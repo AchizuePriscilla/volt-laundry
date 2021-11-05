@@ -1,4 +1,4 @@
 
 //Navigation Routes
 
-const SplashScreen = '/';
+const splashScreenViewRoute = '/';

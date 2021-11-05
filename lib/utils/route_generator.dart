@@ -6,7 +6,7 @@ class RouteGenerator {
   ///Generates routes, extracts and passes navigation arguments.
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case SplashScreen:
+      case splashScreenViewRoute:
         //TODO: Replace with actual SplashScreen widget
         return _getPageRoute(Container());
       default:
