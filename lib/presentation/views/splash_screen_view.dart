@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/src/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/viewmodels/splash_screen_view_model.dart';
 
-class SplashScreenView extends StatelessWidget {
+class SplashScreenView extends StatefulWidget {
   const SplashScreenView({Key? key}) : super(key: key);
+
+  @override
+  State<SplashScreenView> createState() => _SplashScreenViewState();
+}
+
+class _SplashScreenViewState extends State<SplashScreenView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      await context.read<SplashScreenVM>().handleNavigation();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
