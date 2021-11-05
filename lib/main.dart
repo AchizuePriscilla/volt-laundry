@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/handlers/handlers.dart';
+import 'package:volt/presentation/theme/light_theme.dart';
 import 'package:volt/presentation/views/splash_screen_view.dart';
 import 'package:volt/utils/providers.dart';
 import 'package:volt/utils/route_generator.dart';
@@ -26,6 +27,7 @@ class VoltApp extends StatelessWidget {
             providers: AppProviders.providers,
             builder: (context, child) {
               return MaterialApp(
+                  theme: lightTheme,
                   debugShowCheckedModeBanner: false,
                   navigatorKey: locator<NavigationHandler>().navigatorKey,
                   onGenerateRoute: RouteGenerator.onGenerateRoute,
