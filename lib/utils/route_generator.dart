@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:volt/presentation/views/views.dart';
 import 'package:volt/utils/utils.dart';
 
 class RouteGenerator {
@@ -7,8 +8,7 @@ class RouteGenerator {
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splashScreenViewRoute:
-        //TODO: Replace with actual SplashScreen widget
-        return _getPageRoute(Container());
+        return _getPageRoute(const SplashScreenView());
       default:
         return _getPageRoute(_errorPage);
     }
