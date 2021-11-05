@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:volt/handlers/handlers.dart';
 import 'package:volt/utils/providers.dart';
+import 'package:volt/utils/route_generator.dart';
 
-void main() {
+import 'utils/locator.dart';
+
+void main() async {
+  await setupLocator();
   runApp(const VoltApp());
 }
 
@@ -16,13 +21,16 @@ class VoltApp extends StatelessWidget {
     return ScreenUtilInit(
         designSize: const Size(360, 630),
         builder: () => MultiProvider(
-              providers: AppProviders.providers,
-              child: const MaterialApp(
+            providers: AppProviders.providers,
+            builder: (context, child) {
+              return MaterialApp(
                   debugShowCheckedModeBanner: false,
-                  home: MyHomePage(
+                  navigatorKey: locator<NavigationHandler>().navigatorKey,
+                  onGenerateRoute: RouteGenerator.onGenerateRoute,
+                  home: const MyHomePage(
                     title: 'Volt',
-                  )),
-            ));
+                  ));
+            }));
   }
 }
 
