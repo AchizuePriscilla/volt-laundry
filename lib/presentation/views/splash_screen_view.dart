@@ -29,8 +29,9 @@ class _SplashScreenViewState extends State<SplashScreenView> {
             Container(
               height: size.height,
               width: size.width,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                image: const DecorationImage(
                   image: AssetImage('assets/images/blue_background.png'),
                 ),
               ),

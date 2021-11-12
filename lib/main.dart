@@ -1,14 +1,13 @@
+import 'package:country_code_picker/country_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/handlers/handlers.dart';
 import 'package:volt/presentation/theme/light_theme.dart';
-import 'package:volt/presentation/views/splash_screen_view.dart';
 import 'package:volt/utils/constants.dart';
 import 'package:volt/utils/providers.dart';
 import 'package:volt/utils/route_generator.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'utils/locator.dart';
 
 void main() async {
@@ -28,12 +27,18 @@ class VoltApp extends StatelessWidget {
             providers: AppProviders.providers,
             builder: (context, child) {
               return MaterialApp(
-                  theme: lightTheme,
-                  debugShowCheckedModeBanner: false,
-                  navigatorKey: locator<NavigationHandler>().navigatorKey,
-                  onGenerateRoute: RouteGenerator.onGenerateRoute,
-                  initialRoute: splashScreenViewRoute,
-                  );
+                supportedLocales: countries,
+                localizationsDelegates: const [
+                  CountryLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                theme: lightTheme,
+                debugShowCheckedModeBanner: false,
+                navigatorKey: locator<NavigationHandler>().navigatorKey,
+                onGenerateRoute: RouteGenerator.onGenerateRoute,
+                initialRoute: splashScreenViewRoute,
+              );
             }));
   }
 }

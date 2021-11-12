@@ -11,6 +11,8 @@ class RouteGenerator {
         return _getPageRoute(const SplashScreenView());
       case onboardingViewRoute:
         return _getPageRoute(const OnboardingView());
+      case setPhoneNumberViewRoute:
+        return _getPageRoute(const SetPhoneNumberView());
       default:
         return _getPageRoute(_errorPage);
     }

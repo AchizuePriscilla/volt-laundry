@@ -5,7 +5,7 @@ class CustomSpacer extends StatelessWidget {
   final bool? horizontal;
   final double? flex;
 
-  const CustomSpacer({Key? key, this.horizontal: false, this.flex: 2})
+  const CustomSpacer({Key? key, this.horizontal = false, this.flex = 2})
       : super(key: key);
 
   @override
