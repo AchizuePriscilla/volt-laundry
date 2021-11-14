@@ -33,8 +33,9 @@ class OnboardingVM extends BaseViewModel {
     _pageController = controller;
   }
 
-  ///Cancels animation timer, navigates to SignUpPagesView and cache onboarding status
+  ///Navigates to SignUpPagesView and cache onboarding status
   Future<void> navigateToSetPhoneNumber() async {
+    // TODO: cache navigation status
     // await localCache.saveToLocalCache(key: ONBOARDING_DONE, value: true);
     navigationHandler.pushReplacementNamed(setPhoneNumberViewRoute);
   }

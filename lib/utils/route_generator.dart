@@ -13,6 +13,10 @@ class RouteGenerator {
         return _getPageRoute(const OnboardingView());
       case setPhoneNumberViewRoute:
         return _getPageRoute(const SetPhoneNumberView());
+      case verificationViewRoute:
+        return _getPageRoute(const VerificationView());
+       case signUpViewRoute:
+        return _getPageRoute(const SignUpView());
       default:
         return _getPageRoute(_errorPage);
     }

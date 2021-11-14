@@ -30,8 +30,12 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
       child: PinCodeTextField(
         autovalidateMode: AutovalidateMode.disabled,
         appContext: context,
-        pastedTextStyle: TextStyle(
-          color: Colors.green.shade600,
+        textStyle: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+        pastedTextStyle: const TextStyle(
+          color: Colors.white,
           fontWeight: FontWeight.bold,
         ),
         length: widget.length,
@@ -40,14 +44,14 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
           return widget.validator(v!);
         },
         pinTheme: PinTheme(
-          selectedColor: Theme.of(context).primaryColor.withOpacity(.7),
-          selectedFillColor: Theme.of(context).primaryColor.withOpacity(.3),
-          inactiveColor: const Color(0xff99A9F2).withOpacity(.4),
-          inactiveFillColor: const Color(0xff99A9F2).withOpacity(.1),
+          selectedColor: Theme.of(context).primaryColor.withOpacity(.2),
+          selectedFillColor: const Color(0xffBAE6FF).withOpacity(.3),
+          inactiveColor: const Color(0xffBAE6FF).withOpacity(.4),
+          inactiveFillColor: const Color(0xffBAE6FF).withOpacity(.2),
           shape: PinCodeFieldShape.box,
-          borderRadius: BorderRadius.circular(5.h),
+          borderRadius: BorderRadius.circular(10.h),
           fieldHeight: 40.h,
-          fieldWidth: 40.w,
+          fieldWidth: 50.w,
           activeColor: widget.hasError
               ? Theme.of(context).errorColor
               : Theme.of(context).primaryColor.withOpacity(.8),
@@ -55,19 +59,12 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
               ? Theme.of(context).errorColor
               : Theme.of(context).primaryColor.withOpacity(.8),
         ),
-        cursorColor: Theme.of(context).primaryColorLight,
+        cursorColor: Theme.of(context).primaryColor,
         animationDuration: const Duration(milliseconds: 300),
         enableActiveFill: true,
         errorAnimationController: widget.errorController,
         controller: widget.controller,
         keyboardType: TextInputType.number,
-        boxShadows: const [
-          BoxShadow(
-            offset: Offset(0, 1),
-            color: Colors.black12,
-            blurRadius: 10,
-          )
-        ],
         onChanged: (value) {},
         beforeTextPaste: (text) {
           return true;

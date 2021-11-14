@@ -1,5 +1,6 @@
 //Navigation Routes
 import 'package:flutter/painting.dart';
+
 const List<Locale> countries = [
   Locale("af"),
   Locale("am"),
@@ -76,4 +77,5 @@ const List<Locale> countries = [
 const splashScreenViewRoute = '/';
 const onboardingViewRoute = 'onboarding-view';
 const setPhoneNumberViewRoute = 'set-phone-number-view';
-
+const verificationViewRoute = 'verification-view';
+const signUpViewRoute = 'signUp-view';

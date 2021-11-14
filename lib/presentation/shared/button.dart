@@ -74,8 +74,8 @@ class Button extends StatelessWidget {
                 (states) =>
                     color ??
                     (active
-                        ? Theme.of(context).primaryColor
-                        : Theme.of(context).buttonColor.withOpacity(.6)),
+                        ? const Color(0xff233274)
+                        : const Color(0xff233274).withOpacity(.6)),
               ),
             ),
             child: child,
