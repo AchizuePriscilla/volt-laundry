@@ -13,5 +13,6 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => SetPhoneNumberVM()),
     ChangeNotifierProvider(create: (_) => VerificationViewModel()),
     ChangeNotifierProvider(create: (_) => SignUpViewModel()),
+    ChangeNotifierProvider(create: (_) => LogInViewModel()),
   ];
 }

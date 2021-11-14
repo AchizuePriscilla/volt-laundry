@@ -9,6 +9,7 @@ class CustomTextField extends StatelessWidget {
   final String? label;
   final String? hint;
   final Widget? prefix;
+  final Widget? suffix;
   final Function(String)? validator;
   final TextInputType? keyboardType;
   final TextInputAction textInputAction;
@@ -17,6 +18,7 @@ class CustomTextField extends StatelessWidget {
   final TextCapitalization textCapitalization;
   final VoidCallback? onTap;
   final Color? fillColor;
+  final bool obscure;
 
   const CustomTextField({
     Key? key,
@@ -25,6 +27,7 @@ class CustomTextField extends StatelessWidget {
     this.label,
     this.hint,
     this.prefix,
+    this.suffix,
     this.validator,
     this.keyboardType,
     this.textInputAction = TextInputAction.next,
@@ -32,6 +35,7 @@ class CustomTextField extends StatelessWidget {
     this.hintColor,
     this.onTap,
     this.fillColor,
+    this.obscure = false,
     this.textCapitalization = TextCapitalization.none,
   }) : super(key: key);
 
@@ -42,9 +46,9 @@ class CustomTextField extends StatelessWidget {
       textCapitalization: textCapitalization,
       cursorColor: borderColor,
       style: TextStyle(
-        fontSize: 14.sp,
-        color: hintColor ?? Theme.of(context).disabledColor,
+        fontSize: 17.sp,
       ),
+      obscureText: obscure,
       textInputAction: textInputAction,
       autovalidateMode: AutovalidateMode.disabled,
       textAlign: TextAlign.start,
@@ -61,6 +65,7 @@ class CustomTextField extends StatelessWidget {
         labelText: label,
         hintText: hint,
         prefixIcon: prefix,
+        suffixIcon: suffix,
         filled: true,
         fillColor: fillColor,
         labelStyle: TextStyle(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:volt/presentation/theme/palette.dart';
 
 class Button extends StatelessWidget {
   final String text;
@@ -74,8 +75,8 @@ class Button extends StatelessWidget {
                 (states) =>
                     color ??
                     (active
-                        ? const Color(0xff233274)
-                        : const Color(0xff233274).withOpacity(.6)),
+                        ? Palette.buttonColor
+                        : Palette.buttonColor.withOpacity(.6)),
               ),
             ),
             child: child,

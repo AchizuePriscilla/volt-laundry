@@ -5,3 +5,4 @@ export 'button.dart';
 export 'pin_code_fields.dart';
 export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'custom_textfield.dart';
+export 'password_visibility_icon.dart';
