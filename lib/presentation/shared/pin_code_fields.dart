@@ -46,8 +46,8 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
         pinTheme: PinTheme(
           selectedColor: Theme.of(context).primaryColor.withOpacity(.2),
           selectedFillColor: const Color(0xffBAE6FF).withOpacity(.3),
-          inactiveColor: const Color(0xffBAE6FF).withOpacity(.4),
-          inactiveFillColor: const Color(0xffBAE6FF).withOpacity(.2),
+          inactiveColor: const Color(0xffBAE6FF).withOpacity(.5),
+          inactiveFillColor: const Color(0xffBAE6FF).withOpacity(.4),
           shape: PinCodeFieldShape.box,
           borderRadius: BorderRadius.circular(10.h),
           fieldHeight: 40.h,

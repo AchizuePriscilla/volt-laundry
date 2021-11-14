@@ -23,27 +23,24 @@ class _SplashScreenViewState extends State<SplashScreenView> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveWidget(
+      resizeToAvoidBottomInset: false,
       builder: (_, size) {
-        return Stack(
-          children: [
-            Container(
-              height: size.height,
-              width: size.width,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/blue_background.png'),
-                ),
-              ),
+        return Container(
+          height: size.height,
+          width: size.width,
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            image: const DecorationImage(
+              image: AssetImage('assets/images/blue_background.png'),
             ),
-            Center(
-              child: SizedBox(
-                height: 200.h,
-                width: 200.w,
-                child: Image.asset('assets/images/volt_logo/volt_white.png'),
-              ),
+          ),
+          child: Center(
+            child: SizedBox(
+              height: 200.h,
+              width: 200.w,
+              child: Image.asset('assets/images/volt_logo/volt_white.png'),
             ),
-          ],
+          ),
         );
       },
     );

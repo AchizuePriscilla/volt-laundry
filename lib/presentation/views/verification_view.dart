@@ -116,7 +116,9 @@ class _VerificationViewState extends State<VerificationView> {
                   const CustomSpacer(flex: 3),
                   Button(
                     text: 'Next',
-                    onPressed: () {},
+                    onPressed: () {
+                      verificationVM.navigateToSignUp();
+                    },
                     isSmall: true,
                   ),
                 ],

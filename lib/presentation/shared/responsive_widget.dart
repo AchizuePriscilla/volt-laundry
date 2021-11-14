@@ -55,6 +55,7 @@ class ResponsiveWidget extends StatelessWidget {
             resizeToAvoidBottomInset: resizeToAvoidBottomInset,
             appBar: appBar,
             drawer: drawer,
+            
             body: Builder(
               builder: (context) => builder(context, constraints),
             ),
