@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/src/provider.dart';
+import 'package:volt/models/navigation/oops_args.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/constants.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({Key? key}) : super(key: key);
@@ -8,6 +12,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    var drawerVM = context.read<DrawerVM>();
     return Drawer(
         child: Container(
             height: size.height,
@@ -70,7 +75,12 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 DrawerMenuRow(
                   icon: Icons.local_offer_outlined,
-                  onTap: () {},
+                  onTap: () {
+                    drawerVM.navigateToRoute(
+                      oopsViewRoute,
+                      arg: OopsArgs(message: 'Offer or Promotion'),
+                    );
+                  },
                   label: 'Offers and Promotions',
                 ),
                 const CustomSpacer(
