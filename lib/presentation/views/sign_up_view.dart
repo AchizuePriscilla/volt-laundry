@@ -93,7 +93,7 @@ class _SignUpViewState extends State<SignUpView> {
                       'Already have an account? ',
                       style: TextStyle(
                         fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     const CustomSpacer(
@@ -108,7 +108,7 @@ class _SignUpViewState extends State<SignUpView> {
                         'Sign in Here',
                         style: TextStyle(
                           fontSize: 14.sp,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: Palette.orangeColor,
                         ),
                       ),

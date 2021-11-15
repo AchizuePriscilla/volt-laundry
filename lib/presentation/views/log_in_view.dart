@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/src/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/theme/palette.dart';
+import 'package:volt/presentation/viewmodels/viewmodels.dart';
 
 class LogInView extends StatefulWidget {
   const LogInView({Key? key}) : super(key: key);
@@ -28,6 +30,7 @@ class _LogInViewState extends State<LogInView> {
 
   @override
   Widget build(BuildContext context) {
+    var loginVM = context.read<LogInViewModel>();
     return ResponsiveWidget(
       resizeToAvoidBottomInset: false,
       builder: (_, size) {
@@ -94,7 +97,11 @@ class _LogInViewState extends State<LogInView> {
                   ),
                 ),
                 const CustomSpacer(flex: 8),
-                Button(text: 'Log In', onPressed: () {}),
+                Button(
+                    text: 'Log In',
+                    onPressed: () {
+                      loginVM.navigateToHomeView();
+                    }),
                 const CustomSpacer(flex: 3),
                 Row(
                   mainAxisSize: MainAxisSize.min,
@@ -170,8 +177,10 @@ class _LogInViewState extends State<LogInView> {
                       horizontal: true,
                       flex: 0.3,
                     ),
-                    GestureDetector(
-                      onTap: () {},
+                    InkWell(
+                      onTap: () {
+                        loginVM.navigateToSignUpView();
+                      },
                       child: Text(
                         'Create one Here',
                         style: GoogleFonts.lato(

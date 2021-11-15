@@ -5,6 +5,7 @@ import 'package:volt/utils/utils.dart';
 class OnboardingVM extends BaseViewModel {
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
+ set currentIndex(int index) => _currentIndex = index;
 
   late PageController _pageController;
   PageController get pageController => _pageController;
@@ -13,7 +14,7 @@ class OnboardingVM extends BaseViewModel {
   Future<void> changePage(int index, [bool tapped = false]) async {
     _currentIndex = index;
     //if current page is last page, exit onboarding view
-    if (_currentIndex == 2 && tapped) {
+    if (_currentIndex == 3 && tapped) {
       await navigateToSetPhoneNumber();
       return;
     }

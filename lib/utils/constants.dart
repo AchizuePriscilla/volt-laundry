@@ -80,3 +80,4 @@ const setPhoneNumberViewRoute = 'set-phone-number-view';
 const verificationViewRoute = 'verification-view';
 const signUpViewRoute = 'signUp-view';
 const logInViewRoute = 'logIn-view';
+const homeViewRoute = 'home-view';

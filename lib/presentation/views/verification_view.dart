@@ -7,6 +7,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/src/provider.dart';
 import 'package:volt/presentation/shared/responsive_widget.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/theme/palette.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 
 class VerificationView extends StatefulWidget {
@@ -76,7 +77,7 @@ class _VerificationViewState extends State<VerificationView> {
                     context.watch<VerificationViewModel>().getTime,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Theme.of(context).buttonColor,
+                      color: Palette.buttonColor,
                       fontSize: 36.sp,
                       fontWeight: FontWeight.w500,
                     ),

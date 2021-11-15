@@ -16,7 +16,7 @@ class _OnboardingViewState extends State<OnboardingView>
     with SingleTickerProviderStateMixin {
   final PageController _pageController = PageController();
   TabController? tabController;
-  int currentIndex = 0;
+  // int currentIndex = 0;
 
   @override
   void initState() {
@@ -49,9 +49,9 @@ class _OnboardingViewState extends State<OnboardingView>
                   controller: onboardingVM.pageController,
                   // reverse: true,
                   onPageChanged: (index) {
-                    onboardingVM.changePage(index, index == 2 ? true : false);
+                    onboardingVM.changePage(index);
                     setState(() {
-                      currentIndex = index;
+                      onboardingVM.currentIndex = index;
                       tabController!.index = onboardingVM.currentIndex;
                     });
                   },
@@ -69,7 +69,9 @@ class _OnboardingViewState extends State<OnboardingView>
                         child: InkWell(
                           onTap: () {
                             setState(() {
-                              onboardingVM.changePage(currentIndex);
+                              var index = onboardingVM.currentIndex + 1;
+                              onboardingVM.changePage(
+                                  index, index == 3 ? true : false);
                             });
                           },
                           child: SizedBox(
@@ -80,9 +82,9 @@ class _OnboardingViewState extends State<OnboardingView>
                               children: [
                                 CircularProgressIndicator(
                                   strokeWidth: 3,
-                                  value: currentIndex == 0
+                                  value: onboardingVM.currentIndex == 0
                                       ? 0.3
-                                      : currentIndex / 2,
+                                      : onboardingVM.currentIndex / 2,
                                   backgroundColor: Theme.of(context)
                                       .primaryColorLight
                                       .withOpacity(.4),
@@ -110,7 +112,7 @@ class _OnboardingViewState extends State<OnboardingView>
                       ),
                       const CustomSpacer(flex: 2),
                       Align(
-                        alignment: Alignment.bottomRight,
+                        alignment: Alignment.center,
                         child: TabPageSelector(
                           controller: tabController,
                           color: Theme.of(context)

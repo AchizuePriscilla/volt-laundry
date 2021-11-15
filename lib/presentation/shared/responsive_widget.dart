@@ -12,6 +12,7 @@ class ResponsiveWidget extends StatelessWidget {
   final Function? onTap;
   final Widget? floatingActionButton;
   final Widget? bottomNavigationBar;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
 
   const ResponsiveWidget({
     Key? key,
@@ -23,7 +24,8 @@ class ResponsiveWidget extends StatelessWidget {
     this.onTap,
     this.floatingActionButton,
     this.bottomNavigationBar,
-    this.resizeToAvoidBottomInset = true,
+    this.scaffoldKey,
+    this.resizeToAvoidBottomInset = false,
   }) : super(key: key);
 
   @override
@@ -50,12 +52,12 @@ class ResponsiveWidget extends StatelessWidget {
           child: Scaffold(
             floatingActionButton: floatingActionButton,
             bottomNavigationBar: bottomNavigationBar,
+            key: scaffoldKey,
             backgroundColor:
                 backgroundColor ?? Theme.of(context).backgroundColor,
             resizeToAvoidBottomInset: resizeToAvoidBottomInset,
             appBar: appBar,
             drawer: drawer,
-            
             body: Builder(
               builder: (context) => builder(context, constraints),
             ),

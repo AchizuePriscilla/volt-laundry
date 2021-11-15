@@ -5,9 +5,9 @@ import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
 class VerificationViewModel extends BaseViewModel {
-  static const int MINUTES = 5;
+  static const int MINUTES = 1;
   int _minutes = MINUTES;
-  int _seconds = 0;
+  int _seconds = 30;
 
   ///Returns formatted time string
   String get getTime =>
@@ -18,7 +18,7 @@ class VerificationViewModel extends BaseViewModel {
 
   ///Resets timer to 0[MINUTES]: 00 (e.g 05 : 00 if MINUTES is 5)
   void resetTimer() {
-    _seconds = 0;
+    _seconds = 30;
     _minutes = MINUTES;
     notifyListeners();
   }
@@ -54,6 +54,7 @@ class VerificationViewModel extends BaseViewModel {
       });
     }
   }
+
   void navigateToSignUp() {
     navigationHandler.pushNamed(signUpViewRoute);
   }
