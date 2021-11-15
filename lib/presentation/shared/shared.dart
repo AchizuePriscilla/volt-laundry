@@ -9,3 +9,4 @@ export 'custom_textfield.dart';
 export 'password_visibility_icon.dart';
 export 'home_menu_container.dart';
 export 'promotions_container.dart';
+export 'drawer_menu_row.dart';

@@ -25,7 +25,9 @@ class _HomePageViewState extends State<HomePageView>
   Widget build(BuildContext context) {
     return ResponsiveWidget(
       scaffoldKey: scaffoldKey,
-      drawer: const CustomDrawer(),
+      drawer: SizedBox(
+          width: MediaQuery.of(context).size.width * .90,
+          child: const CustomDrawer()),
       builder: (_, size) {
         return SafeArea(
           child: Container(
