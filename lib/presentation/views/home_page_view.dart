@@ -26,12 +26,14 @@ class _HomePageViewState extends State<HomePageView>
     return ResponsiveWidget(
       scaffoldKey: scaffoldKey,
       drawer: SizedBox(
-          width: MediaQuery.of(context).size.width * .90,
+          width: MediaQuery.of(context).size.width * .92,
           child: const CustomDrawer()),
       builder: (_, size) {
         return SafeArea(
           child: Container(
             padding: EdgeInsets.only(left: 25.w),
+            color: Theme.of(context).primaryColorLight,
+            height: size.height,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

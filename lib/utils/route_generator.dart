@@ -22,6 +22,8 @@ class RouteGenerator {
         return _getPageRoute(const LogInView());
       case homeViewRoute:
         return _getPageRoute(const HomeView());
+       case laundryViewRoute:
+        return _getPageRoute(const LaundryView());
       case oopsViewRoute:
         final message = settings.arguments;
         if (message != null && message is OopsArgs) {

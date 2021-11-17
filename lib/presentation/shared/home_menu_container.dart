@@ -22,9 +22,9 @@ class HomeMenuContainer extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color: const Color(0xff393939).withOpacity(.1),
-                spreadRadius: 12,
+                spreadRadius: 8,
                 blurRadius: 10,
-                offset: const Offset(0, 5),
+                offset: const Offset(0, 3),
               )
             ]),
         child: Stack(
@@ -41,7 +41,7 @@ class HomeMenuContainer extends StatelessWidget {
                         color: const Color(0xff08141B).withOpacity(.05),
                         spreadRadius: 10,
                         blurRadius: 7,
-                        offset: const Offset(0, 30),
+                        offset: const Offset(0, 27),
                       )
                     ]),
                 child: Center(

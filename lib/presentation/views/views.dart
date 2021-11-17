@@ -8,3 +8,4 @@ export 'home_view.dart';
 export 'home_page_view.dart';
 export 'drawer.dart';
 export 'oops.dart';
+export 'laundry_view.dart';

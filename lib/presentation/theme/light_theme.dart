@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ThemeData lightTheme = ThemeData(
     primaryColor: const Color(0xff108ED4),
-    backgroundColor: const Color(0xffE5E5E5),
+    backgroundColor: const Color(0xffffffff),
     primaryColorLight: const Color(0xffffffff),
     textTheme: TextTheme(
         headline3: TextStyle(fontSize: 28.sp, color: Color(0xff757575))),

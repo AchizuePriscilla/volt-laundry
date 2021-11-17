@@ -146,7 +146,7 @@ class _HomeViewState extends State<HomeView> {
           children: const [
             HomePageView(),
             SignUpView(),
-            LogInView(),
+            LaundryView(),
             SignUpView(),
             LogInView()
           ],
