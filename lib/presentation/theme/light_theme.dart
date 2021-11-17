@@ -6,5 +6,5 @@ ThemeData lightTheme = ThemeData(
     backgroundColor: const Color(0xffffffff),
     primaryColorLight: const Color(0xffffffff),
     textTheme: TextTheme(
-        headline3: TextStyle(fontSize: 28.sp, color: Color(0xff757575))),
+        headline3: TextStyle(fontSize: 28.sp, color: const Color(0xff757575))),
     disabledColor: const Color(0xff757575));

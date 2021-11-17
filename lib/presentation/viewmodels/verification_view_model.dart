@@ -5,8 +5,8 @@ import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
 class VerificationViewModel extends BaseViewModel {
-  static const int MINUTES = 1;
-  int _minutes = MINUTES;
+  static const int minutes = 1;
+  int _minutes = minutes;
   int _seconds = 30;
 
   ///Returns formatted time string
@@ -14,12 +14,12 @@ class VerificationViewModel extends BaseViewModel {
       '${_minutes.toString().padLeft(2, '0')} : ${_seconds.toString().padLeft(2, '0')}';
 
   ///Returns [true] if countdown is active, otherwise [false]
-  bool get active => _minutes < MINUTES;
+  bool get active => _minutes < minutes;
 
   ///Resets timer to 0[MINUTES]: 00 (e.g 05 : 00 if MINUTES is 5)
   void resetTimer() {
     _seconds = 30;
-    _minutes = MINUTES;
+    _minutes = minutes;
     notifyListeners();
   }
 

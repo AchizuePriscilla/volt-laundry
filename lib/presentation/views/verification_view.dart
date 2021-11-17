@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/responsive_widget.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/theme/palette.dart';
@@ -18,11 +18,11 @@ class VerificationView extends StatefulWidget {
 }
 
 class _VerificationViewState extends State<VerificationView> {
-  TextEditingController _controller = TextEditingController();
+ final TextEditingController _controller = TextEditingController();
   final formKey = GlobalKey<FormState>();
   // ignore: close_sinks
   StreamController<ErrorAnimationType>? _errorController;
-  bool _hasError = false;
+ final bool _hasError = false;
   bool buttonActive = false;
 
   void onListen() {

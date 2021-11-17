@@ -15,7 +15,7 @@ class Button extends StatelessWidget {
   const Button({
     Key? key,
     required this.text,
-    this.loading: false,
+    this.loading = false,
     required this.onPressed,
     this.outlined = false,
     this.isSmall = false,

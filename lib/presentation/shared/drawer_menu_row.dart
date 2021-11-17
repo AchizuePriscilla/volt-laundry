@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
 import 'package:volt/presentation/shared/shared.dart';
 
 class DrawerMenuRow extends StatelessWidget {
