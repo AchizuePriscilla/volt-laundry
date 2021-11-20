@@ -1,0 +1,1 @@
+enum ClothType{tShirt, shorts, cardigans, dresses, home, others}

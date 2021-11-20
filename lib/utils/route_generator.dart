@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:volt/models/navigation/laundry_details_args.dart';
 import 'package:volt/models/navigation/oops_args.dart';
 import 'package:volt/presentation/views/views.dart';
 import 'package:volt/utils/utils.dart';
@@ -22,8 +23,23 @@ class RouteGenerator {
         return _getPageRoute(const LogInView());
       case homeViewRoute:
         return _getPageRoute(const HomeView());
-       case laundryViewRoute:
+      case laundryViewRoute:
         return _getPageRoute(const LaundryView());
+      case laundryDetailsRoute:
+        final clothType = settings.arguments;
+        if (clothType != null && clothType is LaundryDetailsArgs) {
+          return _getPageRoute(LaundryDetails(clothType: clothType.clothType));
+        }
+        return _getPageRoute(
+            _errorPage(message: "ClothType parameter not passed"));
+      case addClothViewRoute:
+        final clothType = settings.arguments;
+        if (clothType != null && clothType is LaundryDetailsArgs) {
+          return _getPageRoute(AddClothView(clothType: clothType.clothType));
+        }
+        return _getPageRoute(
+            _errorPage(message: "ClothType parameter not passed"));
+
       case oopsViewRoute:
         final message = settings.arguments;
         if (message != null && message is OopsArgs) {

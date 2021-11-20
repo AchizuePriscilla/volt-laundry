@@ -94,7 +94,7 @@ class _HomePageViewState extends State<HomePageView>
                             imagePath: 'wash_and_iron',
                           ),
                           HomeMenuContainer(
-                            label: 'Ironing',
+                            label: 'Dry Cleaning',
                             imagePath: 'iron',
                           ),
                         ]),

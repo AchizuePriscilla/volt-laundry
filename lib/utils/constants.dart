@@ -83,3 +83,5 @@ const logInViewRoute = 'logIn-view';
 const homeViewRoute = 'home-view';
 const oopsViewRoute = 'oops-view';
 const laundryViewRoute = 'laundry-view';
+const laundryDetailsRoute = 'laundry-details';
+const addClothViewRoute = 'add-cloth';

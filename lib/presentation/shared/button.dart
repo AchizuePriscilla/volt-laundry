@@ -29,7 +29,7 @@ class Button extends StatelessWidget {
             size ??
             Size(
               300.w,
-              35.h,
+              38.h,
             ),
       );
   MaterialStateProperty<Size> get smallButtonMinSize =>

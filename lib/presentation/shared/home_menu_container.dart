@@ -61,7 +61,7 @@ class HomeMenuContainer extends StatelessWidget {
                     label,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
-                        fontSize: 14.sp, fontWeight: FontWeight.w400),
+                        fontSize: 14.sp, fontWeight: FontWeight.w600),
                   ),
                   const CustomSpacer(flex: 2),
                 ],

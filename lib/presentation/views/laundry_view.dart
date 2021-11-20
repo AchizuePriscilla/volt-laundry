@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/utils.dart';
 
 class LaundryView extends StatefulWidget {
   const LaundryView({Key? key}) : super(key: key);
@@ -13,18 +16,10 @@ class _LaundryViewState extends State<LaundryView>
   bool isWashAndIronDropdownVisible = false;
   bool isIroningDropdownVisible = false;
   bool isDrycleaningDropdownVisible = false;
-  late AnimationController animation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    animation = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 400));
-  }
 
   @override
   Widget build(BuildContext context) {
+    var laundryDetailsVM = context.read<LaundryVM>();
     return ResponsiveWidget(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -64,30 +59,39 @@ class _LaundryViewState extends State<LaundryView>
                   Visibility(
                     visible: isWashAndIronDropdownVisible,
                     child: Column(
-                      children: const [
+                      children: [
                         LaundryOptionsContainer(
                           label: 'T-Shirts',
                           imagePath: 'shirt',
+                          onTap: () {
+                            laundryDetailsVM
+                                .navigateToLaundryDetailsView(ClothType.tShirt);
+                          },
                         ),
                         LaundryOptionsContainer(
                           label: 'Shorts',
                           imagePath: 'trousers',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Cardigans',
                           imagePath: 'cardigan',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Dresses',
                           imagePath: 'dress',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Home',
                           imagePath: 'home',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Others',
                           imagePath: 'tie',
+                          onTap: () {},
                         ),
                       ],
                     ),
@@ -106,30 +110,36 @@ class _LaundryViewState extends State<LaundryView>
                   Visibility(
                     visible: isIroningDropdownVisible,
                     child: Column(
-                      children: const [
+                      children: [
                         LaundryOptionsContainer(
                           label: 'T-Shirts',
                           imagePath: 'shirt',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Shorts',
                           imagePath: 'trousers',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Cardigans',
                           imagePath: 'cardigan',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Dresses',
                           imagePath: 'dress',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Home',
                           imagePath: 'home',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Others',
                           imagePath: 'tie',
+                          onTap: () {},
                         ),
                       ],
                     ),
@@ -147,32 +157,38 @@ class _LaundryViewState extends State<LaundryView>
                     },
                   ),
                   Visibility(
-                    visible: isDrycleaningDropdownVisible,
+                    visible: isIroningDropdownVisible,
                     child: Column(
-                      children: const [
+                      children: [
                         LaundryOptionsContainer(
                           label: 'T-Shirts',
                           imagePath: 'shirt',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Shorts',
                           imagePath: 'trousers',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Cardigans',
                           imagePath: 'cardigan',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Dresses',
                           imagePath: 'dress',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Home',
                           imagePath: 'home',
+                          onTap: () {},
                         ),
                         LaundryOptionsContainer(
                           label: 'Others',
                           imagePath: 'tie',
+                          onTap: () {},
                         ),
                       ],
                     ),
