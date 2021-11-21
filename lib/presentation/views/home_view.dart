@@ -102,7 +102,7 @@ class _HomeViewState extends State<HomeView> {
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: Image.asset(
-                          'assets/images/volt_laundry.png',
+                          'assets/images/me.jpg',
                           fit: BoxFit.cover,
                         ).image,
                       ),
@@ -126,7 +126,7 @@ class _HomeViewState extends State<HomeView> {
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: Image.asset(
-                          'assets/images/volt_laundry.png',
+                          'assets/images/me.jpg',
                           fit: BoxFit.cover,
                         ).image,
                       ),

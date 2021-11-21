@@ -86,4 +86,4 @@ const laundryViewRoute = 'laundry-view';
 const laundryDetailsRoute = 'laundry-details';
 const addClothViewRoute = 'add-cloth';
 const cartViewRoute = 'cart-view';
-const profileViewRoute = 'profile-view';
+const editProfileViewRoute = 'edit-profile-view';

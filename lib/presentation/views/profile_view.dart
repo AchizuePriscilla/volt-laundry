@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/viewmodels/viewmodels.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var profileVM = context.read<ProfileVM>();
     return ResponsiveWidget(builder: (_, size) {
       return Container(
         height: size.height,
@@ -30,7 +33,7 @@ class ProfileView extends StatelessWidget {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: Image.asset(
-                    'assets/images/volt_laundry.png',
+                    'assets/images/me.jpg',
                     fit: BoxFit.cover,
                   ).image,
                 ),
@@ -56,7 +59,9 @@ class ProfileView extends StatelessWidget {
                       child: Container(
                         margin: EdgeInsets.only(top: 10.h),
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              profileVM.navigateToEditProfileView();
+                            },
                             icon: Icon(
                               Icons.border_color_outlined,
                               color: Theme.of(context).primaryColorLight,

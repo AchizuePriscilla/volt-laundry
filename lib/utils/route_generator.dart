@@ -27,6 +27,8 @@ class RouteGenerator {
         return _getPageRoute(const LaundryView());
       case cartViewRoute:
         return _getPageRoute(const CartView());
+       case editProfileViewRoute:
+        return _getPageRoute(const EditProfileView());
       case laundryDetailsRoute:
         final clothType = settings.arguments;
         if (clothType != null && clothType is LaundryDetailsArgs) {
