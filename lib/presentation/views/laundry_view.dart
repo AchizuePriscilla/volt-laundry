@@ -20,18 +20,9 @@ class _LaundryViewState extends State<LaundryView> {
   Widget build(BuildContext context) {
     var laundryDetailsVM = context.read<LaundryVM>();
     return ResponsiveWidget(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          centerTitle: true,
-          title: Text(
-            'Laundry',
-            style: GoogleFonts.lato(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w600,
-                color: Palette.blackColor),
-          ),
-          automaticallyImplyLeading: false,
-          elevation: 0,
+        appBar: CustomAppBar(
+          automaticallyLead: false,
+          text: 'Laundry',
         ),
         builder: (_, size) {
           return Container(
@@ -40,9 +31,6 @@ class _LaundryViewState extends State<LaundryView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const CustomSpacer(
-                    flex: 5,
-                  ),
                   LaundryDropDown(
                     label: 'Wash & Iron',
                     isDropdownVisible: LaundryView.isWashAndIronDropdownVisible,

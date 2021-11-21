@@ -70,13 +70,8 @@ class _LaundryDetailsState extends State<LaundryDetails> {
           ),
           leadingWidth: 30.w,
           leading: Container(
-            margin: EdgeInsets.only(left: 10.w),
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Palette.blackColor,
-              size: 25.w,
-            ),
-          ),
+              margin: EdgeInsets.only(left: 10.w),
+              child: const CustomBackButton()),
           elevation: 0,
         ),
         builder: (_, size) {
