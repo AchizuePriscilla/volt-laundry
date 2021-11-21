@@ -41,37 +41,7 @@ class _WalletViewState extends State<WalletView> {
           margin: EdgeInsets.symmetric(horizontal: 25.w),
           child: Column(
             children: [
-              Stack(children: [
-                CreditCardWidget(
-                    width: size.width,
-                    height: 150.h,
-                    isChipVisible: false,
-                    cardNumber: cardNumber,
-                    expiryDate: expiryDate,
-                    cardHolderName: 'Ade John',
-                    cvvCode: '999',
-                    cardBgColor: Colors.white,
-                    isHolderNameVisible: true,
-                    showBackView: false,
-                    cardType: CardType.mastercard,
-                    onCreditCardWidgetChange: (creditCardBrand) {}),
-                Container(
-                  height: 150.h,
-                  width: size.width,
-                  decoration: const BoxDecoration(
-                    gradient: RadialGradient(
-                      colors: [
-                        Color(0xff0083FF),
-                        Color(0xff8CA6DB),
-                      ],
-                      stops: [0.4, 1],
-                      center: Alignment.centerRight,
-                      radius: 1,
-                      tileMode: TileMode.clamp,
-                    ),
-                  ),
-                ),
-              ]),
+              CreditCard(),
               const CustomSpacer(flex: 3),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,7 +74,9 @@ class _WalletViewState extends State<WalletView> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      walletVM.navigateToFundWalletView();
+                    },
                     child: Container(
                       height: 60.h,
                       width: 85.h,

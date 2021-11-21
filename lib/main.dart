@@ -37,7 +37,7 @@ class VoltApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 navigatorKey: locator<NavigationHandler>().navigatorKey,
                 onGenerateRoute: RouteGenerator.onGenerateRoute,
-                initialRoute: splashScreenViewRoute,
+                initialRoute: homeViewRoute,
               );
             }));
   }
