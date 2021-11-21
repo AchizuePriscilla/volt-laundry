@@ -67,7 +67,7 @@ class CustomTextField extends StatelessWidget {
         prefixIcon: prefix,
         suffixIcon: suffix,
         filled: true,
-        fillColor: fillColor,
+        fillColor: fillColor ?? Theme.of(context).primaryColorLight,
         labelStyle: TextStyle(
           fontSize: 16.sp,
           color:

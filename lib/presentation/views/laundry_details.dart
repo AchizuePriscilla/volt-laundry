@@ -42,6 +42,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
     var laundryDetailsVM = context.read<LaundryVM>();
 
     return ResponsiveWidget(
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           toolbarHeight: 70.h,
           backgroundColor: Colors.transparent,
@@ -199,7 +200,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                     ),
                     const CustomSpacer(flex: 3),
                     Button(text: 'Process', onPressed: () {}),
-                    const Expanded(child: SizedBox())
+                    const CustomSpacer(flex: 3),
                   ],
                 ),
               ),
