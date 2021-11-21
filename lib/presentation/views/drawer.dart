@@ -119,62 +119,8 @@ class CustomDrawer extends StatelessWidget {
                   flex: 3,
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 25.w),
-                  height: 50.h,
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColorLight,
-                      borderRadius: BorderRadius.circular(10.w)),
-                  child: Center(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const CustomSpacer(
-                          flex: 2,
-                          horizontal: true,
-                        ),
-                        Container(
-                          height: 35.h,
-                          width: 35.h,
-                          decoration: BoxDecoration(
-                              color: Palette.buttonColor.withOpacity(.2),
-                              shape: BoxShape.circle),
-                          child: Icon(Icons.headset_mic_outlined,
-                              color: const Color(0xff0B74E5), size: 20.h),
-                        ),
-                        const CustomSpacer(
-                          flex: 2,
-                          horizontal: true,
-                        ),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'How can we help you?',
-                                style: TextStyle(fontSize: 14.sp),
-                              ),
-                              Text(
-                                'Chat with or call us',
-                                style: TextStyle(
-                                    color: const Color(0xff808089),
-                                    fontSize: 12.sp),
-                              )
-                            ]),
-                        const CustomSpacer(
-                          flex: 8,
-                          horizontal: true,
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            color: Color(0xff808089),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                    margin: EdgeInsets.symmetric(horizontal: 25.w),
+                    child: const SupportContainer()),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15.w),
                   child: InkWell(

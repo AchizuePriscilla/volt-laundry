@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
-import 'package:volt/presentation/views/laundry_details.dart';
 import 'package:volt/presentation/views/laundry_view.dart';
 import 'package:volt/utils/constants.dart';
 
@@ -35,7 +34,7 @@ class HomeVM extends BaseViewModel {
 
   void navigateToCartView() {
     navigationHandler.pushNamed(
-      cartView,
+      cartViewRoute,
     );
   }
 

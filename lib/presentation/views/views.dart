@@ -13,3 +13,4 @@ export 'laundry_details.dart';
 export 'add_cloth_view.dart';
 export 'cart_view.dart';
 export 'wallet_view.dart';
+export 'profile_view.dart';

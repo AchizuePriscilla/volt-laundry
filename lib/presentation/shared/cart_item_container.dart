@@ -127,7 +127,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
                           size: 15.w,
                           color: Theme.of(context).primaryColorLight,
                         ),
-                        Text('4'),
+                        const Text('4'),
                         Icon(
                           Icons.add,
                           size: 15.w,
