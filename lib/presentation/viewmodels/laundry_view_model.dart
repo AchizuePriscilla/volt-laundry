@@ -23,6 +23,34 @@ class LaundryVM extends BaseViewModel {
     }
   }
 
+  String getServiceDesc(ServiceType serviceType) {
+    switch (serviceType) {
+      case ServiceType.ironing:
+        return "Ironing";
+      case ServiceType.dryCleaning:
+        return "Dry Cleaning";
+      case ServiceType.washAndIron:
+        return "Wash & Iron";
+
+      default:
+        return "Unknown";
+    }
+  }
+
+  String getServiceImagePath(ServiceType serviceType) {
+    switch (serviceType) {
+      case ServiceType.ironing:
+        return "assets/images/iron.png";
+      case ServiceType.dryCleaning:
+        return "assets/images/dry_clean.png";
+      case ServiceType.washAndIron:
+        return "assets/images/wash_and_iron.png";
+
+      default:
+        return "Unknown";
+    }
+  }
+
   String getImagePath(ClothType clothType) {
     switch (clothType) {
       case ClothType.tShirt:

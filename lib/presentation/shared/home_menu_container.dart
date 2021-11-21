@@ -5,12 +5,12 @@ class HomeMenuContainer extends StatelessWidget {
   final String label;
   final String imagePath;
   final VoidCallback onTap;
-  const HomeMenuContainer({
-    Key? key,
-    required this.label,
-    required this.imagePath,
-    required this.onTap
-  }) : super(key: key);
+  const HomeMenuContainer(
+      {Key? key,
+      required this.label,
+      required this.imagePath,
+      required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +49,15 @@ class HomeMenuContainer extends StatelessWidget {
                         )
                       ]),
                   child: Center(
-                    child: SizedBox(
-                        height: 70.h,
-                        width: 70.h,
-                        child: Image.asset('assets/images/$imagePath.png')),
+                    child: Container(
+                      height: 60.h,
+                      width: 70.h,
+                      decoration: BoxDecoration(
+                          // color: Colors.red,
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/$imagePath.png'),
+                              fit: BoxFit.contain)),
+                    ),
                   ),
                 ),
               ),

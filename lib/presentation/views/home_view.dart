@@ -147,7 +147,7 @@ class _HomeViewState extends State<HomeView> {
             HomePageView(),
             SignUpView(),
             LaundryView(),
-            SignUpView(),
+            WalletView(),
             LogInView()
           ],
         );
