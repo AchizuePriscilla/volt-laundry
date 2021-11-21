@@ -10,7 +10,9 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var profileVM = context.read<ProfileVM>();
-    return ResponsiveWidget(builder: (_, size) {
+    return ResponsiveWidget(
+      
+      builder: (_, size) {
       return Container(
         height: size.height,
         width: size.width,

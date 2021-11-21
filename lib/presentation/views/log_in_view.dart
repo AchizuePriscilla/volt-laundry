@@ -146,7 +146,9 @@ class _LogInViewState extends State<LogInView> {
                       ],
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        loginVM.navigateToForgotPasswordView();
+                      },
                       child: Text(
                         'Forgot Password?',
                         style: TextStyle(

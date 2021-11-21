@@ -15,3 +15,6 @@ export 'cart_view.dart';
 export 'wallet_view.dart';
 export 'edit_profile_view.dart';
 export 'profile_view.dart';
+export 'reset_password_view.dart';
+export 'forgot_password_view.dart';
+export 'fund_wallet_view.dart';

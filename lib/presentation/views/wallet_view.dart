@@ -1,21 +1,78 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
-class WalletView extends StatelessWidget {
+class WalletView extends StatefulWidget {
   const WalletView({Key? key}) : super(key: key);
 
   @override
+  State<WalletView> createState() => _WalletViewState();
+}
+
+class _WalletViewState extends State<WalletView> {
+  String cardNumber = '';
+  String expiryDate = '';
+  String cardHolderName = '';
+  String cvvCode = '';
+  bool isCvvFocused = false;
+  void onCreditCardModelChange(CreditCardModel? creditCardModel) {
+    setState(() {
+      cardNumber = creditCardModel!.cardNumber;
+      expiryDate = creditCardModel.expiryDate;
+      cardHolderName = creditCardModel.cardHolderName;
+      cvvCode = creditCardModel.cvvCode;
+      isCvvFocused = creditCardModel.isCvvFocused;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var walletVM = context.read<WalletVM>();
     return ResponsiveWidget(
+      appBar: CustomAppBar(
+        text: 'Wallet',
+      ),
       builder: (_, size) {
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 25.w),
           child: Column(
             children: [
-              const CustomSpacer(
-                flex: 20,
-              ),
+              Stack(children: [
+                CreditCardWidget(
+                    width: size.width,
+                    height: 150.h,
+                    isChipVisible: false,
+                    cardNumber: cardNumber,
+                    expiryDate: expiryDate,
+                    cardHolderName: 'Ade John',
+                    cvvCode: '999',
+                    cardBgColor: Colors.white,
+                    isHolderNameVisible: true,
+                    showBackView: false,
+                    cardType: CardType.mastercard,
+                    onCreditCardWidgetChange: (creditCardBrand) {}),
+                Container(
+                  height: 150.h,
+                  width: size.width,
+                  decoration: const BoxDecoration(
+                    gradient: RadialGradient(
+                      colors: [
+                        Color(0xff0083FF),
+                        Color(0xff8CA6DB),
+                      ],
+                      stops: [0.4, 1],
+                      center: Alignment.centerRight,
+                      radius: 1,
+                      tileMode: TileMode.clamp,
+                    ),
+                  ),
+                ),
+              ]),
+              const CustomSpacer(flex: 3),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -46,21 +103,24 @@ class WalletView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    height: 60.h,
-                    width: 85.h,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColorLight,
-                        border: Border.all(
-                            color: Theme.of(context).primaryColor, width: 2)),
-                    child: Center(
-                      child: Text(
-                        'Fund\nWallet',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w600),
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      height: 60.h,
+                      width: 85.h,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColorLight,
+                          border: Border.all(
+                              color: Theme.of(context).primaryColor, width: 2)),
+                      child: Center(
+                        child: Text(
+                          'Fund\nWallet',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ),
                   )
