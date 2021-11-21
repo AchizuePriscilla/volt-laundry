@@ -7,16 +7,15 @@ import 'package:volt/utils/utils.dart';
 class LaundryView extends StatefulWidget {
   const LaundryView({Key? key}) : super(key: key);
 
+  static bool isWashAndIronDropdownVisible = false;
+  static bool isIroningDropdownVisible = false;
+  static bool isDrycleaningDropdownVisible = false;
+
   @override
   State<LaundryView> createState() => _LaundryViewState();
 }
 
-class _LaundryViewState extends State<LaundryView>
-    with TickerProviderStateMixin {
-  bool isWashAndIronDropdownVisible = false;
-  bool isIroningDropdownVisible = false;
-  bool isDrycleaningDropdownVisible = false;
-
+class _LaundryViewState extends State<LaundryView> {
   @override
   Widget build(BuildContext context) {
     var laundryDetailsVM = context.read<LaundryVM>();
@@ -46,18 +45,18 @@ class _LaundryViewState extends State<LaundryView>
                   ),
                   LaundryDropDown(
                     label: 'Wash & Iron',
-                    isDropdownVisible: isWashAndIronDropdownVisible,
+                    isDropdownVisible: LaundryView.isWashAndIronDropdownVisible,
                     onPressed: () {
                       setState(() {
-                        isWashAndIronDropdownVisible =
-                            !isWashAndIronDropdownVisible;
-                        isIroningDropdownVisible = false;
-                        isDrycleaningDropdownVisible = false;
+                        LaundryView.isWashAndIronDropdownVisible =
+                            !LaundryView.isWashAndIronDropdownVisible;
+                        LaundryView.isIroningDropdownVisible = false;
+                        LaundryView.isDrycleaningDropdownVisible = false;
                       });
                     },
                   ),
                   Visibility(
-                    visible: isWashAndIronDropdownVisible,
+                    visible: LaundryView.isWashAndIronDropdownVisible,
                     child: Column(
                       children: [
                         LaundryOptionsContainer(
@@ -98,17 +97,18 @@ class _LaundryViewState extends State<LaundryView>
                   ),
                   LaundryDropDown(
                     label: "Ironing",
-                    isDropdownVisible: isIroningDropdownVisible,
+                    isDropdownVisible: LaundryView.isIroningDropdownVisible,
                     onPressed: () {
                       setState(() {
-                        isIroningDropdownVisible = !isIroningDropdownVisible;
-                        isWashAndIronDropdownVisible = false;
-                        isDrycleaningDropdownVisible = false;
+                        LaundryView.isIroningDropdownVisible =
+                            !LaundryView.isIroningDropdownVisible;
+                        LaundryView.isWashAndIronDropdownVisible = false;
+                        LaundryView.isDrycleaningDropdownVisible = false;
                       });
                     },
                   ),
                   Visibility(
-                    visible: isIroningDropdownVisible,
+                    visible: LaundryView.isIroningDropdownVisible,
                     child: Column(
                       children: [
                         LaundryOptionsContainer(
@@ -146,18 +146,18 @@ class _LaundryViewState extends State<LaundryView>
                   ),
                   LaundryDropDown(
                     label: 'Dry Cleaning',
-                    isDropdownVisible: isDrycleaningDropdownVisible,
+                    isDropdownVisible: LaundryView.isDrycleaningDropdownVisible,
                     onPressed: () {
                       setState(() {
-                        isDrycleaningDropdownVisible =
-                            !isDrycleaningDropdownVisible;
-                        isIroningDropdownVisible = false;
-                        isWashAndIronDropdownVisible = false;
+                        LaundryView.isDrycleaningDropdownVisible =
+                            !LaundryView.isDrycleaningDropdownVisible;
+                        LaundryView.isIroningDropdownVisible = false;
+                        LaundryView.isWashAndIronDropdownVisible = false;
                       });
                     },
                   ),
                   Visibility(
-                    visible: isIroningDropdownVisible,
+                    visible: LaundryView.isDrycleaningDropdownVisible,
                     child: Column(
                       children: [
                         LaundryOptionsContainer(

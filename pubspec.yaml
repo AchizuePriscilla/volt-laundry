@@ -19,6 +19,8 @@ dependencies:
   pin_code_fields: ^7.3.0
   country_code_picker: ^2.0.2
   iconly: ^1.0.1
+  flutter_credit_card: ^3.0.1
+  flutter_slidable: ^1.1.0
 
 dev_dependencies:
   flutter_test:

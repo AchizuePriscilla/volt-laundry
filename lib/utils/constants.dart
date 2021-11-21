@@ -85,3 +85,4 @@ const oopsViewRoute = 'oops-view';
 const laundryViewRoute = 'laundry-view';
 const laundryDetailsRoute = 'laundry-details';
 const addClothViewRoute = 'add-cloth';
+const cartView = 'cart-view';

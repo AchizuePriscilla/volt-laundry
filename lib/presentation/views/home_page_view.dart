@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/presentation/views/views.dart';
 
 class HomePageView extends StatefulWidget {
@@ -23,6 +25,7 @@ class _HomePageViewState extends State<HomePageView>
 
   @override
   Widget build(BuildContext context) {
+    var homeVM = context.read<HomeVM>();
     return ResponsiveWidget(
       scaffoldKey: scaffoldKey,
       drawer: SizedBox(
@@ -54,10 +57,15 @@ class _HomePageViewState extends State<HomePageView>
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: 25.w),
-                        child: Icon(
-                          Icons.shopping_cart_outlined,
-                          size: 20.h,
-                          color: const Color(0xff000000).withOpacity(.25),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.shopping_cart_outlined,
+                            size: 20.h,
+                            color: const Color(0xff000000).withOpacity(.25),
+                          ),
+                          onPressed: () {
+                            homeVM.navigateToCartView();
+                          },
                         ),
                       ),
                     ],
@@ -84,19 +92,25 @@ class _HomePageViewState extends State<HomePageView>
                     child: ListView(
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        children: const [
+                        children: [
                           HomeMenuContainer(
-                            label: 'Ironing',
-                            imagePath: 'iron',
-                          ),
+                              label: 'Ironing',
+                              imagePath: 'iron',
+                              onTap: () {
+                                homeVM.navigateToLaundryView('Ironing');
+                              }),
                           HomeMenuContainer(
-                            label: 'Wash & Iron',
-                            imagePath: 'wash_and_iron',
-                          ),
+                              label: 'Wash & Iron',
+                              imagePath: 'wash_and_iron',
+                              onTap: () {
+                                homeVM.navigateToLaundryView('WashAndIron');
+                              }),
                           HomeMenuContainer(
-                            label: 'Dry Cleaning',
-                            imagePath: 'iron',
-                          ),
+                              label: 'Dry Cleaning',
+                              imagePath: 'dry_clean',
+                              onTap: () {
+                                homeVM.navigateToLaundryView('DryCleaning');
+                              }),
                         ]),
                   ),
                   const CustomSpacer(

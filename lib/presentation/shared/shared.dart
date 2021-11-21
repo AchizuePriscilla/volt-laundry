@@ -11,3 +11,4 @@ export 'home_menu_container.dart';
 export 'promotions_container.dart';
 export 'drawer_menu_row.dart';
 export 'laundry_options_container.dart';
+export 'cart_item_container.dart';

@@ -14,8 +14,8 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => VerificationViewModel()),
     ChangeNotifierProvider(create: (_) => SignUpViewModel()),
     ChangeNotifierProvider(create: (_) => LogInViewModel()),
-    ChangeNotifierProvider(create: (_) => BottomNavBarVM()),
     ChangeNotifierProvider(create: (_) => DrawerVM()),
     ChangeNotifierProvider(create: (_) => LaundryVM()),
+    ChangeNotifierProvider(create: (_) => HomeVM()),
   ];
 }

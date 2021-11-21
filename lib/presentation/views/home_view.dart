@@ -21,11 +21,11 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    var bottomBarVM = context.read<BottomNavBarVM>();
-    bottomBarVM.init(_pageController);
+    var homeVM = context.read<HomeVM>();
+    homeVM.init(_pageController);
 
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
-      bottomBarVM.jumpToPage(0);
+      homeVM.jumpToPage(0);
     });
   }
 
@@ -49,9 +49,9 @@ class _HomeViewState extends State<HomeView> {
           backgroundColor: const Color(0xffF8F8F8),
           elevation: 15,
           selectedItemColor: Palette.buttonColor,
-          currentIndex: context.watch<BottomNavBarVM>().selectedIndex,
+          currentIndex: context.watch<HomeVM>().selectedIndex,
           onTap: (int page) {
-            context.read<BottomNavBarVM>().jumpToPage(page);
+            context.read<HomeVM>().jumpToPage(page);
           },
           items: [
             const BottomNavigationBarItem(
