@@ -39,7 +39,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
 
   @override
   Widget build(BuildContext context) {
-    var laundryDetailsVM = context.read<LaundryVM>();
+    var laundryVM = context.read<LaundryVM>();
 
     return ResponsiveWidget(
         resizeToAvoidBottomInset: true,
@@ -52,7 +52,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Text(
-                laundryDetailsVM.getDesc(widget.clothType),
+                laundryVM.getDesc(widget.clothType),
                 style: GoogleFonts.lato(
                     fontSize: 24.sp,
                     fontWeight: FontWeight.w700,
@@ -65,7 +65,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
               SizedBox(
                   height: 25.h,
                   child: Image.asset(
-                      'assets/images/${laundryDetailsVM.getImagePath(widget.clothType)}.png')),
+                      'assets/images/${laundryVM.getImagePath(widget.clothType)}.png')),
             ],
           ),
           leadingWidth: 30.w,
@@ -194,7 +194,11 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                       color: Palette.lightGreen,
                     ),
                     const CustomSpacer(flex: 3),
-                    Button(text: 'Process', onPressed: () {}),
+                    Button(
+                        text: 'Process',
+                        onPressed: () {
+                          laundryVM.navigateToCheckoutView();
+                        }),
                     const CustomSpacer(flex: 3),
                   ],
                 ),
