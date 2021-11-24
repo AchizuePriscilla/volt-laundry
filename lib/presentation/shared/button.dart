@@ -11,6 +11,7 @@ class Button extends StatelessWidget {
   final bool active;
   final Size? size;
   final Color? color;
+  final bool? isRounded;
 
   const Button({
     Key? key,
@@ -20,6 +21,7 @@ class Button extends StatelessWidget {
     this.outlined = false,
     this.isSmall = false,
     this.active = true,
+    this.isRounded = false,
     this.size,
     this.color,
   }) : super(key: key);
@@ -78,6 +80,12 @@ class Button extends StatelessWidget {
                         ? Palette.buttonColor
                         : Palette.buttonColor.withOpacity(.6)),
               ),
+              shape: isRounded!
+                  ? MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ))
+                  : null,
             ),
             child: child,
             onPressed: () => active ? onPressed() : () {},

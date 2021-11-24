@@ -9,6 +9,7 @@ import 'package:volt/presentation/shared/responsive_widget.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/theme/palette.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/constants.dart';
 
 class VerificationView extends StatefulWidget {
   const VerificationView({Key? key}) : super(key: key);
@@ -18,11 +19,11 @@ class VerificationView extends StatefulWidget {
 }
 
 class _VerificationViewState extends State<VerificationView> {
- final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   final formKey = GlobalKey<FormState>();
   // ignore: close_sinks
   StreamController<ErrorAnimationType>? _errorController;
- final bool _hasError = false;
+  final bool _hasError = false;
   bool buttonActive = false;
 
   void onListen() {
@@ -118,7 +119,7 @@ class _VerificationViewState extends State<VerificationView> {
                   Button(
                     text: 'Next',
                     onPressed: () {
-                      verificationVM.navigateToSignUp();
+                      verificationVM.navigateToRoute(signInAsViewRoute);
                     },
                     isSmall: true,
                   ),

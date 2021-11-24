@@ -55,7 +55,9 @@ class VerificationViewModel extends BaseViewModel {
     }
   }
 
-  void navigateToSignUp() {
-    navigationHandler.pushNamed(signUpViewRoute);
+
+
+  void navigateToRoute(String route) {
+    navigationHandler.pushNamed(route);
   }
 }
