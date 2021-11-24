@@ -28,11 +28,30 @@ class FundWalletView extends StatelessWidget {
                       ),
                       const CustomSpacer(flex: 3),
                       Container(
-                        height: 30.h,
-                        width: 75.h,
+                        height: 33.h,
+                        width: 90.h,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20.w),
                             color: Theme.of(context).primaryColorLight),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(
+                              height: 20.h,
+                              width: 20.h,
+                              child: Image.asset(
+                                  'assets/images/volt_coin_yellow.png'),
+                            ),
+                            Text(
+                              'Volt Coin',
+                              style: GoogleFonts.lato(
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w800,
+                                  color: Theme.of(context).primaryColor),
+                            ),
+                            Icon(Icons.keyboard_arrow_down)
+                          ],
+                        ),
                       ),
                       const CustomSpacer(flex: 2),
                       Text(
@@ -58,10 +77,189 @@ class FundWalletView extends StatelessWidget {
                 child: Container(
                   margin:
                       EdgeInsets.symmetric(horizontal: 15.w, vertical: 25.h),
+                  padding: EdgeInsets.symmetric(horizontal: 15.w),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.w),
                     color: Palette.lightBlue,
                   ),
+                  child: ListView(children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 10.h),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            height: 33.h,
+                            width: 33.h,
+                            child: Image.asset(
+                                'assets/images/volt_coin_yellow.png'),
+                          ),
+                          const CustomSpacer(
+                            flex: 2,
+                            horizontal: true,
+                          ),
+                          Text(
+                            'Volt Coin',
+                            style: GoogleFonts.lato(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Expanded(child: SizedBox()),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                '+50%',
+                                style: GoogleFonts.lato(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                    color: Palette.lightGreen),
+                              ),
+                              Text(
+                                'NGN200',
+                                style: GoogleFonts.lato(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 10.h),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            height: 33.h,
+                            width: 33.h,
+                            child: Image.asset(
+                                'assets/images/volt_coin_yellow.png'),
+                          ),
+                          const CustomSpacer(
+                            flex: 2,
+                            horizontal: true,
+                          ),
+                          Text(
+                            'Volt Coin',
+                            style: GoogleFonts.lato(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Expanded(child: SizedBox()),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                '+50%',
+                                style: GoogleFonts.lato(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                    color: Palette.lightGreen),
+                              ),
+                              Text(
+                                'NGN200',
+                                style: GoogleFonts.lato(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 10.h),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            height: 33.h,
+                            width: 33.h,
+                            child: Image.asset(
+                                'assets/images/volt_coin_yellow.png'),
+                          ),
+                          const CustomSpacer(
+                            flex: 2,
+                            horizontal: true,
+                          ),
+                          Text(
+                            'Volt Coin',
+                            style: GoogleFonts.lato(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Expanded(child: SizedBox()),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                '+50%',
+                                style: GoogleFonts.lato(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                    color: Palette.lightGreen),
+                              ),
+                              Text(
+                                'NGN200',
+                                style: GoogleFonts.lato(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 10.h),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            height: 33.h,
+                            width: 33.h,
+                            child: Image.asset(
+                                'assets/images/volt_coin_yellow.png'),
+                          ),
+                          const CustomSpacer(
+                            flex: 2,
+                            horizontal: true,
+                          ),
+                          Text(
+                            'Volt Coin',
+                            style: GoogleFonts.lato(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Expanded(child: SizedBox()),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                '+50%',
+                                style: GoogleFonts.lato(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                    color: Palette.lightGreen),
+                              ),
+                              Text(
+                                'NGN200',
+                                style: GoogleFonts.lato(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ]),
                 ),
               )
             ],
