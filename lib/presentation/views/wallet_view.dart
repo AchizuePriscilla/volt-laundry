@@ -38,10 +38,10 @@ class _WalletViewState extends State<WalletView> {
       ),
       builder: (_, size) {
         return Container(
-          margin: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: EdgeInsets.symmetric(horizontal: 25.w),
           child: Column(
             children: [
-              CreditCard(),
+              const CreditCard(),
               const CustomSpacer(flex: 3),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

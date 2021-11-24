@@ -19,3 +19,4 @@ export 'reset_password_view.dart';
 export 'forgot_password_view.dart';
 export 'fund_wallet_view.dart';
 export 'checkout_view.dart';
+export 'delivery_details.dart';

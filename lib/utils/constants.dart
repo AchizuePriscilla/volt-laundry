@@ -91,3 +91,4 @@ const forgotPasswordViewRoute = 'forgot-password-view';
 const resetPasswordViewRoute = 'reset-password-view';
 const fundWalletViewRoute = 'fund-wallet-view';
 const checkoutViewRoute = 'check-out-view';
+const deliveryDetailsViewRoute = 'delivery-details-view';

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/enums.dart';
 
 class CartView extends StatefulWidget {
@@ -12,6 +14,7 @@ class CartView extends StatefulWidget {
 class _CartViewState extends State<CartView> {
   @override
   Widget build(BuildContext context) {
+    var laundryVM = context.read<LaundryVM>();
     return ResponsiveWidget(
         appBar: CustomAppBar(
           text: 'Cart',
@@ -24,22 +27,24 @@ class _CartViewState extends State<CartView> {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: ListView(
               children: [
-                CartItemContainer(
+                const CartItemContainer(
                   clothType: ClothType.tShirt,
-                  onTap: () {},
                 ),
-                CartItemContainer(
+                const CartItemContainer(
                   clothType: ClothType.shorts,
-                  onTap: () {},
                 ),
-                CartItemContainer(
+                const CartItemContainer(
                   clothType: ClothType.dresses,
-                  onTap: () {},
                 ),
-                CartItemContainer(
+                const CartItemContainer(
                   clothType: ClothType.others,
-                  onTap: () {},
                 ),
+                const CustomSpacer(flex: 7),
+                Button(
+                    text: 'Proceed',
+                    onPressed: () {
+                      laundryVM.navigateToDeliveryDetailsView();
+                    }),
               ],
             ),
           );

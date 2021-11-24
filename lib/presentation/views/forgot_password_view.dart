@@ -13,7 +13,7 @@ class ForgotPasswordView extends StatelessWidget {
         appBar: CustomAppBar(),
         builder: (_, size) {
           return Container(
-            margin: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Column(
               children: [
                 Text(

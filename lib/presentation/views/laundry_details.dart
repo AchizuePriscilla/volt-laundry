@@ -76,7 +76,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
         ),
         builder: (_, size) {
           return Container(
-            margin: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: SingleChildScrollView(
               child: SizedBox(
                 height: size.height,
