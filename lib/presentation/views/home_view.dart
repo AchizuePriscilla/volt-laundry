@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:volt/handlers/navigation_handler.dart';
 import 'package:volt/presentation/shared/responsive_widget.dart';
 import 'package:volt/presentation/theme/palette.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/presentation/views/log_in_view.dart';
 import 'package:volt/presentation/views/sign_up_view.dart';
 import 'package:volt/presentation/views/views.dart';
+import 'package:volt/utils/locator.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -38,6 +40,9 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveWidget(
+      onWillPop: () {
+        locator<NavigationHandler>().exitApp();
+      },
       bottomNavigationBar: SizedBox(
         height: 70.h,
         child: BottomNavigationBar(
@@ -145,7 +150,7 @@ class _HomeViewState extends State<HomeView> {
           physics: const NeverScrollableScrollPhysics(),
           children: const [
             HomePageView(),
-            SignUpView(),
+            OrderStatusView(),
             LaundryView(),
             WalletView(),
             ProfileView()

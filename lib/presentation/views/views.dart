@@ -21,3 +21,4 @@ export 'fund_wallet_view.dart';
 export 'checkout_view.dart';
 export 'delivery_details.dart';
 export 'sign_in_as.dart';
+export 'order_status_view.dart';

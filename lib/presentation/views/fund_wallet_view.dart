@@ -7,7 +7,111 @@ class FundWalletView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveWidget(builder: (_, size) {
-      return Container();
+      return Stack(
+        children: [
+          Column(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  width: size.width,
+                  // height: size.height * .35,
+                  color: Theme.of(context).primaryColor,
+                  child: Column(
+                    children: [
+                      const CustomSpacer(flex: 5),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: CustomBackButton(
+                            color: Theme.of(context).primaryColorLight),
+                      ),
+                      const CustomSpacer(flex: 3),
+                      Container(
+                        height: 30.h,
+                        width: 75.h,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.w),
+                            color: Theme.of(context).primaryColorLight),
+                      ),
+                      const CustomSpacer(flex: 2),
+                      Text(
+                        'VTC 500',
+                        style: GoogleFonts.lato(
+                            fontSize: 36.sp,
+                            fontWeight: FontWeight.w900,
+                            color: Theme.of(context).primaryColorLight),
+                      ),
+                      Text(
+                        '2,500.00',
+                        style: GoogleFonts.lato(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w300,
+                            color: Theme.of(context).primaryColorLight),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 7,
+                child: Container(
+                  margin:
+                      EdgeInsets.symmetric(horizontal: 15.w, vertical: 25.h),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.w),
+                    color: Palette.lightBlue,
+                  ),
+                ),
+              )
+            ],
+          ),
+          Positioned(
+            top: size.height * (3 / 10) - 40.h / 2,
+            left: 35.w,
+            right: 35.w,
+            child: Container(
+              height: 40.h,
+              width: size.width * .6,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.w),
+                color: const Color(0xff92C1D6),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    Icons.restore,
+                    size: 20.h,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                  Icon(
+                    Icons.compare_arrows,
+                    size: 20.h,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                  Icon(
+                    Icons.crop_free,
+                    size: 20.h,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              margin: EdgeInsets.only(bottom: 10.h),
+              child: Button(
+                text: 'Buy Volt Coin',
+                onPressed: () {},
+                color: Palette.lightGreen,
+              ),
+            ),
+          )
+        ],
+      );
     });
   }
 }

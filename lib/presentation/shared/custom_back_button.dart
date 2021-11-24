@@ -5,12 +5,13 @@ import 'package:volt/utils/utils.dart';
 
 class CustomBackButton extends StatelessWidget {
   final Function? onTap;
-  const CustomBackButton({Key? key, this.onTap}) : super(key: key);
+  final Color? color;
+  const CustomBackButton({Key? key, this.onTap, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BackButton(
-      color: Palette.blackColor,
+      color: color ?? Palette.blackColor,
       onPressed: () {
         if (onTap == null) {
           locator<NavigationHandler>().goBack();
