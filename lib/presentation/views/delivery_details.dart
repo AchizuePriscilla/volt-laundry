@@ -72,8 +72,8 @@ class DeliveryDetailsView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
-                    Icons.store,
-                    color: Palette.buttonColor,
+                    Icons.location_on,
+                    color: Palette.lightGreen,
                     size: 20.h,
                   ),
                   const CustomSpacer(

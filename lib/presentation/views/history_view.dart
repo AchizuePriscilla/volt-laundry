@@ -97,7 +97,13 @@ class HistoryView extends StatelessWidget {
                                 ],
                               )
                             ]),
-                        Text('8,000')
+                        Text(
+                          '8,000',
+                          style: GoogleFonts.lato(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w700,
+                              color: Theme.of(context).primaryColor),
+                        )
                       ],
                     ),
                   );
