@@ -93,3 +93,4 @@ const fundWalletViewRoute = 'fund-wallet-view';
 const checkoutViewRoute = 'check-out-view';
 const deliveryDetailsViewRoute = 'delivery-details-view';
 const signInAsViewRoute = 'sign-in-as-view';
+const historyViewRoute = 'history-view';

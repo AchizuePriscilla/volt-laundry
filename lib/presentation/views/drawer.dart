@@ -112,7 +112,9 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 DrawerMenuRow(
                   icon: Icons.history_outlined,
-                  onTap: () {},
+                  onTap: () {
+                    drawerVM.navigateToRoute(historyViewRoute);
+                  },
                   label: 'History',
                 ),
                 const CustomSpacer(

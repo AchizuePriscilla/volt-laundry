@@ -41,6 +41,8 @@ class RouteGenerator {
         return _getPageRoute(const DeliveryDetailsView());
        case signInAsViewRoute:
         return _getPageRoute(const SignInAs());
+       case historyViewRoute:
+        return _getPageRoute(const HistoryView());
       case laundryDetailsRoute:
         final clothType = settings.arguments;
         if (clothType != null && clothType is LaundryDetailsArgs) {

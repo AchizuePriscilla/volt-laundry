@@ -163,24 +163,24 @@ class _CartItemContainerState extends State<CartItemContainer> {
                           scrollDirection: Axis.horizontal,
                           children: [
                             Container(
-                              height: 21.h,
-                              width: 16.h,
+                              height: 17.h,
+                              width: 13.h,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.red,
                               ),
                             ),
                             Container(
-                              height: 21.h,
-                              width: 16.h,
+                              height: 17.h,
+                              width: 13.h,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.yellow,
                               ),
                             ),
                             Container(
-                              height: 21.h,
-                              width: 16.h,
+                              height: 17.h,
+                              width: 13.h,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.green,
