@@ -1,10 +1,9 @@
-
-
 class DialogRequest {
   final DialogContentType dialogContentType;
   final String title;
   final String buttonText;
   final String message;
+  final String? imagePath;
   final bool autoDismiss;
   final bool dismissable;
   final Duration duration;
@@ -18,6 +17,7 @@ class DialogRequest {
     required this.title,
     required this.buttonText,
     required this.message,
+    this.imagePath,
     this.dismissable = true,
     this.autoDismiss = false,
     this.duration = const Duration(seconds: 3),
@@ -26,13 +26,6 @@ class DialogRequest {
     this.secondaryText,
     this.outlineButtons = false,
   });
-
-
 }
 
-enum DialogContentType {
-  
-  success,
-  transactionComplete,
-  coinPicker
-}
+enum DialogContentType { success, transactionComplete, coinPicker }

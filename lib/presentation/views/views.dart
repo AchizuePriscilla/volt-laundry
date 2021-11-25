@@ -23,3 +23,4 @@ export 'delivery_details.dart';
 export 'sign_in_as.dart';
 export 'order_status_view.dart';
 export 'history_view.dart';
+export 'chat_view.dart';

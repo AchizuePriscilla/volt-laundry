@@ -69,7 +69,8 @@ class SuccessDialog extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20.w),
                           color: Theme.of(context).primaryColorLight,
                         ),
-                        child: Image.asset('assets/images/order_placed.png')),
+                        child: Image.asset(
+                            'assets/images/${request.imagePath}.png')),
                     const CustomSpacer(
                       flex: 3,
                     ),
