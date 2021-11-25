@@ -3,7 +3,8 @@ import 'package:volt/handlers/handlers.dart';
 
 GetIt locator = GetIt.instance;
 
-Future<void> setupLocator({String baseApi = ''})async{
+Future<void> setupLocator({String baseApi = ''}) async {
   locator
       .registerLazySingleton<NavigationHandler>(() => NavigationHandlerImpl());
+  locator.registerLazySingleton<DialogHandler>(() => DialogHandlerImpl());
 }

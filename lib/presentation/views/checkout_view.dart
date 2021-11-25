@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 import 'package:volt/presentation/shared/responsive_widget.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/viewmodels/viewmodels.dart';
 
 class CheckoutView extends StatefulWidget {
   const CheckoutView({Key? key}) : super(key: key);
@@ -12,6 +14,7 @@ class CheckoutView extends StatefulWidget {
 class _CheckoutViewState extends State<CheckoutView> {
   @override
   Widget build(BuildContext context) {
+    var walletVM = context.read<WalletVM>();
     return ResponsiveWidget(
         resizeToAvoidBottomInset: true,
         builder: (_, size) {
@@ -123,7 +126,9 @@ class _CheckoutViewState extends State<CheckoutView> {
                     alignment: Alignment.center,
                     child: Button(
                         text: 'Pay',
-                        onPressed: () {},
+                        onPressed: () {
+                          walletVM.showDialog();
+                        },
                         color: Palette.lightGreen),
                   ),
                   const CustomSpacer(flex: 3),

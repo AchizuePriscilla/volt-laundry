@@ -1,4 +1,5 @@
 import 'package:country_code_picker/country_localizations.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import 'package:volt/utils/constants.dart';
 import 'package:volt/utils/providers.dart';
 import 'package:volt/utils/route_generator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'presentation/shared/dialog_manager.dart';
 import 'utils/locator.dart';
 
 void main() async {
@@ -37,7 +39,14 @@ class VoltApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 navigatorKey: locator<NavigationHandler>().navigatorKey,
                 onGenerateRoute: RouteGenerator.onGenerateRoute,
-                initialRoute: splashScreenViewRoute,
+                initialRoute: checkoutViewRoute,
+                builder: (context, widget) => Navigator(
+                  onGenerateRoute: (settings) => CupertinoPageRoute(
+                    builder: (context) => DialogManager(
+                      child: widget!,
+                    ),
+                  ),
+                ),
               );
             }));
   }

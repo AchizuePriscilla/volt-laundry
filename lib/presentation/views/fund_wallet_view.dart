@@ -49,7 +49,7 @@ class FundWalletView extends StatelessWidget {
                                   fontWeight: FontWeight.w800,
                                   color: Theme.of(context).primaryColor),
                             ),
-                            Icon(Icons.keyboard_arrow_down)
+                            const Icon(Icons.keyboard_arrow_down)
                           ],
                         ),
                       ),
@@ -266,13 +266,13 @@ class FundWalletView extends StatelessWidget {
           ),
           Positioned(
             top: size.height * (3 / 10) - 40.h / 2,
-            left: 35.w,
-            right: 35.w,
+            left: 55.w,
+            right: 55.w,
             child: Container(
               height: 40.h,
               width: size.width * .6,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.w),
+                borderRadius: BorderRadius.circular(18.w),
                 color: const Color(0xff92C1D6),
               ),
               child: Row(
