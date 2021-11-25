@@ -103,7 +103,7 @@ class DialogHandlerImpl implements DialogHandler {
     String buttonText = 'Close',
     bool dismissable = true,
     bool autoDismiss = false,
-    String imagePath = 'order_placed.png',
+    String imagePath = 'order_placed',
     Duration duration = const Duration(seconds: 3),
     String? primaryText,
     String? warningMessage,
