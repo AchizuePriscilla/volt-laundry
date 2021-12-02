@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:volt/handlers/handlers.dart';
 import 'package:volt/presentation/shared/shared.dart';
-class OrdersView extends StatefulWidget {
-  const OrdersView({Key? key}) : super(key: key);
+import 'package:volt/utils/utils.dart';
+
+class PickupDetails extends StatefulWidget {
+  const PickupDetails({Key? key}) : super(key: key);
 
   @override
-  State<OrdersView> createState() => _OrdersViewState();
+  State<PickupDetails> createState() => _PickupDetailsState();
 }
 
-class _OrdersViewState extends State<OrdersView> {
+class _PickupDetailsState extends State<PickupDetails> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return ResponsiveWidget(
-        resizeToAvoidBottomInset: false,
         scaffoldKey: scaffoldKey,
-        drawer: SizedBox(
-            width: MediaQuery.of(context).size.width * .92,
-            child: const DriverDrawer()),
-        builder: (context, size) {
+        builder: (_, size) {
           return Container(
             height: size.height,
             width: size.width,
@@ -46,13 +45,6 @@ class _OrdersViewState extends State<OrdersView> {
                           size: 20.h,
                         ),
                       ),
-                      Text(
-                        'Orders',
-                        style: GoogleFonts.lato(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
                       Container(
                         height: 38.w,
                         width: 38.w,
@@ -71,32 +63,14 @@ class _OrdersViewState extends State<OrdersView> {
                     ],
                   ),
                 ),
-                const CustomSpacer(flex: 2),
-                Expanded(
-                  child: Container(
-                    width: size.width,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).disabledColor.withOpacity(.46),
-                      borderRadius: const BorderRadius.horizontal(
-                        left: Radius.circular(20),
-                        right: Radius.circular(20),
-                      ),
-                    ),
-                    child: ListView.builder(
-                        itemCount: 6,
-                        itemBuilder: (context, index) {
-                          return Container(
-                              margin: EdgeInsets.symmetric(
-                                  vertical: 10.h, horizontal: 20.w),
-                              child: const OrderCard());
-                        }),
-                  ),
+                const CustomSpacer(
+                  flex: 3,
                 ),
+                PickupDetailsCard(),
               ],
             ),
           );
         });
   }
 }
-
 
