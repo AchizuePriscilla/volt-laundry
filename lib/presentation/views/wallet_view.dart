@@ -48,7 +48,7 @@ class _WalletViewState extends State<WalletView> {
                 children: [
                   Container(
                     height: 60.h,
-                    width: 85.h,
+                    width: size.width * .38,
                     color: Theme.of(context).primaryColor,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +79,7 @@ class _WalletViewState extends State<WalletView> {
                     },
                     child: Container(
                       height: 60.h,
-                      width: 85.h,
+                      width: size.width * .38,
                       decoration: BoxDecoration(
                           color: Theme.of(context).primaryColorLight,
                           border: Border.all(

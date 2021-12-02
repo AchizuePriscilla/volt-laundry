@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/viewmodels/viewmodels.dart';
 
 class FundWalletView extends StatelessWidget {
   const FundWalletView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var walletVM = context.read<WalletVM>();
     return ResponsiveWidget(builder: (_, size) {
       return Stack(
         children: [
@@ -26,21 +30,29 @@ class FundWalletView extends StatelessWidget {
                         child: CustomBackButton(
                             color: Theme.of(context).primaryColorLight),
                       ),
-                      const CustomSpacer(flex: 3),
+                      const CustomSpacer(flex: 1),
                       Container(
-                        height: 33.h,
-                        width: 90.h,
+                        height: 40.h,
+                        width: 105.h,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.w),
+                            borderRadius: BorderRadius.circular(23.w),
                             color: Theme.of(context).primaryColorLight),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            const CustomSpacer(
+                              flex: 1,
+                              horizontal: true,
+                            ),
                             SizedBox(
                               height: 20.h,
                               width: 20.h,
                               child: Image.asset(
                                   'assets/images/volt_coin_yellow.png'),
+                            ),
+                            const CustomSpacer(
+                              flex: 2,
+                              horizontal: true,
                             ),
                             Text(
                               'Volt Coin',
@@ -49,7 +61,14 @@ class FundWalletView extends StatelessWidget {
                                   fontWeight: FontWeight.w800,
                                   color: Theme.of(context).primaryColor),
                             ),
-                            const Icon(Icons.keyboard_arrow_down)
+                            IconButton(
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                ),
+                                onPressed: () {
+                                  walletVM
+                                      .showDialog(DialogContentType.coinPicker);
+                                }),
                           ],
                         ),
                       ),

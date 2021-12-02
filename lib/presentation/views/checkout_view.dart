@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
+import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/shared/responsive_widget.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
@@ -127,7 +128,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     child: Button(
                         text: 'Pay',
                         onPressed: () {
-                          walletVM.showDialog();
+                          walletVM.showDialog(DialogContentType.success);
                         },
                         color: Palette.lightGreen),
                   ),

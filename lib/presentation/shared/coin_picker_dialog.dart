@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/shared/shared.dart';
-import 'package:volt/presentation/theme/palette.dart';
 
-GlobalKey dialogContainerKey = GlobalKey();
-double dialogMargin = 30.w;
-
-class SuccessDialog extends StatelessWidget {
+class CoinPickerDialog extends StatelessWidget {
   final DialogRequest request;
   final Function(bool) dismissDialog;
-  const SuccessDialog({
+  const CoinPickerDialog({
     Key? key,
     required this.request,
     required this.dismissDialog,
@@ -22,7 +18,7 @@ class SuccessDialog extends StatelessWidget {
     return GestureDetector(
       onTapDown: (details) {
         //do nothing if dialog is not dismissable
-        // if (!request.dismissable) return;
+        if (!request.dismissable) return;
 
         var screenOffset = details.localPosition;
         var dialogCardHeight = dialogContainerKey.currentContext!.size!.height;
@@ -31,11 +27,11 @@ class SuccessDialog extends StatelessWidget {
 
         if (screenOffset.dy < (height - dialogCardHeight) / 2 ||
             screenOffset.dy > (height + dialogCardHeight) / 2) {
-          dismissDialog(true);
+          dismissDialog(false);
         }
         if (screenOffset.dx < dialogMargin ||
             screenOffset.dx > (width - dialogMargin)) {
-          dismissDialog(true);
+          dismissDialog(false);
         }
       },
       child: Material(
@@ -48,51 +44,49 @@ class SuccessDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                key: dialogContainerKey,
                 constraints: BoxConstraints(
-                    minWidth: MediaQuery.of(context).size.width * .6,
+                    minWidth: MediaQuery.of(context).size.width * .3,
                     minHeight: MediaQuery.of(context).size.height * .4),
                 margin: EdgeInsets.symmetric(horizontal: dialogMargin),
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).dialogTheme.backgroundColor,
+                  color: Theme.of(context).primaryColorLight,
                   borderRadius: BorderRadius.circular(30.w),
                 ),
                 child: Column(
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                        padding: EdgeInsets.all(20.h),
-                        height: 160.w,
-                        width: 150.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.w),
-                          color: Theme.of(context).primaryColorLight,
-                        ),
-                        child: Image.asset(
-                            'assets/images/${request.imagePath}.png')),
-                    const CustomSpacer(
-                      flex: 3,
-                    ),
-                    Text(
-                      request.message,
-                      style: GoogleFonts.lato(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).primaryColorLight),
-                    ),
-                    const CustomSpacer(
-                      flex: 3,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Button(
-                        onPressed: () => dismissDialog(false),
-                        text: request.buttonText,
-                        color: Palette.lightGreen,
-                        isRounded: true,
+                      margin: EdgeInsets.symmetric(vertical: 10.h),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            height: 33.h,
+                            width: 33.h,
+                            child: Image.asset(
+                                'assets/images/volt_coin_yellow.png'),
+                          ),
+                          const CustomSpacer(
+                            flex: 1,
+                            horizontal: true,
+                          ),
+                          Text(
+                            'Volt Coin',
+                            style: GoogleFonts.lato(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Expanded(child: SizedBox()),
+                          Radio(
+                              value: 1,
+                              groupValue: 1,
+                              onChanged: (value) {},
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap),
+                        ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:volt/handlers/dialog_handler.dart';
 import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/shared/dialog_card.dart';
+import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/shared/success_dialog.dart';
 import 'package:volt/utils/utils.dart';
 
@@ -62,14 +63,18 @@ class _DialogManagerState extends State<DialogManager> {
 
   Widget getDialogCard(DialogRequest request) {
     switch (request.dialogContentType) {
-    
-    
       case DialogContentType.success:
         return SuccessDialog(
           request: request,
+          dismissDialog: (status) => _dismissDialog(true),
+        );
+
+      case DialogContentType.coinPicker:
+        return CoinPickerDialog(
+          request: request,
           dismissDialog: (status) => _dismissDialog(status),
         );
-      
+
       default:
         return DialogCard(
           request: request,

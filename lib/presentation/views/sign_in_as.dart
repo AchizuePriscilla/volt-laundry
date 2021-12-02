@@ -38,7 +38,7 @@ class SignInAs extends StatelessWidget {
             Button(
               text: 'Driver',
               onPressed: () {
-                // verificationVM.navigateToRoute(signUpViewRoute);
+                verificationVM.navigateToRoute(ordersViewRoute);
               },
               isRounded: true,
             ),
