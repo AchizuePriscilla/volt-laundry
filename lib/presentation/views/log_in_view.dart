@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/theme/palette.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/constants.dart';
 
 class LogInView extends StatefulWidget {
   const LogInView({Key? key}) : super(key: key);
@@ -100,7 +101,7 @@ class _LogInViewState extends State<LogInView> {
                 Button(
                     text: 'Log In',
                     onPressed: () {
-                      loginVM.navigateToHomeView();
+                      loginVM.navigateToRoute(signInAsViewRoute);
                     }),
                 const CustomSpacer(flex: 3),
                 Row(
@@ -147,7 +148,7 @@ class _LogInViewState extends State<LogInView> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        loginVM.navigateToForgotPasswordView();
+                        loginVM.navigateToRoute(forgotPasswordViewRoute);
                       },
                       child: Text(
                         'Forgot Password?',
@@ -181,7 +182,7 @@ class _LogInViewState extends State<LogInView> {
                     ),
                     InkWell(
                       onTap: () {
-                        loginVM.navigateToSignUpView();
+                        loginVM.navigateToRoute(signUpViewRoute);
                       },
                       child: Text(
                         'Create one Here',

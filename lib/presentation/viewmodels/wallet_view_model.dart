@@ -7,8 +7,8 @@ class WalletVM extends BaseViewModel {
     navigationHandler.pushNamed(fundWalletViewRoute);
   }
 
-  void showDialog(DialogContentType contentType){
+  void showDialog(DialogContentType contentType) {
     dialogHandler.showDialog(
-        contentType: contentType, message: 'Order Placed');
+        dismissable: true, contentType: contentType, message: 'Order Placed');
   }
 }

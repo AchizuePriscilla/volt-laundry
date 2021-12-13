@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/constants.dart';
 
 class ForgotPasswordView extends StatelessWidget {
   const ForgotPasswordView({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class ForgotPasswordView extends StatelessWidget {
                 Button(
                     text: 'Reset',
                     onPressed: () {
-                      loginVM.navigateToResetPasswordView();
+                      loginVM.navigateToRoute(resetPasswordViewRoute);
                     })
               ],
             ),

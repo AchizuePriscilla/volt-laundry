@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/constants.dart';
 
 class ResetPasswordView extends StatelessWidget {
   const ResetPasswordView({Key? key}) : super(key: key);
@@ -39,7 +40,7 @@ class ResetPasswordView extends StatelessWidget {
                 Button(
                     text: 'Reset',
                     onPressed: () {
-                      loginVM.navigateToHomeView();
+                      loginVM.navigateToRoute(logInViewRoute);
                     })
               ],
             ),

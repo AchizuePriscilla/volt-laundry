@@ -119,7 +119,7 @@ class _VerificationViewState extends State<VerificationView> {
                   Button(
                     text: 'Next',
                     onPressed: () {
-                      verificationVM.navigateToRoute(signInAsViewRoute);
+                      verificationVM.navigateToRoute(signUpViewRoute);
                     },
                     isSmall: true,
                   ),

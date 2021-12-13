@@ -16,7 +16,7 @@ class SignInAs extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Log In as:',
+              'Log In As:',
               style: GoogleFonts.lato(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w500,
@@ -28,7 +28,7 @@ class SignInAs extends StatelessWidget {
             Button(
               text: 'Customer',
               onPressed: () {
-                verificationVM.navigateToRoute(signUpViewRoute);
+                verificationVM.navigateToRoute(homeViewRoute);
               },
               isRounded: true,
             ),
