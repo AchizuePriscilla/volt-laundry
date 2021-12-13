@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/constants.dart';
 
 class FundWalletView extends StatelessWidget {
   const FundWalletView({Key? key}) : super(key: key);
@@ -322,7 +323,9 @@ class FundWalletView extends StatelessWidget {
               margin: EdgeInsets.only(bottom: 10.h),
               child: Button(
                 text: 'Buy Volt Coin',
-                onPressed: () {},
+                onPressed: () {
+                  walletVM.navigateToRoute(buyCoinViewRoute);
+                },
                 color: Palette.lightGreen,
               ),
             ),

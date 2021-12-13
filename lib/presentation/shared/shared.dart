@@ -24,3 +24,4 @@ export 'dialog_manager.dart';
 export 'driver_drawer.dart';
 export 'order_card.dart';
 export 'pickup_details_card.dart';
+export 'transaction_successful_dialog.dart';

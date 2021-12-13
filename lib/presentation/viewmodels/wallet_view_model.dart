@@ -1,10 +1,9 @@
 import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
-import 'package:volt/utils/constants.dart';
 
 class WalletVM extends BaseViewModel {
-  void navigateToFundWalletView() {
-    navigationHandler.pushNamed(fundWalletViewRoute);
+  void navigateToRoute(String route) {
+    navigationHandler.pushNamed(route);
   }
 
   void showDialog(DialogContentType contentType) {

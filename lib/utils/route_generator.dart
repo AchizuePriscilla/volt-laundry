@@ -49,6 +49,8 @@ class RouteGenerator {
         return _getPageRoute(const OrdersView());
       case pickupDetailsViewRoute:
         return _getPageRoute(const PickupDetails());
+     case buyCoinViewRoute:
+        return _getPageRoute(const BuyCoinView());
       case laundryDetailsRoute:
         final clothType = settings.arguments;
         if (clothType != null && clothType is LaundryDetailsArgs) {

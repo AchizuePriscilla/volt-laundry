@@ -39,7 +39,7 @@ class VoltApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 navigatorKey: locator<NavigationHandler>().navigatorKey,
                 onGenerateRoute: RouteGenerator.onGenerateRoute,
-                initialRoute: onboardingViewRoute,
+                initialRoute: buyCoinViewRoute,
                 builder: (context, widget) => Navigator(
                   onGenerateRoute: (settings) => CupertinoPageRoute(
                     builder: (context) => DialogManager(

@@ -75,7 +75,7 @@ class _WalletViewState extends State<WalletView> {
                   ),
                   InkWell(
                     onTap: () {
-                      walletVM.navigateToFundWalletView();
+                      walletVM.navigateToRoute(fundWalletViewRoute);
                     },
                     child: Container(
                       height: 60.h,
