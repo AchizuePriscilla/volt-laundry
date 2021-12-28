@@ -67,8 +67,9 @@ class FundWalletView extends StatelessWidget {
                                   Icons.keyboard_arrow_down,
                                 ),
                                 onPressed: () {
-                                  walletVM
-                                      .showDialog(DialogContentType.coinPicker);
+                                  walletVM.showDialog(
+                                      DialogContentType.coinPicker,
+                                      autoDismiss: false);
                                 }),
                           ],
                         ),
@@ -320,7 +321,7 @@ class FundWalletView extends StatelessWidget {
               child: Button(
                 text: 'Buy Volt Coin',
                 onPressed: () {
-                  walletVM.navigateToRoute(buyCoinViewRoute);
+                  walletVM.navigateToRoute(paymentMethodViewRoute);
                 },
                 color: Palette.lightGreen,
               ),

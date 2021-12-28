@@ -53,6 +53,10 @@ class RouteGenerator {
         return _getPageRoute(const BuyCoinView());
       case confirmDeductViewRoute:
         return _getPageRoute(const ConfirmDeductView());
+      case paymentMethodViewRoute:
+        return _getPageRoute(const PaymentMethodView());
+      case bankTransferViewRoute:
+        return _getPageRoute(const BankTransferView());
       case laundryDetailsRoute:
         final clothType = settings.arguments;
         if (clothType != null && clothType is LaundryDetailsArgs) {

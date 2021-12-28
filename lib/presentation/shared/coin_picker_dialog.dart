@@ -46,7 +46,7 @@ class CoinPickerDialog extends StatelessWidget {
               Container(
                 constraints: BoxConstraints(
                     minWidth: MediaQuery.of(context).size.width * .3,
-                    minHeight: MediaQuery.of(context).size.height * .3),
+                    minHeight: MediaQuery.of(context).size.height * .22),
                 margin: EdgeInsets.symmetric(horizontal: dialogMargin),
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
                 decoration: BoxDecoration(
@@ -96,7 +96,7 @@ class CoinPickerDialog extends StatelessWidget {
                             height: 33.h,
                             width: 33.h,
                             child: Image.asset(
-                                'assets/images/volt_coin_yellow.png'),
+                                'assets/images/volt_naira_coin.png'),
                           ),
                           const CustomSpacer(
                             flex: 1,
@@ -111,39 +111,7 @@ class CoinPickerDialog extends StatelessWidget {
                           ),
                           const Expanded(child: SizedBox()),
                           Radio(
-                              value: 1,
-                              toggleable: true,
-                              groupValue: 1,
-                              onChanged: (value) => dismissDialog(false),
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.h),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            height: 33.h,
-                            width: 33.h,
-                            child: Image.asset(
-                                'assets/images/volt_coin_yellow.png'),
-                          ),
-                          const CustomSpacer(
-                            flex: 1,
-                            horizontal: true,
-                          ),
-                          Text(
-                            'Naira',
-                            style: GoogleFonts.lato(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const Expanded(child: SizedBox()),
-                          Radio(
-                              value: 1,
+                              value: 0,
                               toggleable: true,
                               groupValue: 1,
                               onChanged: (value) => dismissDialog(false),

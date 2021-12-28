@@ -99,3 +99,5 @@ const ordersViewRoute = 'orders-view';
 const pickupDetailsViewRoute = 'pick-up-details-view';
 const buyCoinViewRoute = 'buy-coin-view';
 const confirmDeductViewRoute = 'confirm-deduct-view';
+const paymentMethodViewRoute = 'payment-method-view';
+const bankTransferViewRoute = 'bank-transfer-view';

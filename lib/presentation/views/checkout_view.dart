@@ -17,6 +17,9 @@ class _CheckoutViewState extends State<CheckoutView> {
     var walletVM = context.read<WalletVM>();
     return ResponsiveWidget(
         resizeToAvoidBottomInset: true,
+        appBar: CustomAppBar(
+          text: 'Card Payment',
+        ),
         builder: (_, size) {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -24,9 +27,6 @@ class _CheckoutViewState extends State<CheckoutView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CustomSpacer(
-                    flex: 12,
-                  ),
                   const CreditCard(),
                   const CustomSpacer(flex: 3),
                   Text(
