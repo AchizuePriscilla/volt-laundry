@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
-import 'package:volt/presentation/theme/palette.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/constants.dart';
 
@@ -101,7 +99,7 @@ class _LogInViewState extends State<LogInView> {
                 Button(
                     text: 'Log In',
                     onPressed: () {
-                      loginVM.navigateToRoute(signInAsViewRoute);
+                      loginVM.navigateToRoute(homeViewRoute);
                     }),
                 const CustomSpacer(flex: 3),
                 Row(

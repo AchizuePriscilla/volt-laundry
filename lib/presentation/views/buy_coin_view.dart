@@ -197,7 +197,8 @@ class _BuyCoinViewState extends State<BuyCoinView> {
                                               .primaryColorLight),
                                       onPressed: () {
                                         walletVM.showDialog(
-                                            DialogContentType.coinPicker);
+                                            DialogContentType.coinPicker,
+                                            autoDismiss: false);
                                       }),
                                 ],
                               ),
@@ -235,7 +236,9 @@ class _BuyCoinViewState extends State<BuyCoinView> {
               margin: EdgeInsets.only(bottom: 10.h),
               child: Button(
                 text: 'Buy Volt Coin',
-                onPressed: () {},
+                onPressed: () {
+                  walletVM.showDialog(DialogContentType.transactionComplete);
+                },
                 color: Palette.lightGreen,
               ),
             ),

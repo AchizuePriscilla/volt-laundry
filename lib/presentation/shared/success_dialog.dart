@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/shared/shared.dart';
-import 'package:volt/presentation/theme/palette.dart';
 
 GlobalKey dialogContainerKey = GlobalKey();
 double dialogMargin = 30.w;

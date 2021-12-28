@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:volt/handlers/dialog_handler.dart';
 import 'package:volt/handlers/handlers.dart';
 import 'package:volt/utils/locator.dart';
 

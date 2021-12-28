@@ -16,12 +16,12 @@ class _ChatViewState extends State<ChatView> {
     return ResponsiveWidget(
         resizeToAvoidBottomInset: true,
         builder: (_, size) {
-          return Container(
+          return SizedBox(
               height: size.height,
               width: size.width,
               child: Column(
                 children: [
-                  Expanded(child: SizedBox()),
+                 const Expanded(child: SizedBox()),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Row(

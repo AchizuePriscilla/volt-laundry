@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:volt/handlers/handlers.dart';
 import 'package:volt/presentation/shared/shared.dart';
-import 'package:volt/utils/utils.dart';
 
 class PickupDetails extends StatefulWidget {
   const PickupDetails({Key? key}) : super(key: key);
@@ -66,7 +64,7 @@ class _PickupDetailsState extends State<PickupDetails> {
                 const CustomSpacer(
                   flex: 3,
                 ),
-                PickupDetailsCard(),
+               const PickupDetailsCard(),
               ],
             ),
           );

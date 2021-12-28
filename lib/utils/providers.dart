@@ -1,6 +1,5 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:volt/presentation/viewmodels/sign_up_view_model.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 
 class AppProviders {

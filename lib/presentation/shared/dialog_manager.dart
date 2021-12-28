@@ -3,7 +3,6 @@ import 'package:volt/handlers/dialog_handler.dart';
 import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/shared/dialog_card.dart';
 import 'package:volt/presentation/shared/shared.dart';
-import 'package:volt/presentation/shared/success_dialog.dart';
 import 'package:volt/utils/utils.dart';
 
 class DialogManager extends StatefulWidget {
@@ -71,6 +70,11 @@ class _DialogManagerState extends State<DialogManager> {
 
       case DialogContentType.coinPicker:
         return CoinPickerDialog(
+          request: request,
+          dismissDialog: (status) => _dismissDialog(status),
+        );
+ case DialogContentType.transactionComplete:
+        return TransactionSuccessfulDialog(
           request: request,
           dismissDialog: (status) => _dismissDialog(status),
         );

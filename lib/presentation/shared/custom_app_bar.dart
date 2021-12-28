@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:volt/handlers/handlers.dart';
 import 'package:volt/presentation/shared/shared.dart';
-import 'package:volt/utils/utils.dart';
 
 class CustomAppBar extends AppBar {
    final String text;

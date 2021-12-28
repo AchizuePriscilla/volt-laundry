@@ -6,8 +6,6 @@ import 'package:volt/handlers/navigation_handler.dart';
 import 'package:volt/presentation/shared/responsive_widget.dart';
 import 'package:volt/presentation/theme/palette.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
-import 'package:volt/presentation/views/log_in_view.dart';
-import 'package:volt/presentation/views/sign_up_view.dart';
 import 'package:volt/presentation/views/views.dart';
 import 'package:volt/utils/locator.dart';
 
