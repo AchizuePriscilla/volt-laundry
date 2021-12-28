@@ -38,7 +38,7 @@ class HomeVM extends BaseViewModel {
     );
   }
 
-  void navigateToLaundryView(String type) {
+  void navigateToLaundryView({String? type}) {
     jumpToPage(2);
     if (type == 'WashAndIron') {
       LaundryView.isWashAndIronDropdownVisible = true;
@@ -50,6 +50,10 @@ class HomeVM extends BaseViewModel {
       LaundryView.isDrycleaningDropdownVisible = false;
     } else if (type == 'DryCleaning') {
       LaundryView.isDrycleaningDropdownVisible = true;
+      LaundryView.isWashAndIronDropdownVisible = false;
+      LaundryView.isIroningDropdownVisible = false;
+    } else {
+      LaundryView.isDrycleaningDropdownVisible = false;
       LaundryView.isWashAndIronDropdownVisible = false;
       LaundryView.isIroningDropdownVisible = false;
     }

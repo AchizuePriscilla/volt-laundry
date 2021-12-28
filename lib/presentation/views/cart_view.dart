@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
-import 'package:volt/utils/enums.dart';
+import 'package:volt/utils/utils.dart';
 
 class CartView extends StatefulWidget {
   const CartView({Key? key}) : super(key: key);
@@ -43,7 +43,7 @@ class _CartViewState extends State<CartView> {
                 Button(
                     text: 'Proceed',
                     onPressed: () {
-                      laundryVM.navigateToDeliveryDetailsView();
+                      laundryVM.navigateToRoute(deliveryDetailsViewRoute);
                     }),
               ],
             ),

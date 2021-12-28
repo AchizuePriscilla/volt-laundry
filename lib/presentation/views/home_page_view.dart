@@ -97,19 +97,19 @@ class _HomePageViewState extends State<HomePageView>
                               label: 'Ironing',
                               imagePath: 'iron',
                               onTap: () {
-                                homeVM.navigateToLaundryView('Ironing');
+                                homeVM.navigateToLaundryView(type:'Ironing');
                               }),
                           HomeMenuContainer(
                               label: 'Wash & Iron',
                               imagePath: 'wash_and_iron',
                               onTap: () {
-                                homeVM.navigateToLaundryView('WashAndIron');
+                                homeVM.navigateToLaundryView(type:'WashAndIron');
                               }),
                           HomeMenuContainer(
                               label: 'Dry Cleaning',
                               imagePath: 'dry_clean',
                               onTap: () {
-                                homeVM.navigateToLaundryView('DryCleaning');
+                                homeVM.navigateToLaundryView(type: 'DryCleaning');
                               }),
                         ]),
                   ),

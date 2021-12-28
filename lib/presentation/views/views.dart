@@ -27,3 +27,4 @@ export 'chat_view.dart';
 export 'orders_view.dart';
 export 'pickup_details_view.dart';
 export 'buy_coin_view.dart';
+export 'confirm_deduct_view.dart';

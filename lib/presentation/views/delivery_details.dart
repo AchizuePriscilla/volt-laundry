@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/constants.dart';
 
 class DeliveryDetailsView extends StatelessWidget {
   const DeliveryDetailsView({Key? key}) : super(key: key);
@@ -223,16 +224,24 @@ class DeliveryDetailsView extends StatelessWidget {
                     flex: 3,
                     horizontal: true,
                   ),
-                  Icon(
-                    Icons.credit_card,
-                    color: Theme.of(context).primaryColor,
+                  Container(
+                    height: 20.h,
+                    width: 20.h,
+                    padding: EdgeInsets.all(2.h),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        width: 1,
+                      ),
+                    ),
+                    child: Image.asset('assets/images/volt.png'),
                   ),
                   const CustomSpacer(
                     flex: 3,
                     horizontal: true,
                   ),
                   Text(
-                    '**** **** ***** 4664',
+                    'Volt coin',
                     style: GoogleFonts.lato(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w400,
@@ -257,7 +266,7 @@ class DeliveryDetailsView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '7,500',
+                    '90 VTC',
                     style: GoogleFonts.lato(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
@@ -277,7 +286,7 @@ class DeliveryDetailsView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '500',
+                    '00 VTC',
                     style: GoogleFonts.lato(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
@@ -297,7 +306,7 @@ class DeliveryDetailsView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '8,000',
+                    '90 VTC',
                     style: GoogleFonts.lato(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w700,
@@ -309,7 +318,7 @@ class DeliveryDetailsView extends StatelessWidget {
               Button(
                   text: 'Proceed',
                   onPressed: () {
-                    laundryVM.navigateToCheckoutView();
+                    laundryVM.navigateToRoute(confirmDeductViewRoute);
                   }),
               const CustomSpacer(flex: 4),
             ]),

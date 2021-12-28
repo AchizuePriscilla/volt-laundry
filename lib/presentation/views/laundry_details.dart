@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:volt/handlers/navigation_handler.dart';
 import 'dart:io';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
@@ -94,22 +95,10 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                             selectedValue = value!;
                           });
                         },
-                        icon: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              '₦300',
-                              style: GoogleFonts.roboto(
-                                  fontSize: 13.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                            const Icon(
-                              Icons.keyboard_arrow_down,
-                              color: Colors.black,
-                              // size: 24.w,
-                            ),
-                          ],
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.black,
+                          // size: 24.w,
                         ),
                         style: GoogleFonts.lato(
                             fontSize: 18.sp,
@@ -135,12 +124,57 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                       ),
                     ),
                     const CustomSpacer(
+                      flex: 2,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Number of clothes',
+                          style: TextStyle(
+                              fontSize: 14.sp, fontWeight: FontWeight.w400),
+                        ),
+                        const CustomSpacer(
+                          flex: 2,
+                          horizontal: true,
+                        ),
+                        Container(
+                          height: 22.h,
+                          width: 47.h,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.circular(10.w),
+                          ),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.remove,
+                                  size: 15.w,
+                                  color: Theme.of(context).primaryColorLight,
+                                ),
+                                Text('4',
+                                    style: TextStyle(
+                                      color:
+                                          Theme.of(context).primaryColorLight,
+                                    )),
+                                Icon(
+                                  Icons.add,
+                                  size: 15.w,
+                                  color: Theme.of(context).primaryColorLight,
+                                ),
+                              ]),
+                        ),
+                      ],
+                    ),
+                    const CustomSpacer(
                       flex: 6,
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Select Color',
+                        'Select Color(s)',
                         style: GoogleFonts.lato(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w300,
@@ -189,15 +223,17 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                       flex: 6,
                     ),
                     Button(
-                      text: 'Add Cloth',
-                      onPressed: () {},
+                      text: 'Add to cart',
+                      onPressed: () {
+                        locator<NavigationHandler>().goBack();
+                      },
                       color: Palette.lightGreen,
                     ),
                     const CustomSpacer(flex: 3),
                     Button(
-                        text: 'Process',
+                        text: 'Proceed',
                         onPressed: () {
-                          laundryVM.navigateToCheckoutView();
+                          laundryVM.navigateToRoute(cartViewRoute);
                         }),
                     const CustomSpacer(flex: 3),
                   ],

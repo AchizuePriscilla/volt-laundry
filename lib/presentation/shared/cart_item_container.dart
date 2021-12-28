@@ -27,7 +27,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
     return InkWell(
       onTap: widget.onTap ??
           () {
-            laundryDetailsVM.navigateToDeliveryDetailsView();
+            laundryDetailsVM.navigateToRoute(deliveryDetailsViewRoute);
           },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10.h),
@@ -85,11 +85,15 @@ class _CartItemContainerState extends State<CartItemContainer> {
                     Row(
                       children: [
                         Text(
-                          '₦300  ',
+                          '30 VTC',
                           style: GoogleFonts.roboto(
                               fontSize: 13.sp,
                               fontWeight: FontWeight.w400,
                               color: Theme.of(context).primaryColor),
+                        ),
+                        const CustomSpacer(
+                          flex: 2,
+                          horizontal: true,
                         ),
                         DropdownButtonHideUnderline(
                           child: DropdownButton<String>(

@@ -286,17 +286,18 @@ class FundWalletView extends StatelessWidget {
           ),
           Positioned(
             top: size.height * (3 / 10) - 40.h / 2,
-            left: 55.w,
-            right: 55.w,
+            left: 85.w,
+            right: 85.w,
             child: Container(
               height: 40.h,
-              width: size.width * .6,
+              width: size.width * .4,
+              padding: EdgeInsets.symmetric(horizontal: 30.w),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.w),
                 color: const Color(0xff92C1D6),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(
                     Icons.restore,
@@ -305,11 +306,6 @@ class FundWalletView extends StatelessWidget {
                   ),
                   Icon(
                     Icons.compare_arrows,
-                    size: 20.h,
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                  Icon(
-                    Icons.crop_free,
                     size: 20.h,
                     color: Theme.of(context).primaryColorLight,
                   ),

@@ -76,11 +76,9 @@ class LaundryVM extends BaseViewModel {
         arg: LaundryDetailsArgs(clothType));
   }
 
-  void navigateToCheckoutView() {
-    navigationHandler.pushNamed(checkoutViewRoute);
+  void navigateToRoute(String route) {
+    navigationHandler.pushNamed(route);
   }
 
-  void navigateToDeliveryDetailsView() {
-    navigationHandler.pushNamed(deliveryDetailsViewRoute);
-  }
+ 
 }

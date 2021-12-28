@@ -6,8 +6,12 @@ class WalletVM extends BaseViewModel {
     navigationHandler.pushNamed(route);
   }
 
-  void showDialog(DialogContentType contentType, {String? message, bool autoDismiss = false}) {
+  void showDialog(DialogContentType contentType,
+      {String? message, bool autoDismiss = true}) {
     dialogHandler.showDialog(
-        dismissable: true, contentType: contentType, message: message ?? 'Order Placed', autoDismiss: autoDismiss);
+        dismissable: true,
+        contentType: contentType,
+        message: message ?? 'Order Placed',
+        autoDismiss: autoDismiss);
   }
 }
