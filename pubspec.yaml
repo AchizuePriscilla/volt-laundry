@@ -19,8 +19,23 @@ dependencies:
   pin_code_fields: ^7.3.0
   country_code_picker: ^2.0.2
   iconly: ^1.0.1
+  equatable: ^2.0.3
+  connectivity: ^3.0.6
   flutter_credit_card: ^3.0.1
   flutter_slidable: ^1.1.0
+  logger: ^1.0.0
+  dartz: ^0.10.0-nullsafety.2
+  flutter_dotenv: ^5.0.0
+  shared_preferences: ^2.0.6
+  flutter_secure_storage: ^4.2.0
+  dio:
+    git: 
+      url: https://github.com/Space-HQ/dio.git
+      path: dio/
+
+  pretty_dio_logger:
+    git:
+      url: https://github.com/Space-HQ/pretty_dio_logger.git
 
 dev_dependencies:
   flutter_test:
