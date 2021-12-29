@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:developer';
 import 'package:country_code_picker/country_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,10 @@ import 'utils/locator.dart';
 
 void main() async {
   await setupLocator();
+  runZonedGuarded(
+    () => runApp(const VoltApp()),
+    (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
+  );
   runApp(const VoltApp());
 }
 
