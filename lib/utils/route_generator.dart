@@ -39,16 +39,10 @@ class RouteGenerator {
         return _getPageRoute(const CheckoutView());
       case deliveryDetailsViewRoute:
         return _getPageRoute(const DeliveryDetailsView());
-      case signInAsViewRoute:
-        return _getPageRoute(const SignInAs());
       case historyViewRoute:
         return _getPageRoute(const HistoryView());
       case chatViewRoute:
         return _getPageRoute(const ChatView());
-      case ordersViewRoute:
-        return _getPageRoute(const OrdersView());
-      case pickupDetailsViewRoute:
-        return _getPageRoute(const PickupDetails());
       case buyCoinViewRoute:
         return _getPageRoute(const BuyCoinView());
       case confirmDeductViewRoute:
