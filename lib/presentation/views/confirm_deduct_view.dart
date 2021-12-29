@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/handlers/navigation_handler.dart';
-import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/constants.dart';
+import 'package:volt/utils/enums.dart';
 import 'package:volt/utils/locator.dart';
 
 class ConfirmDeductView extends StatelessWidget {

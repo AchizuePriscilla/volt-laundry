@@ -1,5 +1,5 @@
-import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/enums.dart';
 
 class WalletVM extends BaseViewModel {
   void navigateToRoute(String route) {

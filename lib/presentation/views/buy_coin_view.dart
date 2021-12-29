@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/enums.dart';
 
 class BuyCoinView extends StatefulWidget {
   const BuyCoinView({Key? key}) : super(key: key);

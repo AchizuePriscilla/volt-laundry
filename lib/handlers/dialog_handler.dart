@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:volt/models/dialog/dialog_request.dart';
+import 'package:volt/utils/enums.dart';
 
 abstract class DialogHandler {
   ///Sets the visibility of a dialog

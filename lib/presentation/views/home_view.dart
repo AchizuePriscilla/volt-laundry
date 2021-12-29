@@ -150,7 +150,7 @@ class _HomeViewState extends State<HomeView> {
             HomePageView(),
             OrderStatusView(),
             LaundryView(),
-            WalletView(),
+            FundWalletView(),
             ProfileView()
           ],
         );

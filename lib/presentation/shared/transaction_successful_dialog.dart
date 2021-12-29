@@ -3,7 +3,7 @@ import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/shared/shared.dart';
 
 class TransactionSuccessfulDialog extends StatelessWidget {
-   final DialogRequest request;
+  final DialogRequest request;
   final Function(bool) dismissDialog;
   const TransactionSuccessfulDialog({
     Key? key,
@@ -51,31 +51,64 @@ class TransactionSuccessfulDialog extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: dialogMargin),
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).dialogTheme.backgroundColor,
                   borderRadius: BorderRadius.circular(30.w),
+                  color: Theme.of(context).primaryColorLight,
                 ),
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                        padding: EdgeInsets.all(20.h),
-                        height: 160.w,
-                        width: 150.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.w),
-                          color: Theme.of(context).primaryColorLight,
-                        ),
-                        child: Image.asset(
-                            'assets/images/${request.imagePath}.png')),
+                      alignment: Alignment.topCenter,
+                      height: 40.h,
+                      width: 40.h,
+                      decoration: const BoxDecoration(
+                        color: Palette.lightGreen,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child:
+                            Icon(Icons.check, size: 20.h, color: Colors.white),
+                      ),
+                    ),
                     const CustomSpacer(
                       flex: 3,
                     ),
                     Text(
-                      request.message,
+                      'You received',
                       style: GoogleFonts.lato(
-                          fontSize: 24.sp,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const CustomSpacer(
+                      flex: 1,
+                    ),
+                    Text(
+                      '500',
+                      style: GoogleFonts.lato(
+                          fontSize: 45.sp,
                           fontWeight: FontWeight.w700,
-                          color: Theme.of(context).primaryColorLight),
+                          color: Palette.lightGreen),
+                    ),
+                    const CustomSpacer(
+                      flex: 1,
+                    ),
+                    Text(
+                      'Volt coins',
+                      style: GoogleFonts.lato(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const CustomSpacer(
+                      flex: 3,
+                    ),
+                    Text(
+                      'Your transaction has been initiated. Your balance will be updated after your transaction is processed',
+                      style: GoogleFonts.lato(
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                     const CustomSpacer(
                       flex: 3,
