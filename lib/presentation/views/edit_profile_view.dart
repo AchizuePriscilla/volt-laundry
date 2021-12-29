@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:volt/handlers/bottom_sheet_handler.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/utils/locator.dart';
 
 class EditProfileView extends StatelessWidget {
   const EditProfileView({Key? key}) : super(key: key);
@@ -18,12 +20,28 @@ class EditProfileView extends StatelessWidget {
                     const CustomSpacer(
                       flex: 12,
                     ),
-                    const Align(
+                    Align(
                       alignment: Alignment.center,
                       child: ProfileAvatar(
-                        canEdit: true,
-                        isSmall: true,
-                      ),
+                          canEdit: true,
+                          isSmall: true,
+                          onPressed: () {
+                            locator<BottomSheetHandler>()
+                                .triggerModalBottomSheet(context,
+                                    child: Row(
+                                      children: const [
+                                        AvatarOption(
+                                          text: 'Camera',
+                                          icon: Icons.photo_camera,
+                                        ),
+                                        AvatarOption(
+                                          text: 'Gallery',
+                                          icon: Icons.image,
+                                        )
+                                      ],
+                                    ),
+                                    isShort: true);
+                          }),
                     ),
                     const CustomSpacer(flex: 3),
                     Text(
@@ -97,5 +115,47 @@ class EditProfileView extends StatelessWidget {
                 ),
               ));
         });
+  }
+}
+
+class AvatarOption extends StatelessWidget {
+  final String text;
+  final IconData icon;
+  const AvatarOption({Key? key, required this.text, required this.icon})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 105.w,
+      child: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(
+                left: 10.w, right: 10.w, top: 50.h, bottom: 10.h),
+            height: 50.h,
+            width: 75.w,
+            child: Icon(
+              icon,
+              color: Theme.of(context).primaryColorLight,
+              size: 40.h,
+            ),
+          ),
+          Container(
+              margin: EdgeInsets.only(
+                left: 10.w,
+                right: 10.w,
+              ),
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  color: Theme.of(context).primaryColorLight,
+                ),
+              ))
+        ],
+      ),
+    );
   }
 }
