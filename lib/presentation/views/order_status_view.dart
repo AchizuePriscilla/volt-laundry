@@ -16,6 +16,7 @@ class _OrderStatusViewState extends State<OrderStatusView> {
     return ResponsiveWidget(
         appBar: CustomAppBar(
           text: 'Order Status',
+          automaticallyLead: false,
         ),
         builder: (_, size) {
           return Container(

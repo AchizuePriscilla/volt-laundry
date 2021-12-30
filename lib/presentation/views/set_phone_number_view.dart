@@ -54,41 +54,42 @@ class SetPhoneNumberView extends StatelessWidget {
               TextField(
                 cursorColor: Theme.of(context).primaryColor,
                 decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(20),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor.withOpacity(.06),
+                      ),
                     ),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor.withOpacity(.06),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor.withOpacity(.06),
+                      ),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(20),
+                      ),
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor.withOpacity(.06),
+                    hintText: 'Phone Number',
+                    hintStyle: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        color: Theme.of(context).disabledColor.withOpacity(.5)),
+                    filled: true,
+                    fillColor: Theme.of(context).primaryColor.withOpacity(.06),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.h),
+                    prefixIcon: const Icon(Icons.phone)
+                    // CountryCodePicker(
+                    //   initialSelection: 'ng',
+                    //   showCountryOnly: true,
+                    //   showDropDownButton: true,
+                    //   hideMainText: true,
+                    //   showFlagMain: true,
+                    //   flagWidth: 28,
+                    //   padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
+                    // ),
                     ),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                  hintText: 'Phone Number',
-                  hintStyle: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(context).disabledColor.withOpacity(.5)),
-                  filled: true,
-                  fillColor: Theme.of(context).primaryColor.withOpacity(.06),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.h),
-                  prefixIcon: CountryCodePicker(
-                    initialSelection: 'ng',
-                    showCountryOnly: true,
-                    showDropDownButton: true,
-                    hideMainText: true,
-                    showFlagMain: true,
-                    flagWidth: 28,
-                    padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
-                  ),
-                ),
               ),
               const CustomSpacer(
                 flex: 3,

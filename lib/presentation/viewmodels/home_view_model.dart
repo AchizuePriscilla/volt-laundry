@@ -38,6 +38,12 @@ class HomeVM extends BaseViewModel {
     );
   }
 
+  ///Handles onWillPop of HomeView
+  Future<bool> onWillPop() {
+    navigationHandler.exitApp();
+    return Future.value(false);
+  }
+
   void navigateToLaundryView({String? type}) {
     jumpToPage(2);
     if (type == 'WashAndIron') {

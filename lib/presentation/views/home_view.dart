@@ -37,10 +37,9 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    var homeVM = context.read<HomeVM>();
     return ResponsiveWidget(
-      onWillPop: () {
-        locator<NavigationHandler>().exitApp();
-      },
+      onWillPop: () => homeVM.onWillPop(),
       bottomNavigationBar: SizedBox(
         height: 70.h,
         child: BottomNavigationBar(
@@ -54,7 +53,7 @@ class _HomeViewState extends State<HomeView> {
           selectedItemColor: Palette.buttonColor,
           currentIndex: context.watch<HomeVM>().selectedIndex,
           onTap: (int page) {
-            context.read<HomeVM>().jumpToPage(page);
+            homeVM.jumpToPage(page);
           },
           items: [
             const BottomNavigationBarItem(
