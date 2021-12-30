@@ -73,6 +73,8 @@ const List<Locale> countries = [
   Locale("vi"),
   Locale("zh")
 ];
+const String onboardingDone = 'onboardingStatus';
+const String lastPage = 'lastPage';
 
 const splashScreenViewRoute = '/';
 const onboardingViewRoute = 'onboarding-view';

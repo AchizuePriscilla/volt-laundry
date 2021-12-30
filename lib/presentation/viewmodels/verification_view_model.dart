@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 class VerificationViewModel extends BaseViewModel {
   static const int minutes = 1;

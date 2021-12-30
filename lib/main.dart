@@ -15,12 +15,13 @@ import 'presentation/shared/dialog_manager.dart';
 import 'utils/locator.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
   runZonedGuarded(
     () => runApp(const VoltApp()),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
-  runApp(const VoltApp());
+  // runApp(const VoltApp());
 }
 
 class VoltApp extends StatelessWidget {
@@ -30,30 +31,31 @@ class VoltApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: const Size(360, 630),
-        builder: () => MultiProvider(
-            providers: AppProviders.providers,
-            builder: (context, child) {
-              return MaterialApp(
-                supportedLocales: countries,
-                localizationsDelegates: const [
-                  CountryLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                ],
-                theme: lightTheme,
-                debugShowCheckedModeBanner: false,
-                navigatorKey: locator<NavigationHandler>().navigatorKey,
-                onGenerateRoute: RouteGenerator.onGenerateRoute,
-                initialRoute: splashScreenViewRoute,
-                builder: (context, widget) => Navigator(
-                  onGenerateRoute: (settings) => CupertinoPageRoute(
-                    builder: (context) => DialogManager(
-                      child: widget!,
-                    ),
+      designSize: const Size(360, 630),
+      builder: () => MultiProvider(
+          providers: AppProviders.providers,
+          builder: (context, child) {
+            return MaterialApp(
+              supportedLocales: countries,
+              localizationsDelegates: const [
+                CountryLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              theme: lightTheme,
+              debugShowCheckedModeBanner: false,
+              navigatorKey: locator<NavigationHandler>().navigatorKey,
+              onGenerateRoute: RouteGenerator.onGenerateRoute,
+              initialRoute: splashScreenViewRoute,
+              builder: (context, widget) => Navigator(
+                onGenerateRoute: (settings) => CupertinoPageRoute(
+                  builder: (context) => DialogManager(
+                    child: widget!,
                   ),
                 ),
-              );
-            }));
+              ),
+            );
+          }),
+    );
   }
 }

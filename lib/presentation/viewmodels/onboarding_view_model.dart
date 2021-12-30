@@ -7,7 +7,7 @@ import 'package:volt/utils/utils.dart';
 class OnboardingVM extends BaseViewModel {
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
- set currentIndex(int index) => _currentIndex = index;
+  set currentIndex(int index) => _currentIndex = index;
 
   late PageController _pageController;
   PageController get pageController => _pageController;
@@ -38,8 +38,7 @@ class OnboardingVM extends BaseViewModel {
 
   ///Navigates to SignUpPagesView and cache onboarding status
   Future<void> navigateToSetPhoneNumber() async {
-    // TODO: cache navigation status
-    // await localCache.saveToLocalCache(key: ONBOARDING_DONE, value: true);
+    await localCache.saveToLocalCache(key: onboardingDone, value: true);
     navigationHandler.pushReplacementNamed(setPhoneNumberViewRoute);
   }
 }
