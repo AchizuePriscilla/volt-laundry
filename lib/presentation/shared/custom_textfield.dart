@@ -48,7 +48,7 @@ class CustomTextField extends StatelessWidget {
       ),
       obscureText: obscure,
       textInputAction: textInputAction,
-      autovalidateMode: AutovalidateMode.disabled,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       textAlign: TextAlign.start,
       keyboardType: keyboardType,
       controller: controller,

@@ -14,6 +14,7 @@ class LogInView extends StatefulWidget {
 class _LogInViewState extends State<LogInView> {
   bool hidePassword = true;
   bool rememberMe = false;
+  final _formKey = GlobalKey<FormState>();
 
   void toggleVisibility() {
     setState(() {
@@ -45,6 +46,7 @@ class _LogInViewState extends State<LogInView> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Form(
+              key: _formKey,
               child: ListView(children: [
                 Padding(
                   padding: EdgeInsets.only(top: 75.h, left: 75.h, right: 75.h),

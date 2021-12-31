@@ -11,6 +11,7 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var signUpVM = context.read<SignUpViewModel>();
@@ -26,9 +27,10 @@ class _SignUpViewState extends State<SignUpView> {
               image: AssetImage('assets/images/white_background.png'),
             ),
           ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Form(
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: ListView(children: [
                 Padding(
                   padding: EdgeInsets.only(top: 75.h, left: 75.h, right: 75.h),
@@ -50,6 +52,9 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const CustomSpacer(flex: 3),
                 CustomTextField(
+                  validator: (name) {
+                    return signUpVM.validateFullName(name);
+                  },
                   fillColor: Theme.of(context).primaryColorLight,
                   prefix: Icon(
                     Icons.person_outlined,
@@ -59,6 +64,9 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const CustomSpacer(flex: 3),
                 CustomTextField(
+                  validator: (email) {
+                    return signUpVM.validateEmail(email);
+                  },
                   fillColor: Theme.of(context).primaryColorLight,
                   prefix: Icon(
                     Icons.mail_outline,
@@ -68,6 +76,9 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const CustomSpacer(flex: 3),
                 CustomTextField(
+                  validator: (password) {
+                    return signUpVM.validatePassword(password);
+                  },
                   fillColor: Theme.of(context).primaryColorLight,
                   prefix: Icon(
                     Icons.lock_outline,
@@ -79,7 +90,9 @@ class _SignUpViewState extends State<SignUpView> {
                 Button(
                     text: 'Sign Up',
                     onPressed: () {
-                      signUpVM.navigateToLogInView();
+                      if (_formKey.currentState!.validate()) {
+                        signUpVM.navigateToLogInView();
+                      }
                     }),
                 const CustomSpacer(flex: 3),
                 Row(
