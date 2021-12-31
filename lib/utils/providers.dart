@@ -9,7 +9,6 @@ class AppProviders {
   static final providers = <SingleChildWidget>[
     ChangeNotifierProvider(create: (_) => SplashScreenVM()),
     ChangeNotifierProvider(create: (_) => OnboardingVM()),
-    ChangeNotifierProvider(create: (_) => SetPhoneNumberVM()),
     ChangeNotifierProvider(create: (_) => VerificationViewModel()),
     ChangeNotifierProvider(create: (_) => SignUpViewModel()),
     ChangeNotifierProvider(create: (_) => LogInViewModel()),

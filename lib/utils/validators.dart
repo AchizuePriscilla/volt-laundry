@@ -51,8 +51,9 @@ class Validators {
     List<String> splitNames = name.trim().split(' ');
 
     if (splitNames.length < 2 ||
-        (splitNames.length >= 2 && (splitNames.any((name) => name.isEmpty))))
+        (splitNames.length >= 2 && (splitNames.any((name) => name.isEmpty)))) {
       return 'Enter Surname     First name';
+    }
 
     return null;
   }

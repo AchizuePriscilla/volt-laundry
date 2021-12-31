@@ -93,7 +93,7 @@ class LocalCacheImpl implements LocalCache {
 
   @override
   Future<Map<String, dynamic>> getUserData() async {
-    var res = await getFromLocalCache(user) as String? ?? '{}';
+    var res = getFromLocalCache(user) as String? ?? '{}';
     return Map<String, dynamic>.from(json.decode(res));
   }
 }
