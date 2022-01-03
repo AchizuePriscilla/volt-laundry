@@ -2,8 +2,8 @@ import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
 class SignUpViewModel extends BaseViewModel {
-  void navigateToLogInView() {
-    navigationHandler.pushNamed(logInViewRoute);
+  void navigateToRoute(String route) {
+    navigationHandler.pushNamed(route);
   }
 
   ///validates password text field
@@ -16,6 +16,9 @@ class SignUpViewModel extends BaseViewModel {
   
   ///Validates full name text field
   String? validateFullName(String name) => Validators.validateFullName(name);
+
+  ///Validates phone number text field
+  String? validatePhoneNumber(String phoneNumber) => Validators.validatePhoneNumber(phoneNumber);
 
 
 }

@@ -8,6 +8,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:dartz/dartz.dart';
 import 'package:volt/models/api/api.dart';
 import 'package:volt/utils/utils.dart';
+
 abstract class BaseApi {
   late Dio dio;
 
@@ -16,8 +17,8 @@ abstract class BaseApi {
         baseUrl: "https://$baseApi",
         receiveDataWhenStatusError: true,
         connectTimeout: 60 * 1000, // 60 seconds
-        receiveTimeout: 60 * 1000 // 60 seconds
-        );
+        receiveTimeout: 60 * 1000, // 60 seconds
+        headers: {'API-KEY': 'b1103269-dca6-459b-9867-c9dfeba3e196'});
 
     dio = Dio(options);
     dio.interceptors.add(InterceptorsWrapper(onRequest: (

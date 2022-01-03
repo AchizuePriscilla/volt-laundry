@@ -81,7 +81,7 @@ class _VerificationViewState extends State<VerificationView> {
                   ),
                   const CustomSpacer(flex: 3),
                   Text(
-                    "Enter the verification code \nwe've sent you",
+                    "Enter the verification code \nwe've sent to your phone number",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
                         fontSize: 17.sp,

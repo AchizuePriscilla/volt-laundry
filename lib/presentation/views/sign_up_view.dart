@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/constants.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _SignUpViewState extends State<SignUpView> {
   Widget build(BuildContext context) {
     var signUpVM = context.read<SignUpViewModel>();
     return ResponsiveWidget(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       builder: (_, size) {
         return Container(
           height: size.height,
@@ -24,8 +25,8 @@ class _SignUpViewState extends State<SignUpView> {
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColorLight,
             image: const DecorationImage(
-              image: AssetImage('assets/images/white_background.png'),
-            ),
+                image: AssetImage('assets/images/white_background.png'),
+                fit: BoxFit.cover),
           ),
           child: Form(
             key: _formKey,
@@ -64,6 +65,18 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const CustomSpacer(flex: 3),
                 CustomTextField(
+                  validator: (phoneNumber) {
+                    return signUpVM.validatePhoneNumber(phoneNumber);
+                  },
+                  fillColor: Theme.of(context).primaryColorLight,
+                  prefix: Icon(
+                    Icons.phone,
+                    color: Theme.of(context).disabledColor.withOpacity(.6),
+                  ),
+                  hint: "Phone Number, E.g: 08145518998",
+                ),
+                const CustomSpacer(flex: 3),
+                CustomTextField(
                   validator: (email) {
                     return signUpVM.validateEmail(email);
                   },
@@ -91,7 +104,7 @@ class _SignUpViewState extends State<SignUpView> {
                     text: 'Sign Up',
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        signUpVM.navigateToLogInView();
+                        signUpVM.navigateToRoute(verificationViewRoute);
                       }
                     }),
                 const CustomSpacer(flex: 3),
@@ -113,7 +126,7 @@ class _SignUpViewState extends State<SignUpView> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        signUpVM.navigateToLogInView();
+                        signUpVM.navigateToRoute(logInViewRoute);
                       },
                       child: Text(
                         'Sign in Here',
