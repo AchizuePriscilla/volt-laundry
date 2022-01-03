@@ -16,7 +16,7 @@ import 'utils/locator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setupLocator();
+  await setupLocator(baseApi: "https://vlt-laundry-api-shadownetz.vercel.app/v1/");
   runZonedGuarded(
     () => runApp(const VoltApp()),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),

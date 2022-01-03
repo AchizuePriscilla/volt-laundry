@@ -17,14 +17,14 @@ class SplashScreenVM extends BaseViewModel {
     return isCached;
   }
 
-  Future<void> handleNavigation() async {
-    await Future.delayed(const Duration(seconds: 2)).then((value) async {
-      navigationHandler.pushNamed(onboardingViewRoute);
-    });
-  }
+  // Future<void> handleNavigation() async {
+  //   await Future.delayed(const Duration(seconds: 2)).then((value) async {
+  //     navigationHandler.pushNamed(onboardingViewRoute);
+  //   });
+  // }
 
   ///Handles navigation from SplashScreenView on app start
-  Future<void> handleNavigation2() async {
+  Future<void> handleNavigation() async {
     await Future.delayed(const Duration(seconds: 2)).then((value) async {
       await localCache.getToken().then(
         (token) async {

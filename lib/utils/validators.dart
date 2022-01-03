@@ -1,6 +1,6 @@
 class Validators {
   static String? validatePhoneNumber(String? value) {
-    const Pattern pattern = r'^\+234\d{10}$';
+    const Pattern pattern = r'^\d{11}$';
     final regex = RegExp(pattern.toString());
     if (value!.isEmpty || !regex.hasMatch(value)) {
       return 'Please enter a valid phone number';
