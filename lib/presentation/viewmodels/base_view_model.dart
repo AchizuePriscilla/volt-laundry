@@ -18,4 +18,13 @@ class BaseViewModel extends ChangeNotifier {
     this.dialogHandler = dialogHandler ?? locator();
     this.localCache = localCache ?? locator();
   }
+
+
+  bool _loading = false;
+  bool get loading => _loading;
+
+  void toggleLoading(bool val) {
+    _loading = val;
+    notifyListeners();
+  }
 }

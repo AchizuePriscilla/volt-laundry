@@ -57,6 +57,45 @@ class VerificationViewModel extends BaseViewModel {
   ///Validates phone number text field
   String? validatePhoneNumber(String phoneNumber) => Validators.validatePhoneNumber(phoneNumber);
 
+    ///Removes cached data and navigate to appropriate route
+  // Future<void> _removeCachedDataAndNavigate([String? route]) async {
+  //   //removes cached data
+  //   await localCache.removeFromLocalCache(lastPage);
+  //   // await localCache.removeFromLocalCache(lastEmail);
+
+  //   //navigates to APP HomePage
+  //   navigationHandler.pushReplacementNamed(route ?? homeViewRoute);
+  // }
+
+
+    ///Makes a network call to verify [phoneNumber] with given [token]
+  // Future<void> verifyAccount({
+  //   required String phoneNumber,
+  //   required String token,
+  // }) async {
+  //   try {
+  //     if (loading) return;
+  //     toggleLoading(true);
+  //     var res = await authService.verifyAccount(VerifyAccountRequest(
+  //       email: email,
+  //       token: token,
+  //     ));
+
+  //     if (res.success) {
+  //       _removeCachedDataAndNavigate();
+  //     } else {
+  //       //show error messagge
+  //       dialogHandler.showDialog(
+  //         message: res.error!.message,
+  //       );
+  //     }
+  //     toggleLoading(false);
+  //   } catch (e) {
+  //     AppLogger.logger.d(e);
+  //     toggleLoading(false);
+  //   }
+  // }
+
 //TODO: Handle caching when user visits verification view
 
   void navigateToRoute(String route) {
