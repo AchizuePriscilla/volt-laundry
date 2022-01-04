@@ -5,7 +5,7 @@ import 'package:volt/data/local/secure_storage.dart';
 import 'package:volt/utils/logger.dart';
 
 class LocalCacheImpl implements LocalCache {
-  static const token = 'userTokenId';
+  static const userToken = 'userTokenId';
   static const user = "currentUser";
 
   late SecureStorage storage;
@@ -19,7 +19,7 @@ class LocalCacheImpl implements LocalCache {
   @override
   Future<void> deleteToken() async {
     try {
-      await storage.delete(token);
+      await storage.delete(userToken);
     } catch (e) {
       AppLogger.logger.d(e);
     }
@@ -37,7 +37,7 @@ class LocalCacheImpl implements LocalCache {
   @override
   Future<String?> getToken() async {
     try {
-      return await storage.read(token);
+      return await storage.read(userToken);
     } catch (e) {
       AppLogger.logger.d(e);
     }
@@ -51,7 +51,7 @@ class LocalCacheImpl implements LocalCache {
   @override
   Future<void> saveToken(String token) async {
     try {
-      await storage.write(key: token, value: token);
+      await storage.write(key: userToken, value: token);
     } catch (e) {
       AppLogger.logger.d(e);
     }
@@ -79,7 +79,6 @@ class LocalCacheImpl implements LocalCache {
       await sharedPreferences.setString(key, json.encode(value));
     }
   }
-
 
   @override
   Future<void> cacheUserData({required String value}) async {

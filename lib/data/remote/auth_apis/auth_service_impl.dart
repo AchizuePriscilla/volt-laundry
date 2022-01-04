@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:volt/data/local/local.dart';
 import 'package:volt/data/remote/auth_apis/auth_service.dart';
 import 'package:volt/models/api/api.dart';
@@ -24,7 +25,7 @@ class AuthServiceImpl implements AuthService {
     var res = await authRepo.signUp(request);
     if (res.success) {
       await cache.saveToken(res.token!);
-
+      log('token: ${res.token}');
       await cache.cacheUserData(
         value: json.encode(
           res.user!.toJson(),
