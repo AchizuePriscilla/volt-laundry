@@ -133,7 +133,7 @@ class _VerificationViewState extends State<VerificationView> {
                     loading: context.watch<SignUpViewModel>().loading,
                     text: 'Next',
                     onPressed: () {
-                      verificationVM.navigateToRoute(signUpViewRoute);
+                      context.read<SignUpViewModel>().signUp(_controller.text);
                     },
                     isSmall: true,
                   ),

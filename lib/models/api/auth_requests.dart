@@ -21,8 +21,8 @@ class SignUpRequest extends Equatable {
   final String address;
   final String country;
   final String state;
-  final String latitude;
-  final String longitude;
+  final double latitude;
+  final double longitude;
   final String timeOfUserCreation;
   final String timeOfUserUpdate;
 

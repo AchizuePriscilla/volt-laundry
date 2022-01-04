@@ -12,10 +12,11 @@ class SignUpViewModel extends BaseViewModel {
   late String address;
   late String country;
   late String state;
-  late String latitude;
-  late String longitude;
+  late double latitude;
+  late double longitude;
   late String timeOfUserCreation;
   late String timeOfUserUpdate;
+  late String verificationCode;
 
   void navigateToRoute(String route) {
     navigationHandler.pushNamed(route);
@@ -53,8 +54,8 @@ class SignUpViewModel extends BaseViewModel {
     this.address = address;
     this.country = country;
     this.state = state;
-    this.latitude = 12323434.toString();
-    this.longitude = 12980830.toString();
+    this.latitude = 12323434;
+    this.longitude = 12980830;
     timeOfUserCreation = DateTime.now().toString();
     timeOfUserUpdate = DateTime.now().toString();
   }
@@ -69,7 +70,6 @@ class SignUpViewModel extends BaseViewModel {
     localCache.saveToLocalCache(key: lastPhoneNumber, value: phoneNumber);
   }
 
-
   Future<void> sendVerificationToken() async {
     try {
       if (loading) return;
@@ -78,6 +78,7 @@ class SignUpViewModel extends BaseViewModel {
           PhoneVerificationRequest(phoneNumber: phoneNumber));
 
       if (res.success) {
+        verificationCode = res.code;
         log('Verification code sent successfully');
         log(res.code);
         toggleLoading(false);
@@ -88,6 +89,7 @@ class SignUpViewModel extends BaseViewModel {
 
       } else {
         log('Verification code sending unsuccessful');
+        toggleLoading(false);
       }
     } catch (e) {
       AppLogger.logger.d(e);
@@ -96,44 +98,48 @@ class SignUpViewModel extends BaseViewModel {
   }
 
   ///Makes a network request to create an account with `email` and `password`
-  Future<void> signUp() async {
+  Future<void> signUp(String code) async {
     try {
       if (loading) return;
 
       toggleLoading(true);
-
-      var res = await authService.signUp(
-        SignUpRequest(
-            name: name,
-            phoneNumber: phoneNumber,
-            email: email,
-            password: password,
-            address: address,
-            country: country,
-            state: state,
-            latitude: latitude,
-            longitude: longitude,
-            timeOfUserCreation: timeOfUserCreation,
-            timeOfUserUpdate: timeOfUserUpdate),
-      );
-      if (res.success) {
-        //navigate to HomeViewRoute
-        navigationHandler.pushReplacementNamed(
-          homeViewRoute,
+      if (code == verificationCode) {
+        var res = await authService.signUp(
+          SignUpRequest(
+              name: name,
+              phoneNumber: phoneNumber,
+              email: email,
+              password: password,
+              address: address,
+              country: country,
+              state: state,
+              latitude: latitude,
+              longitude: longitude,
+              timeOfUserCreation: timeOfUserCreation,
+              timeOfUserUpdate: timeOfUserUpdate),
         );
-      } else {
-        //if user is already registered, navigate to LoginView
-        if (res.error!.type == ErrorType.emailExists) {
-          dialogHandler.showDialog(
-            message: res.error!.message + "\nLogin to continue",
+        if (res.success) {
+          //navigate to HomeViewRoute
+          navigationHandler.pushReplacementNamed(
+            homeViewRoute,
           );
-          navigationHandler.pushReplacementNamed(logInViewRoute);
         } else {
-          //show error message
-          dialogHandler.showDialog(message: res.error!.message);
+          //if user is already registered, navigate to LoginView
+          if (res.error!.type == ErrorType.emailExists) {
+            dialogHandler.showDialog(
+              message: res.error!.message + "\nLogin to continue",
+            );
+            navigationHandler.pushReplacementNamed(logInViewRoute);
+          } else {
+            //show error message
+            dialogHandler.showDialog(message: res.error!.message);
+          }
         }
+        toggleLoading(false);
+      } else {
+        log("Codes don't match");
+        toggleLoading(false);
       }
-      toggleLoading(false);
     } catch (e) {
       AppLogger.logger.d(e);
       toggleLoading(false);

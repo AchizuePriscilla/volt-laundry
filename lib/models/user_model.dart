@@ -8,8 +8,8 @@ class UserModel extends Equatable {
   final String address;
   final String country;
   final String state;
-  final String vltCoinBalance;
-  final String vltNairaBalance;
+  final int vltCoinBalance;
+  final int vltNairaBalance;
 
   const UserModel(
       {required this.id,

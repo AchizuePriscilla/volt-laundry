@@ -21,7 +21,7 @@ class AuthRepositoryImpl extends BaseApi implements AuthRepository {
 
   @override
   Future<LoginResponse> signUp(SignUpRequest request) async {
-    var response = await post(phoneAuth, data: request.toMap());
+    var response = await post(registerUser, data: request.toMap());
     return LoginResponse.fromMap(response);
   }
 }
