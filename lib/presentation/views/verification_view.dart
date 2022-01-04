@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
@@ -37,11 +36,12 @@ class _VerificationViewState extends State<VerificationView> {
   @override
   void initState() {
     _errorController = StreamController<ErrorAnimationType>();
+    var verificationVM = context.read<VerificationViewModel>();
     super.initState();
 
     WidgetsBinding.instance?.addPostFrameCallback(
       (timeStamp) {
-        context.read<VerificationViewModel>().startTimer();
+        verificationVM.startTimer();
       },
     );
 
@@ -100,19 +100,37 @@ class _VerificationViewState extends State<VerificationView> {
                         return null;
                       }),
                   const CustomSpacer(flex: 3),
-                  Text(
-                    "Resend Code",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: verificationVM.active
-                          ? Theme.of(context).disabledColor.withOpacity(.7)
-                          : Theme.of(context).primaryColor,
-                      fontSize: 17.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
+                  GestureDetector(
+                    onTap: () {
+                      verificationVM.resendToken(
+                          context.read<SignUpViewModel>().phoneNumber);
+                    },
+                    child: verificationVM.isResendingToken
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation(
+                                Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          )
+                        : Text(
+                            "Resend Code",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: verificationVM.active
+                                  ? Theme.of(context)
+                                      .disabledColor
+                                      .withOpacity(.7)
+                                  : Theme.of(context).primaryColor,
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                   ),
                   const CustomSpacer(flex: 3),
                   Button(
+                    active: buttonActive,
+                    loading: context.watch<SignUpViewModel>().loading,
                     text: 'Next',
                     onPressed: () {
                       verificationVM.navigateToRoute(signUpViewRoute);

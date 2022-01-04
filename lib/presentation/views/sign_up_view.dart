@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:volt/handlers/handlers.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/constants.dart';
+import 'package:volt/utils/utils.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
@@ -13,6 +15,46 @@ class SignUpView extends StatefulWidget {
 
 class _SignUpViewState extends State<SignUpView> {
   final _formKey = GlobalKey<FormState>();
+
+  final _passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneNumberController = TextEditingController();
+  final _nameController = TextEditingController();
+  bool buttonActive = false;
+
+  void onListen() {
+    if (_emailController.text.isEmpty ||
+        _passwordController.text.isEmpty ||
+        _phoneNumberController.text.isEmpty ||
+        _nameController.text.isEmpty) {
+      setState(() {
+        buttonActive = false;
+      });
+    } else {
+      setState(() {
+        buttonActive = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController.addListener(onListen);
+    _passwordController.addListener(onListen);
+    _phoneNumberController.addListener(onListen);
+    _nameController.addListener(onListen);
+  }
+
+  @override
+  void dispose() {
+    _emailController.removeListener(onListen);
+    _passwordController.removeListener(onListen);
+    _phoneNumberController.removeListener(onListen);
+    _nameController.removeListener(onListen);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var signUpVM = context.read<SignUpViewModel>();
@@ -53,6 +95,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const CustomSpacer(flex: 3),
                 CustomTextField(
+                  controller: _nameController,
                   validator: (name) {
                     return signUpVM.validateFullName(name);
                   },
@@ -65,6 +108,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const CustomSpacer(flex: 3),
                 CustomTextField(
+                  controller: _phoneNumberController,
                   validator: (phoneNumber) {
                     return signUpVM.validatePhoneNumber(phoneNumber);
                   },
@@ -77,6 +121,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const CustomSpacer(flex: 3),
                 CustomTextField(
+                  controller: _emailController,
                   validator: (email) {
                     return signUpVM.validateEmail(email);
                   },
@@ -89,6 +134,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const CustomSpacer(flex: 3),
                 CustomTextField(
+                  controller: _passwordController,
                   validator: (password) {
                     return signUpVM.validatePassword(password);
                   },
@@ -101,10 +147,22 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const CustomSpacer(flex: 3),
                 Button(
+                    active: buttonActive,
+                    loading: context.watch<SignUpViewModel>().loading,
                     text: 'Sign Up',
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        signUpVM.navigateToRoute(verificationViewRoute);
+                        signUpVM.updateFields(
+                            name: _nameController.text,
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            phoneNumber: _phoneNumberController.text,
+                            address: "address",
+                            country: "country",
+                            state: "state",
+                            latitude: "latitude",
+                            longitude: "longitude");
+                        await signUpVM.sendVerificationToken();
                       }
                     }),
                 const CustomSpacer(flex: 3),

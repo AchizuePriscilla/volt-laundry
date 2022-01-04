@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:volt/models/api/auth_requests.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
 class VerificationViewModel extends BaseViewModel {
-  static const int minutes = 1;
+  static const int minutes = 2;
   int _minutes = minutes;
-  int _seconds = 30;
+  int _seconds = 0;
 
   ///Returns formatted time string
   String get getTime =>
@@ -15,10 +16,19 @@ class VerificationViewModel extends BaseViewModel {
   ///Returns [true] if countdown is active, otherwise [false]
   bool get active => _minutes < minutes;
 
+  bool _resendingToken = false;
+  bool get isResendingToken => _resendingToken;
+
   ///Resets timer to 0[MINUTES]: 00 (e.g 05 : 00 if MINUTES is 5)
   void resetTimer() {
-    _seconds = 30;
+    _seconds = 0;
     _minutes = minutes;
+    notifyListeners();
+  }
+
+  ///Toggles [_resendingToken]
+  void _toggleResending(bool val) {
+    _resendingToken = val;
     notifyListeners();
   }
 
@@ -55,49 +65,43 @@ class VerificationViewModel extends BaseViewModel {
   }
 
   ///Validates phone number text field
-  String? validatePhoneNumber(String phoneNumber) => Validators.validatePhoneNumber(phoneNumber);
+  String? validatePhoneNumber(String phoneNumber) =>
+      Validators.validatePhoneNumber(phoneNumber);
 
-    ///Removes cached data and navigate to appropriate route
-  // Future<void> _removeCachedDataAndNavigate([String? route]) async {
-  //   //removes cached data
-  //   await localCache.removeFromLocalCache(lastPage);
-  //   // await localCache.removeFromLocalCache(lastEmail);
+  ///Makes network call to resend verification token
+  Future<void> resendToken(String phoneNumber) async {
+    try {
+      if (!active) {
+        _toggleResending(true);
+        var res = await authService.phoneVerification(
+            PhoneVerificationRequest(phoneNumber: phoneNumber));
 
-  //   //navigates to APP HomePage
-  //   navigationHandler.pushReplacementNamed(route ?? homeViewRoute);
-  // }
+        if (res.success) {
+          await localCache.removeFromLocalCache(lastPage);
+          await localCache.removeFromLocalCache(lastPhoneNumber);
+          log(res.code);
+        } else {
+          //show error message
 
-
-    ///Makes a network call to verify [phoneNumber] with given [token]
-  // Future<void> verifyAccount({
-  //   required String phoneNumber,
-  //   required String token,
-  // }) async {
-  //   try {
-  //     if (loading) return;
-  //     toggleLoading(true);
-  //     var res = await authService.verifyAccount(VerifyAccountRequest(
-  //       email: email,
-  //       token: token,
-  //     ));
-
-  //     if (res.success) {
-  //       _removeCachedDataAndNavigate();
-  //     } else {
-  //       //show error messagge
-  //       dialogHandler.showDialog(
-  //         message: res.error!.message,
-  //       );
-  //     }
-  //     toggleLoading(false);
-  //   } catch (e) {
-  //     AppLogger.logger.d(e);
-  //     toggleLoading(false);
-  //   }
-  // }
-
-//TODO: Handle caching when user visits verification view
-
+          if (res.error!.type == ErrorType.emailAlreadyValidated) {
+            await localCache.removeFromLocalCache(lastPage);
+            await localCache.removeFromLocalCache(lastPhoneNumber);
+            dialogHandler.showDialog(
+              message: res.error!.message + "\nLogin to continue.",
+            );
+          } else {
+            dialogHandler.showDialog(
+              message: res.error!.message,
+            );
+          }
+        }
+        _toggleResending(false);
+        startTimer();
+      }
+    } catch (e) {
+      _toggleResending(false);
+    }
+  }
   void navigateToRoute(String route) {
     navigationHandler.pushNamed(route);
   }

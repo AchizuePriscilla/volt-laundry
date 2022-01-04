@@ -75,6 +75,7 @@ const List<Locale> countries = [
 ];
 const String onboardingDone = 'onboardingStatus';
 const String lastPage = 'lastPage';
+const String lastPhoneNumber = 'lastPhoneNumber';
 
 const splashScreenViewRoute = '/';
 const onboardingViewRoute = 'onboarding-view';
