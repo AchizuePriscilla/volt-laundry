@@ -8,6 +8,7 @@ class AuthRepositoryImpl extends BaseApi implements AuthRepository {
   AuthRepositoryImpl(String baseApi) : super(baseApi);
   static const String phoneAuth = 'auth/phone-auth';
   static const String registerUser = 'user/register';
+  static const String login = 'user/login';
   @override
   Future<VerifyAccountResponse> requestPhoneVerificationCode(
       PhoneVerificationRequest request) async {
@@ -22,6 +23,16 @@ class AuthRepositoryImpl extends BaseApi implements AuthRepository {
   @override
   Future<LoginResponse> signUp(SignUpRequest request) async {
     var response = await post(registerUser, data: request.toMap());
+    return LoginResponse.fromMap(response);
+  }
+
+  @override
+  Future<LoginResponse> logIn(LoginRequest request) async {
+    var response = await post(
+      login,
+      data: request.toMap(),
+    );
+
     return LoginResponse.fromMap(response);
   }
 }

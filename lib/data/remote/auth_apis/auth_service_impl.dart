@@ -34,4 +34,21 @@ class AuthServiceImpl implements AuthService {
     }
     return res;
   }
+
+  @override
+  Future<LoginResponse> logIn(LoginRequest request) async {
+    var res = await authRepo.logIn(request);
+
+    if (res.success) {
+      await cache.saveToken(res.token!);
+
+      await cache.cacheUserData(
+        value: json.encode(
+          res.user!.toJson(),
+        ),
+      );
+    }
+
+    return res;
+  }
 }

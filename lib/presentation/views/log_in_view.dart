@@ -12,9 +12,24 @@ class LogInView extends StatefulWidget {
 }
 
 class _LogInViewState extends State<LogInView> {
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   bool hidePassword = true;
   bool rememberMe = false;
   final _formKey = GlobalKey<FormState>();
+  bool buttonActive = false;
+
+  void onListen() {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      setState(() {
+        buttonActive = false;
+      });
+    } else {
+      setState(() {
+        buttonActive = true;
+      });
+    }
+  }
 
   void toggleVisibility() {
     setState(() {
@@ -26,6 +41,20 @@ class _LogInViewState extends State<LogInView> {
     setState(() {
       rememberMe = !rememberMe;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController.addListener(onListen);
+    _passwordController.addListener(onListen);
+  }
+
+  @override
+  void dispose() {
+    _emailController.removeListener(onListen);
+    _passwordController.removeListener(onListen);
+    super.dispose();
   }
 
   @override
@@ -68,7 +97,7 @@ class _LogInViewState extends State<LogInView> {
                 ),
                 const CustomSpacer(flex: 3),
                 Text(
-                  'Email or Phone Number',
+                  'Email',
                   style: GoogleFonts.poppins(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
@@ -99,6 +128,7 @@ class _LogInViewState extends State<LogInView> {
                 ),
                 const CustomSpacer(flex: 8),
                 Button(
+                    active: buttonActive,
                     text: 'Log In',
                     onPressed: () {
                       loginVM.navigateToRoute(homeViewRoute);

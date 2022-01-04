@@ -6,4 +6,5 @@ abstract class AuthRepository {
   Future<VerifyAccountResponse> requestPhoneVerificationCode(
       PhoneVerificationRequest request);
   Future<LoginResponse> signUp(SignUpRequest request);
+  Future<LoginResponse> logIn(LoginRequest request);
 }
