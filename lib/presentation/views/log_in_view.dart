@@ -107,6 +107,7 @@ class _LogInViewState extends State<LogInView> {
                 const CustomSpacer(flex: 1),
                 CustomTextField(
                   fillColor: Theme.of(context).primaryColorLight,
+                  controller: _emailController,
                 ),
                 const CustomSpacer(flex: 3),
                 Text(
@@ -121,6 +122,7 @@ class _LogInViewState extends State<LogInView> {
                 CustomTextField(
                   fillColor: Theme.of(context).disabledColor.withOpacity(.2),
                   obscure: hidePassword,
+                  controller: _passwordController,
                   suffix: PasswordVisibilityIcon(
                     onPressed: toggleVisibility,
                     value: hidePassword,
@@ -129,9 +131,12 @@ class _LogInViewState extends State<LogInView> {
                 const CustomSpacer(flex: 8),
                 Button(
                     active: buttonActive,
+                    loading: context.read<LogInViewModel>().loading,
                     text: 'Log In',
                     onPressed: () {
-                      loginVM.navigateToRoute(homeViewRoute);
+                      loginVM.login(
+                          email: _emailController.text,
+                          password: _passwordController.text);
                     }),
                 const CustomSpacer(flex: 3),
                 Row(
