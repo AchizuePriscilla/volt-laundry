@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:volt/data/local/local.dart';
 import 'package:volt/data/remote/auth_apis/auth_service.dart';
 import 'package:volt/models/api/api.dart';
@@ -21,6 +22,15 @@ class AuthServiceImpl implements AuthService {
   @override
   Future<LoginResponse> signUp(SignUpRequest request) async {
     var res = await authRepo.signUp(request);
+    if (res.success) {
+      await cache.saveToken(res.token!);
+
+      await cache.cacheUserData(
+        value: json.encode(
+          res.user!.toJson(),
+        ),
+      );
+    }
     return res;
   }
 }

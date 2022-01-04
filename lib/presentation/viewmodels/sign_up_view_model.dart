@@ -119,7 +119,9 @@ class SignUpViewModel extends BaseViewModel {
               timeOfUserUpdate: timeOfUserUpdate),
         );
         if (res.success) {
-          //navigate to HomeViewRoute
+          //remove cached data and navigate to HomeViewRoute
+           await localCache.removeFromLocalCache(lastPage);
+            await localCache.removeFromLocalCache(lastPhoneNumber);
           navigationHandler.pushReplacementNamed(
             homeViewRoute,
           );
