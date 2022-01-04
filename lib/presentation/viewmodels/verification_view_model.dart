@@ -77,8 +77,6 @@ class VerificationViewModel extends BaseViewModel {
             PhoneVerificationRequest(phoneNumber: phoneNumber));
 
         if (res.success) {
-          await localCache.removeFromLocalCache(lastPage);
-          await localCache.removeFromLocalCache(lastPhoneNumber);
           log(res.code);
         } else {
           //show error message
@@ -102,6 +100,7 @@ class VerificationViewModel extends BaseViewModel {
       _toggleResending(false);
     }
   }
+
   void navigateToRoute(String route) {
     navigationHandler.pushNamed(route);
   }
