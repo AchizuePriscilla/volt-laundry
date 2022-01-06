@@ -137,6 +137,7 @@ class _FundWalletViewState extends State<FundWalletView> {
   @override
   Widget build(BuildContext context) {
     var walletVM = context.read<WalletVM>();
+    var rxWalletVM = context.watch<WalletVM>();
     return ResponsiveWidget(builder: (_, size) {
       return DefaultTabController(
         length: 2,
@@ -297,13 +298,14 @@ class _FundWalletViewState extends State<FundWalletView> {
               child: Container(
                 margin: EdgeInsets.only(bottom: 10.h),
                 child: Button(
-                  loading: walletVM.loading,
+                  loading: rxWalletVM.loading,
                   text: 'Buy ${getCoinType(isVNGN)}',
                   onPressed: () {
-                    walletVM.transactionInit(
-                        email: context.read<AppProfileVM>().email,
-                        amount: 2000);
-                    // walletVM.navigateToRoute(paymentMethodViewRoute);
+                    if (isVNGN) {
+                      walletVM.transactionInit(
+                          email: context.read<AppProfileVM>().email,
+                          amount: 2000);
+                    }
                   },
                   color: Palette.lightGreen,
                 ),
