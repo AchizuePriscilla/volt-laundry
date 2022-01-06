@@ -6,6 +6,10 @@ import 'package:volt/data/remote/auth_apis/auth_repo_impl.dart';
 import 'package:volt/data/remote/auth_apis/auth_service.dart';
 import 'package:volt/data/remote/auth_apis/auth_service_impl.dart';
 import 'package:volt/data/remote/connectivity_service.dart';
+import 'package:volt/data/remote/wallet_apis/transaction_repo.dart';
+import 'package:volt/data/remote/wallet_apis/transaction_repo_impl.dart';
+import 'package:volt/data/remote/wallet_apis/transaction_service.dart';
+import 'package:volt/data/remote/wallet_apis/transaction_service_impl.dart';
 import 'package:volt/handlers/handlers.dart';
 
 GetIt locator = GetIt.instance;
@@ -38,10 +42,24 @@ Future<void> setupLocator({String baseApi = ''}) async {
   );
 
   locator.registerLazySingleton<AuthService>(
-      () => AuthServiceImpl(authRepo: locator(), cache: locator()));
+    () => AuthServiceImpl(
+      authRepo: locator(),
+      cache: locator(),
+    ),
+  );
+
+  locator.registerLazySingleton<TransactionService>(
+    () => TransactionServiceImpl(
+      transactionRepo: locator(),
+    ),
+  );
 
 //Repos
 
-  locator
-      .registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(baseApi));
+  locator.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(baseApi),
+  );
+  locator.registerLazySingleton<TransactionRepo>(
+    () => TransactionRepoImpl(baseApi),
+  );
 }

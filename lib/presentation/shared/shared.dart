@@ -18,7 +18,6 @@ export 'profile_avatar.dart';
 export 'custom_back_button.dart';
 export 'custom_app_bar.dart';
 export 'credit_card.dart';
-export 'coin_picker_dialog.dart';
 export 'success_dialog.dart';
 export 'dialog_manager.dart';
 export 'transaction_successful_dialog.dart';

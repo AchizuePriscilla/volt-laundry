@@ -3,6 +3,7 @@ import 'package:volt/handlers/dialog_handler.dart';
 import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/shared/dialog_card.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/views/fund_wallet_view.dart';
 import 'package:volt/utils/utils.dart';
 
 class DialogManager extends StatefulWidget {
