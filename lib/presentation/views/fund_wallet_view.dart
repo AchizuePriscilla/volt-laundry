@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/shared/shared.dart';
-import 'package:volt/presentation/viewmodels/app_profile_view_model.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
@@ -14,8 +12,7 @@ class FundWalletView extends StatefulWidget {
 }
 
 class _FundWalletViewState extends State<FundWalletView> {
-  bool isVNGN = false;
-  int _radioValue = 0;
+  bool isVNGN = true;
 
   String getCoinType(bool isVNGN) {
     if (isVNGN) {
@@ -31,10 +28,7 @@ class _FundWalletViewState extends State<FundWalletView> {
     return 'assets/images/volt_coin_yellow.png';
   }
 
-  void _handleRadioValueChanged(int? value) {
-    if (value != null) setState(() => _radioValue = value);
-  }
-
+  SelectedCoin selectedCoin = SelectedCoin.voltNaira;
   void _showCoinPickerDialog() {
     showDialog(
         context: context,
@@ -72,11 +66,15 @@ class _FundWalletViewState extends State<FundWalletView> {
                             ),
                           ),
                           const Expanded(child: SizedBox()),
-                          Radio(
-                              value: 1,
+                          Radio<SelectedCoin>(
+                              value: SelectedCoin.voltCoin,
                               toggleable: true,
-                              groupValue: 1,
-                              onChanged: (value) {
+                              groupValue: selectedCoin,
+                              onChanged: (SelectedCoin? newValue) {
+                                setState(() {
+                                  isVNGN = false;
+                                  selectedCoin = newValue!;
+                                });
                                 Navigator.pop(context);
                               },
                               materialTapTargetSize:
@@ -106,11 +104,15 @@ class _FundWalletViewState extends State<FundWalletView> {
                             ),
                           ),
                           const Expanded(child: SizedBox()),
-                          Radio(
-                              value: 0,
+                          Radio<SelectedCoin>(
+                              value: SelectedCoin.voltNaira,
                               toggleable: true,
-                              groupValue: 1,
-                              onChanged: (value) {
+                              groupValue: selectedCoin,
+                              onChanged: (SelectedCoin? newValue) {
+                                setState(() {
+                                  isVNGN = true;
+                                  selectedCoin = newValue!;
+                                });
                                 Navigator.pop(context);
                               },
                               materialTapTargetSize:
@@ -147,7 +149,6 @@ class _FundWalletViewState extends State<FundWalletView> {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
                     width: size.width,
-                    // height: size.height * .35,
                     color: Theme.of(context).primaryColor,
                     child: Column(
                       children: [
