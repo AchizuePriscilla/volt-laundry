@@ -70,10 +70,7 @@ class _BuyCoinViewState extends State<BuyCoinView> {
                                 icon: const Icon(
                                   Icons.keyboard_arrow_down,
                                 ),
-                                onPressed: () {
-                                  walletVM
-                                      .showDialog(DialogContentType.coinPicker);
-                                }),
+                                onPressed: () {}),
                           ],
                         ),
                       ),
@@ -195,11 +192,7 @@ class _BuyCoinViewState extends State<BuyCoinView> {
                                       icon: Icon(Icons.keyboard_arrow_down,
                                           color: Theme.of(context)
                                               .primaryColorLight),
-                                      onPressed: () {
-                                        walletVM.showDialog(
-                                            DialogContentType.coinPicker,
-                                            autoDismiss: false);
-                                      }),
+                                      onPressed: () {}),
                                 ],
                               ),
                             ),

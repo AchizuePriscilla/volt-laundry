@@ -9,6 +9,9 @@ class WalletVM extends BaseViewModel {
   void navigateToRoute(String route) {
     navigationHandler.pushNamed(route);
   }
+  void popContext() {
+    navigationHandler.goBack();
+  }
 
   void showDialog(DialogContentType contentType,
       {String? message, bool autoDismiss = true}) {

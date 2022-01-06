@@ -69,11 +69,7 @@ class _DialogManagerState extends State<DialogManager> {
           dismissDialog: (status) => _dismissDialog(true),
         );
 
-      case DialogContentType.coinPicker:
-        return CoinPickerDialog(
-          request: request,
-          dismissDialog: (status) => _dismissDialog(status),
-        );
+      
  case DialogContentType.transactionComplete:
         return TransactionSuccessfulDialog(
           request: request,

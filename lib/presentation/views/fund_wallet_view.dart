@@ -14,13 +14,116 @@ class FundWalletView extends StatefulWidget {
 }
 
 class _FundWalletViewState extends State<FundWalletView> {
-  bool isVNGN = true;
+  bool isVNGN = false;
+  int _radioValue = 0;
 
   String getCoinType(bool isVNGN) {
     if (isVNGN) {
       return 'Volt Naira coin';
     }
     return 'Volt Coin';
+  }
+
+  String getImagePath(bool isVNGN) {
+    if (isVNGN) {
+      return 'assets/images/volt_naira_coin.png';
+    }
+    return 'assets/images/volt_coin_yellow.png';
+  }
+
+  void _handleRadioValueChanged(int? value) {
+    if (value != null) setState(() => _radioValue = value);
+  }
+
+  void _showCoinPickerDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Theme.of(context).primaryColorLight,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.w),
+            ),
+            actions: [
+              Container(
+                padding: EdgeInsets.only(
+                    top: 10.h, bottom: 20.h, left: 20.w, right: 20.w),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 10.h),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            height: 33.h,
+                            width: 33.h,
+                            child: Image.asset(
+                                'assets/images/volt_coin_yellow.png'),
+                          ),
+                          const CustomSpacer(
+                            flex: 1,
+                            horizontal: true,
+                          ),
+                          Text(
+                            'Volt Coin',
+                            style: GoogleFonts.lato(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Expanded(child: SizedBox()),
+                          Radio(
+                              value: 1,
+                              toggleable: true,
+                              groupValue: 1,
+                              onChanged: (value) {
+                                Navigator.pop(context);
+                              },
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 10.h),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            height: 33.h,
+                            width: 33.h,
+                            child: Image.asset(
+                                'assets/images/volt_naira_coin.png'),
+                          ),
+                          const CustomSpacer(
+                            flex: 1,
+                            horizontal: true,
+                          ),
+                          Text(
+                            'Volt Naira Coin',
+                            style: GoogleFonts.lato(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Expanded(child: SizedBox()),
+                          Radio(
+                              value: 0,
+                              toggleable: true,
+                              groupValue: 1,
+                              onChanged: (value) {
+                                Navigator.pop(context);
+                              },
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        });
   }
 
   @override
@@ -56,7 +159,7 @@ class _FundWalletViewState extends State<FundWalletView> {
                         ),
                         const CustomSpacer(flex: 1),
                         Container(
-                          height: 40.h,
+                          height: 35.h,
                           width: 125.h,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(23.w),
@@ -71,8 +174,7 @@ class _FundWalletViewState extends State<FundWalletView> {
                               SizedBox(
                                 height: 20.h,
                                 width: 20.h,
-                                child: Image.asset(
-                                    'assets/images/volt_coin_yellow.png'),
+                                child: Image.asset(getImagePath(isVNGN)),
                               ),
                               const CustomSpacer(
                                 flex: 2,
@@ -90,9 +192,7 @@ class _FundWalletViewState extends State<FundWalletView> {
                                     Icons.keyboard_arrow_down,
                                   ),
                                   onPressed: () {
-                                    walletVM.showDialog(
-                                        DialogContentType.coinPicker,
-                                        autoDismiss: false);
+                                    _showCoinPickerDialog();
                                   }),
                             ],
                           ),
@@ -263,148 +363,6 @@ class AccountHistory extends StatelessWidget {
             ],
           )
         ],
-      ),
-    );
-  }
-}
-
-class CoinPickerDialog extends StatelessWidget {
-  final DialogRequest request;
-  final Function(bool) dismissDialog;
-  const CoinPickerDialog({
-    Key? key,
-    required this.request,
-    required this.dismissDialog,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
-    return GestureDetector(
-      onTapDown: (details) {
-        //do nothing if dialog is not dismissable
-        if (!request.dismissable) return;
-
-        var screenOffset = details.localPosition;
-        var dialogCardHeight = dialogContainerKey.currentContext!.size!.height;
-
-        //dismiss dialog if user taps on any screen area outside the dimensions of the dialog
-
-        if (screenOffset.dy < (height - dialogCardHeight) / 2 ||
-            screenOffset.dy > (height + dialogCardHeight) / 2) {
-          dismissDialog(true);
-        }
-        if (screenOffset.dx < dialogMargin ||
-            screenOffset.dx > (width - dialogMargin)) {
-          dismissDialog(true);
-        }
-      },
-      child: Material(
-        color: Theme.of(context).primaryColorLight.withOpacity(.75),
-        elevation: 10,
-        child: SizedBox(
-          height: height,
-          width: width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                constraints: BoxConstraints(
-                    minWidth: MediaQuery.of(context).size.width * .3,
-                    minHeight: MediaQuery.of(context).size.height * .22),
-                margin: EdgeInsets.symmetric(horizontal: dialogMargin),
-                padding: EdgeInsets.only(
-                    top: 10.h, bottom: 20.h, left: 20.w, right: 20.w),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColorLight,
-                  borderRadius: BorderRadius.circular(30.w),
-                ),
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-
-                  children: [
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: IconButton(
-                          onPressed: () {
-                            dismissDialog(true);
-                          },
-                          icon: const Icon(
-                            Icons.close,
-                            color: Colors.red,
-                          )),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.h),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            height: 33.h,
-                            width: 33.h,
-                            child: Image.asset(
-                                'assets/images/volt_coin_yellow.png'),
-                          ),
-                          const CustomSpacer(
-                            flex: 1,
-                            horizontal: true,
-                          ),
-                          Text(
-                            'Volt Coin',
-                            style: GoogleFonts.lato(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const Expanded(child: SizedBox()),
-                          Radio(
-                              value: 1,
-                              toggleable: true,
-                              groupValue: 1,
-                              onChanged: (value) => dismissDialog(false),
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.h),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            height: 33.h,
-                            width: 33.h,
-                            child: Image.asset(
-                                'assets/images/volt_naira_coin.png'),
-                          ),
-                          const CustomSpacer(
-                            flex: 1,
-                            horizontal: true,
-                          ),
-                          Text(
-                            'Volt Naira Coin',
-                            style: GoogleFonts.lato(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const Expanded(child: SizedBox()),
-                          Radio(
-                              value: 0,
-                              toggleable: true,
-                              groupValue: 1,
-                              onChanged: (value) => dismissDialog(false),
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
