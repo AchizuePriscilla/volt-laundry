@@ -23,11 +23,12 @@ class TransactionInitResponse {
       (failure) => TransactionInitResponse(error: failure.error),
       (success) => TransactionInitResponse(
         success: true,
-        message: success.data['message'] ?? "",
-        status: success.data['status'],
-        accessCode: success.data['data']['access_code'] ?? '',
-        authorizationUrl: success.data['data']['authorization_url'] ?? '',
-        reference: success.data['data']['reference'] ?? '',
+        message: success.data['data']['message'] ?? "",
+        status: success.data['data']['status'] ?? false,
+        accessCode: success.data['data']['data']['access_code'] ?? '',
+        authorizationUrl:
+            success.data['data']['data']['authorization_url'] ?? '',
+        reference: success.data['data']['data']['reference'] ?? '',
       ),
     );
   }

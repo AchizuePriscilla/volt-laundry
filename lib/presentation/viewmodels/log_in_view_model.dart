@@ -29,6 +29,7 @@ class LogInViewModel extends BaseViewModel {
 
       if (res.success) {
         navigationHandler.pushReplacementNamed(homeViewRoute);
+        log(res.user!.email);
       } else {
         if (res.error!.type == ErrorType.emailNotValidated) {
           //navigate to AccountVerificationViewRoute

@@ -9,3 +9,4 @@ export 'laundry_view_model.dart';
 export 'home_view_model.dart';
 export 'profile_view_model.dart';
 export 'wallet_view_model.dart';
+export 'app_profile_view_model.dart';

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/models/dialog/dialog_request.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/viewmodels/app_profile_view_model.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
@@ -20,6 +21,12 @@ class _FundWalletViewState extends State<FundWalletView> {
       return 'Volt Naira coin';
     }
     return 'Volt Coin';
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<AppProfileVM>().fetchUserData();
   }
 
   @override
@@ -50,7 +57,7 @@ class _FundWalletViewState extends State<FundWalletView> {
                         const CustomSpacer(flex: 1),
                         Container(
                           height: 40.h,
-                          width: 105.h,
+                          width: 125.h,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(23.w),
                               color: Theme.of(context).primaryColorLight),
@@ -189,9 +196,13 @@ class _FundWalletViewState extends State<FundWalletView> {
               child: Container(
                 margin: EdgeInsets.only(bottom: 10.h),
                 child: Button(
+                  loading: walletVM.loading,
                   text: 'Buy ${getCoinType(isVNGN)}',
                   onPressed: () {
-                    walletVM.navigateToRoute(paymentMethodViewRoute);
+                    walletVM.transactionInit(
+                        email: context.read<AppProfileVM>().email,
+                        amount: 2000);
+                    // walletVM.navigateToRoute(paymentMethodViewRoute);
                   },
                   color: Palette.lightGreen,
                 ),
@@ -282,11 +293,11 @@ class CoinPickerDialog extends StatelessWidget {
 
         if (screenOffset.dy < (height - dialogCardHeight) / 2 ||
             screenOffset.dy > (height + dialogCardHeight) / 2) {
-          dismissDialog(false);
+          dismissDialog(true);
         }
         if (screenOffset.dx < dialogMargin ||
             screenOffset.dx > (width - dialogMargin)) {
-          dismissDialog(false);
+          dismissDialog(true);
         }
       },
       child: Material(
@@ -303,14 +314,27 @@ class CoinPickerDialog extends StatelessWidget {
                     minWidth: MediaQuery.of(context).size.width * .3,
                     minHeight: MediaQuery.of(context).size.height * .22),
                 margin: EdgeInsets.symmetric(horizontal: dialogMargin),
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                padding: EdgeInsets.only(
+                    top: 10.h, bottom: 20.h, left: 20.w, right: 20.w),
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColorLight,
                   borderRadius: BorderRadius.circular(30.w),
                 ),
                 child: Column(
                   // mainAxisAlignment: MainAxisAlignment.center,
+
                   children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                          onPressed: () {
+                            dismissDialog(true);
+                          },
+                          icon: const Icon(
+                            Icons.close,
+                            color: Colors.red,
+                          )),
+                    ),
                     Container(
                       margin: EdgeInsets.symmetric(vertical: 10.h),
                       child: Row(
