@@ -36,6 +36,7 @@ dependencies:
   pretty_dio_logger:
     git:
       url: https://github.com/Space-HQ/pretty_dio_logger.git
+  flutter_paystack: ^1.0.5+1
 
 dev_dependencies:
   flutter_test:

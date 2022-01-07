@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:volt/data/local/local_cache.dart';
 import 'package:volt/data/remote/connectivity_service.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -11,18 +12,15 @@ import 'package:volt/utils/utils.dart';
 
 abstract class BaseApi {
   late Dio dio;
-
+  final apiKey = dotenv.env['API_KEY'];
+  final accessToken = dotenv.env['X_ACCESS_TOKEN'];
   BaseApi(String baseApi) {
     final options = BaseOptions(
         baseUrl: "https://$baseApi",
         receiveDataWhenStatusError: true,
         connectTimeout: 60 * 1000, // 60 seconds
         receiveTimeout: 60 * 1000, // 60 seconds
-        headers: {
-          'API-KEY': 'b1103269-dca6-459b-9867-c9dfeba3e196',
-          'X-ACCESS-TOKEN':
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDM1ZGQ4MGM0NjAwZmYxOWE2ZDFmMSIsIm5hbWUiOiJGb28gQmFyIiwiZW1haWwiOiJmb29AbWFpbC5jb20iLCJwaG9uZSI6IisxMjM0NTY3OCIsInBhc3N3b3JkIjoiY2FhODJkZWEyNDlmNjQwY2RjZTY4NWUzMjk3NmQ5NzE0NzBiZDdjMGQ5OTE4ZjJmNTM3YWIzNmVjMmQzMjc0MyIsImNyZWF0ZWRBdCI6IjIwMjItMDEtMDNUMjA6MzQ6MzEuNDMxWiIsInVwZGF0ZWRBdCI6IjIwMjItMDEtMDNUMjA6MzQ6MzEuNDMxWiIsImxvY2F0aW9uIjp7ImFkZHJlc3MiOiJVTk4iLCJjb3VudHJ5IjoiTkciLCJzdGF0ZSI6IkVudWd1IiwibGF0IjoyMywibG5nIjoyM30sIndhbGxldCI6eyJWTFRfQ09JTiI6eyJjdXJyZW5jeSI6IlZMVENPSU4iLCJhbW91bnQiOjB9LCJWTFRfTkdOIjp7ImN1cnJlbmN5IjoiVk5HTiIsImFtb3VudCI6MH19LCJpYXQiOjE2NDEyNDIwNzIsImV4cCI6MTY0MTg0Njg3Mn0.BspCY1MRgQ-GEVuUpX1X4fAt5LS62TcNuoCXuUCVcNw'
-        });
+        headers: {'API-KEY': apiKey, 'X-ACCESS-TOKEN': accessToken});
 
     dio = Dio(options);
     dio.interceptors.add(InterceptorsWrapper(onRequest: (
