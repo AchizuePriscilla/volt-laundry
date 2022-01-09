@@ -302,9 +302,11 @@ class _FundWalletViewState extends State<FundWalletView> {
                   text: 'Buy ${getCoinType(isVNGN)}',
                   onPressed: () {
                     if (isVNGN) {
-                      walletVM.transactionInit(
-                          email: context.read<AppProfileVM>().email,
-                          amount: 2000);
+                      walletVM.navigateToRoute(checkoutViewRoute);
+
+                      // walletVM.transactionInit(
+                      //     email: context.read<AppProfileVM>().email,
+                      //     amount: 2000);
                     }
                   },
                   color: Palette.lightGreen,

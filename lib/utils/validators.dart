@@ -9,6 +9,46 @@ class Validators {
     }
   }
 
+    static String? validateCardNumber(String? value) {
+    const Pattern pattern = r'^\d{16}$';
+    final regex = RegExp(pattern.toString());
+    if (value!.isEmpty || !regex.hasMatch(value)) {
+      return 'Please enter a valid card number';
+    } else {
+      return null;
+    }
+  }
+
+    static String? validateExpiryMonth(String? value) {
+    const Pattern pattern = r'^\d{2}$';
+    final regex = RegExp(pattern.toString());
+    if (value!.isEmpty || !regex.hasMatch(value)) {
+      return 'Please enter a valid expiry month';
+    } else {
+      return null;
+    }
+  }
+
+    static String? validateExpiryYear(String? value) {
+    const Pattern pattern = r'^\d{2}$';
+    final regex = RegExp(pattern.toString());
+    if (value!.isEmpty || !regex.hasMatch(value)) {
+      return 'Please enter a valid expiry year';
+    } else {
+      return null;
+    }
+  }
+
+    static String? validateCVV(String? value) {
+    const Pattern pattern = r'^\d{3}$';
+    final regex = RegExp(pattern.toString());
+    if (value!.isEmpty || !regex.hasMatch(value)) {
+      return 'Please enter a valid CVV';
+    } else {
+      return null;
+    }
+  }
+
   static String? validateEmail(String? value) {
     const Pattern emailPatter =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';

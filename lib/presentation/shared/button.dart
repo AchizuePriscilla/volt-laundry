@@ -71,14 +71,14 @@ class Button extends StatelessWidget {
               foregroundColor: MaterialStateProperty.resolveWith(
                 (states) => active
                     ? Theme.of(context).primaryColorLight
-                    : Theme.of(context).primaryColorLight.withOpacity(.65),
+                    : Theme.of(context).primaryColorLight.withOpacity(.55),
               ),
               backgroundColor: MaterialStateProperty.resolveWith(
                 (states) =>
                     color ??
                     (active
                         ? Palette.buttonColor
-                        : Palette.buttonColor.withOpacity(.6)),
+                        : Palette.buttonColor.withOpacity(.55)),
               ),
               shape: isRounded!
                   ? MaterialStateProperty.all<RoundedRectangleBorder>(

@@ -9,6 +9,7 @@ class WalletVM extends BaseViewModel {
   void navigateToRoute(String route) {
     navigationHandler.pushNamed(route);
   }
+
   void popContext() {
     navigationHandler.goBack();
   }
@@ -21,6 +22,28 @@ class WalletVM extends BaseViewModel {
         message: message ?? 'Order Placed',
         autoDismiss: autoDismiss);
   }
+
+  ///validates card Number text field
+  String? validateCardNumber(String cardNumber) =>
+      Validators.validateCardNumber(cardNumber);
+
+  ///Validates expiry month text field
+  String? validateExpiryMonth(String expiryMonth) =>
+      Validators.validateExpiryMonth(expiryMonth);
+
+  ///Validates expiry year text field
+  String? validateExpiryYear(String expiryYear) =>
+      Validators.validateExpiryYear(expiryYear);
+
+  ///Validates CVV text field
+  String? validateCVV(String cvv) => Validators.validateCVV(cvv);
+
+  ///Validates amount text field
+  String? validateAmount(String amount) =>
+      Validators.validateTextInput(amount, 'amount');
+
+  ///Validates full name text field
+  String? validateFullName(String name) => Validators.validateFullName(name);
 
   Future<void> transactionInit({
     required String email,
