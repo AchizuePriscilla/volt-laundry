@@ -1,5 +1,8 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:volt/models/api/transaction_reqests.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
@@ -44,11 +47,40 @@ class WalletVM extends BaseViewModel {
 
   ///Validates full name text field
   String? validateFullName(String name) => Validators.validateFullName(name);
+  String getReference() {
+    var platform = (Platform.isIOS) ? 'iOS' : 'Android';
+    final thisDate = DateTime.now().millisecondsSinceEpoch;
+    return 'ChargedFrom${platform}_$thisDate';
+  }
 
-  Future<void> transactionInit({
-    required String email,
-    required double amount,
-  }) async {
+  _chargeCard(
+      {required String accessCode,
+      required BuildContext context,
+      // required PaymentCard getCardFromUI,
+      required int amount,
+      required PaystackPlugin paystackPlugin,
+      required String email}) async {
+    var charge = Charge()
+      ..accessCode = accessCode
+      ..amount = amount
+      ..reference = getReference()
+      // ..card = getCardFromUI
+      ..email = email;
+
+    final response = await paystackPlugin.checkout(context,
+        charge: charge, method: CheckoutMethod.card);
+
+    log(response.status.toString());
+    AppLogger.logger.d(response.message);
+    // Use the response
+  }
+
+  Future<void> transactionInit(
+      {required String email,
+      required double amount,
+      required BuildContext context,
+      // required PaymentCard getCardFromUI,
+      required PaystackPlugin paystackPlugin}) async {
     try {
       if (loading) return;
       toggleLoading(true);
@@ -57,7 +89,15 @@ class WalletVM extends BaseViewModel {
       );
       if (res.success) {
         accessCode = res.accessCode;
+
         log(accessCode);
+        _chargeCard(
+            accessCode: accessCode,
+            context: context,
+            // getCardFromUI: getCardFromUI,
+            amount: amount.toInt(),
+            paystackPlugin: paystackPlugin,
+            email: email);
       } else {
         //show error messagge
         log('message: ${res.error!.message.toString()}');

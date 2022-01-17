@@ -13,14 +13,13 @@ import 'package:volt/utils/utils.dart';
 abstract class BaseApi {
   late Dio dio;
   final apiKey = dotenv.env['API_KEY'];
-  final accessToken = dotenv.env['X_ACCESS_TOKEN'];
   BaseApi(String baseApi) {
     final options = BaseOptions(
         baseUrl: "https://$baseApi",
         receiveDataWhenStatusError: true,
         connectTimeout: 60 * 1000, // 60 seconds
         receiveTimeout: 60 * 1000, // 60 seconds
-        headers: {'API-KEY': apiKey, 'X-ACCESS-TOKEN': accessToken});
+        headers: {'API-KEY': apiKey});
 
     dio = Dio(options);
     dio.interceptors.add(InterceptorsWrapper(onRequest: (
@@ -41,7 +40,7 @@ abstract class BaseApi {
       var token = await locator<LocalCache>().getToken();
       AppLogger.logger.d(token);
       if (token != null) {
-        options.headers['authorization'] = 'Bearer $token';
+        options.headers['X-ACCESS-TOKEN'] = token;
       }
       handler.next(options);
     }));

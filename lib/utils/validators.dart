@@ -9,17 +9,18 @@ class Validators {
     }
   }
 
-    static String? validateCardNumber(String? value) {
-    const Pattern pattern = r'^\d{16}$';
-    final regex = RegExp(pattern.toString());
-    if (value!.isEmpty || !regex.hasMatch(value)) {
-      return 'Please enter a valid card number';
-    } else {
-      return null;
+  static String? validateCardNumber(String? value) {
+    if (value == null) return null;
+
+    if (value.isEmpty) {
+      return 'Enter card number';
+    }
+    if (value.length < 16) {
+      return 'Card number cannot be less than 16 characters';
     }
   }
 
-    static String? validateExpiryMonth(String? value) {
+  static String? validateExpiryMonth(String? value) {
     const Pattern pattern = r'^\d{2}$';
     final regex = RegExp(pattern.toString());
     if (value!.isEmpty || !regex.hasMatch(value)) {
@@ -29,7 +30,7 @@ class Validators {
     }
   }
 
-    static String? validateExpiryYear(String? value) {
+  static String? validateExpiryYear(String? value) {
     const Pattern pattern = r'^\d{2}$';
     final regex = RegExp(pattern.toString());
     if (value!.isEmpty || !regex.hasMatch(value)) {
@@ -39,7 +40,7 @@ class Validators {
     }
   }
 
-    static String? validateCVV(String? value) {
+  static String? validateCVV(String? value) {
     const Pattern pattern = r'^\d{3}$';
     final regex = RegExp(pattern.toString());
     if (value!.isEmpty || !regex.hasMatch(value)) {

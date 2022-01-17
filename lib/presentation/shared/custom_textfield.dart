@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
   final Color? hintColor;
   final TextCapitalization textCapitalization;
   final VoidCallback? onTap;
+  final Function(String)? onChanged;
   final Color? fillColor;
   final bool obscure;
 
@@ -32,6 +33,7 @@ class CustomTextField extends StatelessWidget {
     this.borderColor,
     this.hintColor,
     this.onTap,
+    this.onChanged,
     this.fillColor,
     this.obscure = false,
     this.textCapitalization = TextCapitalization.none,
@@ -58,6 +60,7 @@ class CustomTextField extends StatelessWidget {
           return validator!(value ?? "");
         }
       },
+      onChanged: onChanged ?? (val){},
       decoration: InputDecoration(
         alignLabelWithHint: true,
         labelText: label,

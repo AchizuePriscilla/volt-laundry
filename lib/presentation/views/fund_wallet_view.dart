@@ -138,6 +138,7 @@ class _FundWalletViewState extends State<FundWalletView> {
   Widget build(BuildContext context) {
     var walletVM = context.read<WalletVM>();
     var rxWalletVM = context.watch<WalletVM>();
+    var rxAppProfileVM = context.watch<AppProfileVM>();
     return ResponsiveWidget(builder: (_, size) {
       return DefaultTabController(
         length: 2,
@@ -201,14 +202,14 @@ class _FundWalletViewState extends State<FundWalletView> {
                         ),
                         const CustomSpacer(flex: 2),
                         Text(
-                          'VTC 500',
+                          'VTC ${rxAppProfileVM.vltCoinBalance.toString()}',
                           style: GoogleFonts.lato(
                               fontSize: 36.sp,
                               fontWeight: FontWeight.w900,
                               color: Theme.of(context).primaryColorLight),
                         ),
                         Text(
-                          '2,500.00',
+                          "VNGN ${rxAppProfileVM.vltNairaBalance.toString()}",
                           style: GoogleFonts.lato(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w300,
@@ -229,7 +230,9 @@ class _FundWalletViewState extends State<FundWalletView> {
                         borderRadius: BorderRadius.circular(10.w),
                         color: Palette.lightBlue,
                       ),
-                      child: ListView(children: const [
+                      child: 
+                      
+                      ListView(children: const [
                         AccountHistory(),
                         AccountHistory(),
                         AccountHistory(),

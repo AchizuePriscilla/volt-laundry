@@ -17,7 +17,7 @@ class OnboardingVM extends BaseViewModel {
     _currentIndex = index;
     //if current page is last page, exit onboarding view
     if (_currentIndex == 3 && tapped) {
-      await navigateToSetPhoneNumber();
+      await navigateToSignUp();
       return;
     }
     //else, animate to next onboarding page
@@ -37,8 +37,8 @@ class OnboardingVM extends BaseViewModel {
   }
 
   ///Navigates to SignUpPagesView and cache onboarding status
-  Future<void> navigateToSetPhoneNumber() async {
+  Future<void> navigateToSignUp() async {
     await localCache.saveToLocalCache(key: onboardingDone, value: true);
-    navigationHandler.pushReplacementNamed(setPhoneNumberViewRoute);
+    navigationHandler.pushReplacementNamed(signUpViewRoute);
   }
 }
