@@ -1,8 +1,10 @@
 import 'package:volt/models/navigation/laundry_details_args.dart';
+import 'package:volt/models/order_model.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
 class LaundryVM extends BaseViewModel {
+  late OrderHistoryModel _orderHistoryModel;
   String getDesc(ClothType clothType) {
     switch (clothType) {
       case ClothType.tShirt:
@@ -80,5 +82,16 @@ class LaundryVM extends BaseViewModel {
     navigationHandler.pushNamed(route);
   }
 
- 
+ List<Order> get orderHistory {
+    try {
+      return _orderHistoryModel.orders;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<void> getOrderHistory() async {
+    final response = await orderService.getOrderHistory();
+    _orderHistoryModel = response.orderHistory!;
+  }
 }

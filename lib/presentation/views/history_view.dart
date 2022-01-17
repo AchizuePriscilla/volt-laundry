@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/viewmodels/viewmodels.dart';
 
-class HistoryView extends StatelessWidget {
+class HistoryView extends StatefulWidget {
   const HistoryView({Key? key}) : super(key: key);
 
   @override
+  State<HistoryView> createState() => _HistoryViewState();
+}
+
+class _HistoryViewState extends State<HistoryView> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<LaundryVM>().getOrderHistory();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var laundryVM = context.read<LaundryVM>();
     return ResponsiveWidget(
         appBar: CustomAppBar(
           text: 'History',
@@ -15,103 +29,105 @@ class HistoryView extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 25.w),
             height: size.height,
             width: size.width,
-            child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(vertical: 10.h),
-                    height: 30.h,
-                    width: size.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(children: [
-                                Text(
-                                  'Wash & Iron',
-                                  style: GoogleFonts.lato(
-                                      fontSize: 10.sp,
-                                      fontWeight: FontWeight.w300,
-                                      fontStyle: FontStyle.italic),
-                                ),
-                                const CustomSpacer(
-                                  flex: 2,
-                                  horizontal: true,
-                                ),
-                                Text(
-                                  'KGHJIJD',
-                                  style: GoogleFonts.lato(
-                                      fontSize: 10.sp,
-                                      fontWeight: FontWeight.w300,
-                                      fontStyle: FontStyle.italic),
-                                )
-                              ]),
-                              const CustomSpacer(
-                                flex: 2,
-                              ),
-                              Row(
+            child: laundryVM.orderHistory.isEmpty
+                ? const EmptyContainer(message: 'Order history')
+                : ListView.separated(
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.symmetric(vertical: 10.h),
+                        height: 30.h,
+                        width: size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    '4 Shirts, 6 Trousers',
-                                    style: GoogleFonts.lato(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w600,
+                                  Row(children: [
+                                    Text(
+                                      'Wash & Iron',
+                                      style: GoogleFonts.lato(
+                                          fontSize: 10.sp,
+                                          fontWeight: FontWeight.w300,
+                                          fontStyle: FontStyle.italic),
                                     ),
-                                  ),
+                                    const CustomSpacer(
+                                      flex: 2,
+                                      horizontal: true,
+                                    ),
+                                    Text(
+                                      'KGHJIJD',
+                                      style: GoogleFonts.lato(
+                                          fontSize: 10.sp,
+                                          fontWeight: FontWeight.w300,
+                                          fontStyle: FontStyle.italic),
+                                    )
+                                  ]),
                                   const CustomSpacer(
                                     flex: 2,
-                                    horizontal: true,
                                   ),
-                                  SizedBox(
-                                    height: 12.h,
-                                    width: 47.h,
-                                    // color: Colors.black,
-                                    child: ListView(
-                                      scrollDirection: Axis.horizontal,
-                                      children: [
-                                        Container(
-                                          width: 11.h,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.red,
-                                          ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '4 Shirts, 6 Trousers',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w600,
                                         ),
-                                        Container(
-                                          width: 11.h,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.yellow,
-                                          ),
+                                      ),
+                                      const CustomSpacer(
+                                        flex: 2,
+                                        horizontal: true,
+                                      ),
+                                      SizedBox(
+                                        height: 12.h,
+                                        width: 47.h,
+                                        // color: Colors.black,
+                                        child: ListView(
+                                          scrollDirection: Axis.horizontal,
+                                          children: [
+                                            Container(
+                                              width: 11.h,
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 11.h,
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.yellow,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 11.h,
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.green,
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                        Container(
-                                          width: 11.h,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.green,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ]),
-                        Text(
-                          '8,000',
-                          style: GoogleFonts.lato(
-                              fontSize: 17.sp,
-                              fontWeight: FontWeight.w700,
-                              color: Theme.of(context).primaryColor),
-                        )
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider();
-                },
-                itemCount: 5),
+                                      ),
+                                    ],
+                                  )
+                                ]),
+                            Text(
+                              '8,000',
+                              style: GoogleFonts.lato(
+                                  fontSize: 17.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: Theme.of(context).primaryColor),
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const Divider();
+                    },
+                    itemCount: 5),
           );
         });
   }

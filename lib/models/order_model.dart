@@ -3,19 +3,19 @@
 //     final orderModel = orderModelFromMap(jsonString);
 import 'dart:convert';
 
-OrderModel orderModelFromMap(String str) =>
-    OrderModel.fromMap(json.decode(str));
+OrderHistoryModel orderModelFromMap(String str) =>
+    OrderHistoryModel.fromMap(json.decode(str));
 
-String orderModelToMap(OrderModel data) => json.encode(data.toMap());
+String orderModelToMap(OrderHistoryModel data) => json.encode(data.toMap());
 
-class OrderModel {
-  OrderModel({
+class OrderHistoryModel {
+  OrderHistoryModel({
     required this.orders,
   });
 
   final List<Order> orders;
 
-  factory OrderModel.fromMap(Map<String, dynamic> json) => OrderModel(
+  factory OrderHistoryModel.fromMap(Map<String, dynamic> json) => OrderHistoryModel(
         orders: List<Order>.from(json["orders"].map((x) => Order.fromMap(x))),
       );
 

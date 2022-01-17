@@ -1,7 +1,6 @@
 import 'package:volt/data/config/base_api.dart';
 import 'package:volt/data/remote/wallet_apis/wallet_repo.dart';
 import 'package:volt/models/api/get_wallet_history_response.dart';
-import 'package:volt/models/api/general_request.dart';
 import 'package:volt/models/api/transaction_reqests.dart';
 import 'package:volt/models/api/transaction_init_response.dart';
 
@@ -18,7 +17,7 @@ class WalletRepoImpl extends BaseApi implements WalletRepo {
 
   @override
   Future<GetWalletHistoryResponse> getWalletHistory(
-      String accessToken ) async {
+     ) async {
     var response = await get(walletHistory);
     return GetWalletHistoryResponse.fromMap(response);
   }

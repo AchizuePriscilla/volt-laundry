@@ -68,7 +68,6 @@ class WalletVM extends BaseViewModel {
 
   Future<void> getWalletHistory() async {
     final response = await walletService.getWalletHistory();
-
     _walletHistory = response.walletHistory!;
   }
 
