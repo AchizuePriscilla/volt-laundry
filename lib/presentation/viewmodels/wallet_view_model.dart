@@ -3,14 +3,27 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
+import 'package:volt/data/local/local.dart';
+import 'package:volt/models/api/general_request.dart';
 import 'package:volt/models/api/transaction_reqests.dart';
+import 'package:volt/models/wallet_history_model.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
 class WalletVM extends BaseViewModel {
   late String accessCode;
+  late WalletHistoryModel _walletHistory;
+
   void navigateToRoute(String route) {
     navigationHandler.pushNamed(route);
+  }
+
+ List<History> get walletHistory {
+    try {
+      return _walletHistory.history;
+    } catch (e) {
+      return [];
+    }
   }
 
   void popContext() {
@@ -53,6 +66,12 @@ class WalletVM extends BaseViewModel {
     return 'ChargedFrom${platform}_$thisDate';
   }
 
+  Future<void> getWalletHistory() async {
+    final response = await walletService.getWalletHistory();
+
+    _walletHistory = response.walletHistory!;
+  }
+
   _chargeCard(
       {required String accessCode,
       required BuildContext context,
@@ -84,7 +103,7 @@ class WalletVM extends BaseViewModel {
     try {
       if (loading) return;
       toggleLoading(true);
-      var res = await transactionService.transactionInit(
+      var res = await walletService.transactionInit(
         TransactionInitRequest(email: email, amount: amount),
       );
       if (res.success) {

@@ -18,8 +18,8 @@ class WalletRepoImpl extends BaseApi implements WalletRepo {
 
   @override
   Future<GetWalletHistoryResponse> getWalletHistory(
-      GeneralRequest request) async {
-    var response = await get(walletHistory, data: request.toMap());
+      String accessToken ) async {
+    var response = await get(walletHistory);
     return GetWalletHistoryResponse.fromMap(response);
   }
 }

@@ -9,10 +9,11 @@ class Oops extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Column(children: [
-          const CustomSpacer(
+         height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+             const CustomSpacer(
             flex: 7,
           ),
           Align(
@@ -28,26 +29,11 @@ class Oops extends StatelessWidget {
           const CustomSpacer(
             flex: 10,
           ),
-          Center(
-            child: SizedBox(
-              child: Image.asset('assets/images/oops.png'),
-            ),
-          ),
-          Text(
-            'Oops!',
-            style:
-                GoogleFonts.lato(fontSize: 24.sp, fontWeight: FontWeight.w900),
-          ),
-          const CustomSpacer(
-            flex: 1,
-          ),
-          Text(
-            'No $message found at this time',
-            style:
-                GoogleFonts.lato(fontSize: 17.sp, fontWeight: FontWeight.w500),
-          )
-        ]),
+            EmptyContainer(message: message),
+          ],
+        ),
       ),
     );
   }
 }
+

@@ -132,6 +132,7 @@ class _FundWalletViewState extends State<FundWalletView> {
   void initState() {
     super.initState();
     context.read<AppProfileVM>().fetchUserData();
+    context.read<WalletVM>().getWalletHistory();
   }
 
   @override
@@ -230,16 +231,16 @@ class _FundWalletViewState extends State<FundWalletView> {
                         borderRadius: BorderRadius.circular(10.w),
                         color: Palette.lightBlue,
                       ),
-                      child: 
-                      
-                      ListView(children: const [
-                        AccountHistory(),
-                        AccountHistory(),
-                        AccountHistory(),
-                        AccountHistory(),
-                        AccountHistory(),
-                        AccountHistory(),
-                      ]),
+                      child: rxWalletVM.walletHistory.isEmpty
+                          ? const EmptyContainer(message: 'Transaction History')
+                          : ListView(children: const [
+                              AccountHistory(),
+                              AccountHistory(),
+                              AccountHistory(),
+                              AccountHistory(),
+                              AccountHistory(),
+                              AccountHistory(),
+                            ]),
                     ),
                     Container(
                       margin: EdgeInsets.symmetric(

@@ -7,5 +7,5 @@ abstract class WalletRepo {
   Future<TransactionInitResponse> transactionInit(
       TransactionInitRequest request);
 
-  Future<GetWalletHistoryResponse> getWalletHistory(GeneralRequest request);
+  Future<GetWalletHistoryResponse> getWalletHistory(String accessToken );
 }

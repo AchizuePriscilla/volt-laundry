@@ -138,7 +138,10 @@ abstract class BaseApi {
       //check for status code that indicates expired session and log user out
       log('Status Code: ${req.statusCode.toString()}');
       if ("${req.statusCode}".startsWith('2')) {
-        return Right(Success(data));
+        if(data is! Map){
+          return Right(Success(<String, dynamic>{"data":data}));
+        }
+        return Right(Success(data as Map<String, dynamic>));
       }
 
       return Left(Failure(data["message"]));

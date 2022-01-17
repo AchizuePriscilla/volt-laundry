@@ -51,6 +51,7 @@ Future<void> setupLocator({String baseApi = ''}) async {
   locator.registerLazySingleton<WalletService>(
     () => WalletServiceImpl(
       walletRepo: locator(),
+      localCache: locator()
     ),
   );
 

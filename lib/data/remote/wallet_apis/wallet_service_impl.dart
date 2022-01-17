@@ -1,3 +1,4 @@
+import 'package:volt/data/local/local_cache.dart';
 import 'package:volt/data/remote/wallet_apis/wallet_repo.dart';
 import 'package:volt/data/remote/wallet_apis/wallet_service.dart';
 import 'package:volt/models/api/get_wallet_history_response.dart';
@@ -7,8 +8,8 @@ import 'package:volt/models/api/transaction_init_response.dart';
 
 class WalletServiceImpl implements WalletService {
   final WalletRepo walletRepo;
-
-  WalletServiceImpl({required this.walletRepo});
+  final LocalCache localCache;
+  WalletServiceImpl({required this.walletRepo, required this.localCache});
   @override
   Future<TransactionInitResponse> transactionInit(
       TransactionInitRequest request) async {
@@ -18,8 +19,8 @@ class WalletServiceImpl implements WalletService {
 
   @override
   Future<GetWalletHistoryResponse> getWalletHistory(
-      GeneralRequest request) async {
-    var res = await walletRepo.getWalletHistory(request);
+    ) async {
+    var res = await walletRepo.getWalletHistory((await localCache.getToken())!);
     return res;
   }
 }

@@ -12,19 +12,19 @@ class BaseViewModel extends ChangeNotifier {
   late DialogHandler dialogHandler;
   late LocalCache localCache;
   late AuthService authService;
-  late WalletService transactionService;
+  late WalletService walletService;
 
   BaseViewModel(
       {NavigationHandler? navigationHandler,
       DialogHandler? dialogHandler,
       LocalCache? localCache,
       AuthService? authService,
-      WalletService? transactionService}) {
+      WalletService? walletService}) {
     this.navigationHandler = navigationHandler ?? locator();
     this.dialogHandler = dialogHandler ?? locator();
     this.localCache = localCache ?? locator();
     this.authService = authService ?? locator();
-    this.transactionService = transactionService ?? locator();
+    this.walletService = walletService ?? locator();
   }
 
   bool _loading = false;
