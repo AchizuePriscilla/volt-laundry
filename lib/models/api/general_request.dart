@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 
-class GetUserRequest extends Equatable {
+class GeneralRequest extends Equatable {
   final String accessToken;
 
-  const GetUserRequest({required this.accessToken});
+  const GeneralRequest({required this.accessToken});
 
 
    Map<String, dynamic> toMap() {
