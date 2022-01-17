@@ -9,10 +9,9 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var profileVM = context.read<ProfileVM>();
-    return ResponsiveWidget(
-      
-      builder: (_, size) {
+    var profileVM = context.read<AppProfileVM>();
+
+    return ResponsiveWidget(builder: (_, size) {
       return Container(
         height: size.height,
         width: size.width,
@@ -89,7 +88,7 @@ class ProfileView extends StatelessWidget {
                           horizontal: true,
                         ),
                         Text(
-                          'Ade John',
+                          profileVM.name,
                           style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColorLight,
                               fontWeight: FontWeight.w600,
@@ -118,7 +117,7 @@ class ProfileView extends StatelessWidget {
                           horizontal: true,
                         ),
                         Text(
-                          '08145518998',
+                          profileVM.number,
                           style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColorLight,
                               fontWeight: FontWeight.w600,

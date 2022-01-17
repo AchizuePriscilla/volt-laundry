@@ -13,6 +13,22 @@ class AppProfileVM extends BaseViewModel {
     }
   }
 
+  String get name {
+    try {
+      return _user.name;
+    } catch (e) {
+      return '';
+    }
+  }
+
+  String get number {
+    try {
+      return _user.phoneNumber;
+    } catch (e) {
+      return '';
+    }
+  }
+
   int get vltNairaBalance {
     try {
       return _user.vltNairaBalance;
@@ -21,7 +37,7 @@ class AppProfileVM extends BaseViewModel {
     }
   }
 
-   int get vltCoinBalance {
+  int get vltCoinBalance {
     try {
       return _user.vltCoinBalance;
     } catch (e) {
@@ -38,5 +54,9 @@ class AppProfileVM extends BaseViewModel {
     } catch (e) {
       AppLogger.logger.d(e);
     }
+  }
+
+  void navigateToEditProfileView() {
+    navigationHandler.pushNamed(editProfileViewRoute);
   }
 }

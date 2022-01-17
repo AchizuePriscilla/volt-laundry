@@ -15,7 +15,6 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => DrawerVM()),
     ChangeNotifierProvider(create: (_) => LaundryVM()),
     ChangeNotifierProvider(create: (_) => HomeVM()),
-    ChangeNotifierProvider(create: (_) => ProfileVM()),
     ChangeNotifierProvider(create: (_) => WalletVM()),
     ChangeNotifierProvider(create: (_) => AppProfileVM()),
   ];

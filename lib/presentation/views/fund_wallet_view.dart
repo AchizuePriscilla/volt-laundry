@@ -246,22 +246,28 @@ class _FundWalletViewState extends State<FundWalletView> {
                       margin: EdgeInsets.symmetric(
                           horizontal: 15.w, vertical: 25.h),
                       padding: EdgeInsets.symmetric(horizontal: 15.w),
-                      child: ListView(
-                        children: const [
-                          TransactionHistory(serviceType: ServiceType.ironing),
-                          TransactionHistory(
-                              serviceType: ServiceType.washAndIron),
-                          TransactionHistory(
-                              serviceType: ServiceType.dryCleaning),
-                          TransactionHistory(serviceType: ServiceType.ironing),
-                          TransactionHistory(serviceType: ServiceType.ironing),
-                          TransactionHistory(
-                              serviceType: ServiceType.washAndIron),
-                          TransactionHistory(
-                              serviceType: ServiceType.dryCleaning),
-                          TransactionHistory(serviceType: ServiceType.ironing)
-                        ],
-                      ),
+                      child: rxWalletVM.walletHistory.isEmpty
+                          ? const EmptyContainer(message: 'Order History')
+                          : ListView(
+                              children: const [
+                                TransactionHistory(
+                                    serviceType: ServiceType.ironing),
+                                TransactionHistory(
+                                    serviceType: ServiceType.washAndIron),
+                                TransactionHistory(
+                                    serviceType: ServiceType.dryCleaning),
+                                TransactionHistory(
+                                    serviceType: ServiceType.ironing),
+                                TransactionHistory(
+                                    serviceType: ServiceType.ironing),
+                                TransactionHistory(
+                                    serviceType: ServiceType.washAndIron),
+                                TransactionHistory(
+                                    serviceType: ServiceType.dryCleaning),
+                                TransactionHistory(
+                                    serviceType: ServiceType.ironing)
+                              ],
+                            ),
                     ),
                   ]),
                 ),

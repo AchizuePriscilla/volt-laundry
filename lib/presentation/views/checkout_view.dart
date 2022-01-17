@@ -18,20 +18,21 @@ class CheckoutView extends StatefulWidget {
 class _CheckoutViewState extends State<CheckoutView> {
   final _formKey = GlobalKey<FormState>();
   final paystackPlugin = PaystackPlugin();
-  final _cardNumberController = TextEditingController();
-  final _expiryMonthController = TextEditingController();
-  final _expiryYearController = TextEditingController();
-  final _nameController = TextEditingController();
-  final _cvvController = TextEditingController();
+  // final _cardNumberController = TextEditingController();
+  // final _expiryMonthController = TextEditingController();
+  // final _expiryYearController = TextEditingController();
+  // final _nameController = TextEditingController();
+  // final _cvvController = TextEditingController();
   final _amountController = TextEditingController();
   bool buttonActive = false;
 
   void onListen() {
-    if (_expiryMonthController.text.isEmpty ||
-        _cardNumberController.text.isEmpty ||
-        _expiryYearController.text.isEmpty ||
-        _nameController.text.isEmpty ||
-        _cvvController.text.isEmpty ||
+    if (
+        // _expiryMonthController.text.isEmpty ||
+        //   _cardNumberController.text.isEmpty ||
+        //   _expiryYearController.text.isEmpty ||
+        //   _nameController.text.isEmpty ||
+        //   _cvvController.text.isEmpty ||
         _amountController.text.isEmpty) {
       setState(() {
         buttonActive = false;
@@ -48,38 +49,38 @@ class _CheckoutViewState extends State<CheckoutView> {
   void initState() {
     super.initState();
     paystackPlugin.initialize(publicKey: publicKey!);
-    _expiryMonthController.addListener(onListen);
-    _cardNumberController.addListener(onListen);
-    _expiryYearController.addListener(onListen);
-    _nameController.addListener(onListen);
-    _cvvController.addListener(onListen);
+    // _expiryMonthController.addListener(onListen);
+    // _cardNumberController.addListener(onListen);
+    // _expiryYearController.addListener(onListen);
+    // _nameController.addListener(onListen);
+    // _cvvController.addListener(onListen);
     _amountController.addListener(onListen);
   }
 
   @override
   void dispose() {
-    _expiryMonthController.removeListener(onListen);
-    _cardNumberController.removeListener(onListen);
-    _expiryYearController.removeListener(onListen);
-    _nameController.removeListener(onListen);
-    _cvvController.removeListener(onListen);
+    // _expiryMonthController.removeListener(onListen);
+    // _cardNumberController.removeListener(onListen);
+    // _expiryYearController.removeListener(onListen);
+    // _nameController.removeListener(onListen);
+    // _cvvController.removeListener(onListen);
     _amountController.removeListener(onListen);
     super.dispose();
   }
 
-  late int _expiryMonth;
-  late int _expiryYear;
+  // late int _expiryMonth;
+  // late int _expiryYear;
   late int _amount;
 
-  PaymentCard _getCardFromUI() {
-    // Using just the must-required parameters.
-    return PaymentCard(
-      number: _cardNumberController.text,
-      cvc: _cvvController.text,
-      expiryMonth: _expiryMonth,
-      expiryYear: _expiryYear,
-    );
-  }
+  // PaymentCard _getCardFromUI() {
+  //   // Using just the must-required parameters.
+  //   return PaymentCard(
+  //     number: _cardNumberController.text,
+  //     cvc: _cvvController.text,
+  //     expiryMonth: _expiryMonth,
+  //     expiryYear: _expiryYear,
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
