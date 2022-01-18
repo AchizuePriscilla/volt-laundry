@@ -73,16 +73,16 @@ class LaundryVM extends BaseViewModel {
     }
   }
 
-  void navigateToLaundryDetailsView(ClothType clothType) {
+  void navigateToLaundryDetailsView(ClothType clothType, ServiceType serviceType) {
     navigationHandler.pushNamed(laundryDetailsRoute,
-        arg: LaundryDetailsArgs(clothType));
+        arg: LaundryDetailsArgs(clothType, serviceType));
   }
 
   void navigateToRoute(String route) {
     navigationHandler.pushNamed(route);
   }
 
- List<Order> get orderHistory {
+  List<Order> get orderHistory {
     try {
       return _orderHistoryModel.orders;
     } catch (e) {
@@ -94,4 +94,6 @@ class LaundryVM extends BaseViewModel {
     final response = await orderService.getOrderHistory();
     _orderHistoryModel = response.orderHistory!;
   }
+
+  Future<void> processOrder() async {}
 }

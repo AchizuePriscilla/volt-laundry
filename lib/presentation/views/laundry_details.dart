@@ -9,7 +9,10 @@ import 'package:volt/utils/utils.dart';
 
 class LaundryDetails extends StatefulWidget {
   final ClothType clothType;
-  const LaundryDetails({Key? key, required this.clothType}) : super(key: key);
+  final ServiceType serviceType;
+  const LaundryDetails(
+      {Key? key, required this.clothType, required this.serviceType})
+      : super(key: key);
 
   @override
   _LaundryDetailsState createState() => _LaundryDetailsState();
@@ -37,6 +40,19 @@ class _LaundryDetailsState extends State<LaundryDetails> {
   }
 
   String selectedValue = 'Men';
+  int _numberOfClothes = 0;
+
+  void _incrementCloth() {
+    setState(() {
+      _numberOfClothes++;
+    });
+  }
+
+  void _decrementCloth() {
+    setState(() {
+      _numberOfClothes == 0 ? null : _numberOfClothes--;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,20 +165,30 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(
-                                  Icons.remove,
-                                  size: 15.w,
-                                  color: Theme.of(context).primaryColorLight,
+                                IconButton(
+                                  onPressed: () {
+                                    _decrementCloth();
+                                  },
+                                  icon: Icon(
+                                    Icons.remove,
+                                    size: 15.w,
+                                    color: Theme.of(context).primaryColorLight,
+                                  ),
                                 ),
-                                Text('4',
+                                Text(_numberOfClothes.toString(),
                                     style: TextStyle(
                                       color:
                                           Theme.of(context).primaryColorLight,
                                     )),
-                                Icon(
-                                  Icons.add,
-                                  size: 15.w,
-                                  color: Theme.of(context).primaryColorLight,
+                                IconButton(
+                                  onPressed: () {
+                                    _incrementCloth();
+                                  },
+                                  icon: Icon(
+                                    Icons.add,
+                                    size: 15.w,
+                                    color: Theme.of(context).primaryColorLight,
+                                  ),
                                 ),
                               ]),
                         ),

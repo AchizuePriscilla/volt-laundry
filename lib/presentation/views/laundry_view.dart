@@ -52,7 +52,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'shirt',
                           onTap: () {
                             laundryDetailsVM
-                                .navigateToLaundryDetailsView(ClothType.tShirt);
+                                .navigateToLaundryDetailsView(ClothType.tShirt, ServiceType.washAndIron);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -60,7 +60,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'trousers',
                           onTap: () {
                             laundryDetailsVM
-                                .navigateToLaundryDetailsView(ClothType.shorts);
+                                .navigateToLaundryDetailsView(ClothType.shorts, ServiceType.washAndIron);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -68,7 +68,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'cardigan',
                           onTap: () {
                             laundryDetailsVM.navigateToLaundryDetailsView(
-                                ClothType.cardigans);
+                                ClothType.cardigans, ServiceType.washAndIron);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -76,7 +76,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'dress',
                           onTap: () {
                             laundryDetailsVM.navigateToLaundryDetailsView(
-                                ClothType.dresses);
+                                ClothType.dresses, ServiceType.washAndIron);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -84,7 +84,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'home',
                           onTap: () {
                             laundryDetailsVM
-                                .navigateToLaundryDetailsView(ClothType.home);
+                                .navigateToLaundryDetailsView(ClothType.home, ServiceType.washAndIron);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -92,7 +92,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'tie',
                           onTap: () {
                             laundryDetailsVM
-                                .navigateToLaundryDetailsView(ClothType.others);
+                                .navigateToLaundryDetailsView(ClothType.others, ServiceType.washAndIron);
                           },
                         ),
                       ],
@@ -119,7 +119,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'shirt',
                           onTap: () {
                             laundryDetailsVM
-                                .navigateToLaundryDetailsView(ClothType.tShirt);
+                                .navigateToLaundryDetailsView(ClothType.tShirt, ServiceType.ironing);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -127,7 +127,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'trousers',
                           onTap: () {
                             laundryDetailsVM
-                                .navigateToLaundryDetailsView(ClothType.shorts);
+                                .navigateToLaundryDetailsView(ClothType.shorts, ServiceType.ironing);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -135,7 +135,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'cardigan',
                           onTap: () {
                             laundryDetailsVM.navigateToLaundryDetailsView(
-                                ClothType.cardigans);
+                                ClothType.cardigans, ServiceType.ironing);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -143,7 +143,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'dress',
                           onTap: () {
                             laundryDetailsVM.navigateToLaundryDetailsView(
-                                ClothType.dresses);
+                                ClothType.dresses, ServiceType.ironing);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -151,7 +151,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'home',
                           onTap: () {
                             laundryDetailsVM
-                                .navigateToLaundryDetailsView(ClothType.home);
+                                .navigateToLaundryDetailsView(ClothType.home, ServiceType.ironing);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -159,7 +159,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'tie',
                           onTap: () {
                             laundryDetailsVM
-                                .navigateToLaundryDetailsView(ClothType.others);
+                                .navigateToLaundryDetailsView(ClothType.others, ServiceType.ironing);
                           },
                         ),
                       ],
@@ -186,7 +186,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'shirt',
                           onTap: () {
                             laundryDetailsVM
-                                .navigateToLaundryDetailsView(ClothType.tShirt);
+                                .navigateToLaundryDetailsView(ClothType.tShirt, ServiceType.dryCleaning);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -194,7 +194,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'trousers',
                           onTap: () {
                             laundryDetailsVM
-                                .navigateToLaundryDetailsView(ClothType.shorts);
+                                .navigateToLaundryDetailsView(ClothType.shorts, ServiceType.dryCleaning);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -202,7 +202,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'cardigan',
                           onTap: () {
                             laundryDetailsVM.navigateToLaundryDetailsView(
-                                ClothType.cardigans);
+                                ClothType.cardigans, ServiceType.dryCleaning);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -210,7 +210,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'dress',
                           onTap: () {
                             laundryDetailsVM.navigateToLaundryDetailsView(
-                                ClothType.dresses);
+                                ClothType.dresses, ServiceType.dryCleaning);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -218,7 +218,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'home',
                           onTap: () {
                             laundryDetailsVM
-                                .navigateToLaundryDetailsView(ClothType.home);
+                                .navigateToLaundryDetailsView(ClothType.home, ServiceType.dryCleaning);
                           },
                         ),
                         LaundryOptionsContainer(
@@ -226,7 +226,7 @@ class _LaundryViewState extends State<LaundryView> {
                           imagePath: 'tie',
                           onTap: () {
                             laundryDetailsVM
-                                .navigateToLaundryDetailsView(ClothType.others);
+                                .navigateToLaundryDetailsView(ClothType.others, ServiceType.dryCleaning);
                           },
                         ),
                       ],
