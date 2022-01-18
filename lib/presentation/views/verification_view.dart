@@ -4,8 +4,6 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
-import 'package:volt/utils/constants.dart';
-
 class VerificationView extends StatefulWidget {
   const VerificationView({Key? key}) : super(key: key);
 

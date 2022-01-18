@@ -126,7 +126,9 @@ class CustomDrawer extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15.w),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      drawerVM.navigateToRoute(logInViewRoute, signOut: true);
+                    },
                     child: SizedBox(
                       child: Column(
                         children: [
