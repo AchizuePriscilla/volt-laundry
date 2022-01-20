@@ -6,7 +6,7 @@ enum SelectedCoin {voltCoin, voltNaira}
 
 enum DeliveryMethod{pickup, dropOff}
 
-enum DialogContentType { success, transactionComplete }
+enum DialogContentType {success, transactionComplete, error}
 enum ErrorType {
   emailNotVerified,
   unknown,

@@ -131,7 +131,7 @@ class _LogInViewState extends State<LogInView> {
                 const CustomSpacer(flex: 8),
                 Button(
                     active: buttonActive,
-                    loading: context.read<LogInViewModel>().loading,
+                    loading: context.watch<LogInViewModel>().loading,
                     text: 'Log In',
                     onPressed: () {
                       loginVM.login(

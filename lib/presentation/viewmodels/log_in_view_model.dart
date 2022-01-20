@@ -31,18 +31,16 @@ class LogInViewModel extends BaseViewModel {
         navigationHandler.pushReplacementNamed(homeViewRoute);
         log(res.user!.email);
       } else {
-        if (res.error!.type == ErrorType.emailNotValidated) {
-          //navigate to AccountVerificationViewRoute
-          navigationHandler.pushReplacementNamed(
-            verificationViewRoute,
-          );
-        }
         //show error messagge
-        log('message: ${res.error!.message.toString()}');
+        log('An error occured');
+        dialogHandler.showDialog(
+            message: res.error!.message, contentType: DialogContentType.error);
+        return;
       }
       toggleLoading(false);
     } catch (e) {
-      AppLogger.logger.d(e);
+      log(e.toString());
+
       toggleLoading(false);
     }
   }

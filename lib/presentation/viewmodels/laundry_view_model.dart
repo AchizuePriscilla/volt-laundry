@@ -217,13 +217,15 @@ class LaundryVM extends BaseViewModel {
       );
       if (res.success) {
         dialogHandler.showDialog(
-            contentType: DialogContentType.success, message: res.message);
+            contentType: DialogContentType.success,
+            title: 'Success',
+            message: 'Order placed successfully',
+            autoDismiss: true);
         Future.delayed(const Duration(seconds: 3), () {
           navigationHandler.pushNamed(homeViewRoute);
         });
       } else {
         log(res.error!.message);
-
         onFailure();
       }
 

@@ -122,11 +122,30 @@ class WalletVM extends BaseViewModel {
     }
   }
 
-  Future<void> creditVTCWallet({required double amount}) async {
+  Future<void> creditVTCWallet(
+      {required double amount, required Function onFailure}) async {
     try {
       if (loading) return;
       toggleLoading(true);
-      creditwallet(amount: amount, paymentSource: 'VNGN');
+      var res = await walletService.creditWallet(
+        CreditWalletRequest(
+          amount: amount,
+          paymentSource: 'VNGN',
+        ),
+      );
+      if (res.success) {
+        dialogHandler.showDialog(
+            contentType: DialogContentType.transactionComplete,
+            message: amount.toString(),
+            autoDismiss: true);
+        Future.delayed(const Duration(seconds: 3), () {
+          navigationHandler.pushNamed(homeViewRoute);
+        });
+      } else {
+        log(res.error!.message);
+        onFailure();
+        toggleLoading(false);
+      }
       toggleLoading(false);
     } catch (e) {
       AppLogger.logger.d(e);

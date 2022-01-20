@@ -122,7 +122,26 @@ class _FundVTCWalletViewState extends State<FundVTCWalletView> {
                         onPressed: () {
                           context
                               .read<WalletVM>()
-                              .creditVTCWallet(amount: _amount.toDouble());
+                              .creditVTCWallet(
+                                  amount: _amount.toDouble(),
+                                  onFailure: () {
+                                    return ScaffoldMessenger.of(context)
+                                        .showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: SizedBox(
+                                          height: 30.h,
+                                          child: Center(
+                                            child: Text(
+                                              'Something went wrong, please try again',
+                                              style: TextStyle(fontSize: 14.sp),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  })
+                              .then((value) => _amountController.clear());
                         },
                         color: Palette.lightGreen),
                   ),

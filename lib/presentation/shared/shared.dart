@@ -23,3 +23,4 @@ export 'dialog_manager.dart';
 export 'transaction_successful_dialog.dart';
 export 'bottom_sheet.dart';
 export 'empty_container.dart';
+export 'error_dialog.dart';

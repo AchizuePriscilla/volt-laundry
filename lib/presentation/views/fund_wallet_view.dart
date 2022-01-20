@@ -238,7 +238,8 @@ class _FundWalletViewState extends State<FundWalletView> {
                             child: Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal: 15.w, vertical: 25.h),
-                              padding: EdgeInsets.symmetric(horizontal: 15.w),
+                              padding: EdgeInsets.only(
+                                  left: 15.w, right: 15.w, bottom: 20.h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.w),
                                 color: Palette.lightBlue,
@@ -284,7 +285,8 @@ class _FundWalletViewState extends State<FundWalletView> {
                             child: Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal: 15.w, vertical: 25.h),
-                              padding: EdgeInsets.symmetric(horizontal: 15.w),
+                              padding: EdgeInsets.only(
+                                  left: 15.w, right: 15.w, bottom: 20.h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.w),
                               ),
