@@ -27,6 +27,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
     0xff2196f3,
     0xff2196f3,
     0xffffffff,
+    0xff000000,
     0xff8bc34a,
   ];
 
@@ -270,6 +271,21 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                                 colors: selectedColors,
                                 serviceType: widget.serviceType);
                             laundryVM.navigateToRoute(deliveryDetailsViewRoute);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: Colors.red,
+                                content: SizedBox(
+                                  height: 30.h,
+                                  child: Center(
+                                    child: Text(
+                                      'Select at least a color and add at least one cloth',
+                                      style: TextStyle(fontSize: 14.sp),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
                           }
                         }),
                     const CustomSpacer(flex: 3),

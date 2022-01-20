@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/painting.dart';
 import 'package:volt/models/api/transaction_reqests.dart';
+import 'package:volt/models/navigation/confirm_deduct_args.dart';
 import 'package:volt/models/navigation/laundry_details_args.dart';
 import 'package:volt/models/order_history_model.dart' as order_history;
 import 'package:volt/models/process_order_model.dart';
@@ -164,7 +165,10 @@ class LaundryVM extends BaseViewModel {
         _paymentRef = PaymentRef.fromMap({'ref': res.reference});
 
         log("PaymentRef: ${_paymentRef.toString()}");
-        navigateToRoute(confirmDeductViewRoute);
+        navigationHandler.pushNamed(
+          confirmDeductViewRoute,
+          arg: ConfirmDeductArgs(amount: amount),
+        );
       } else {
         //show error messagge
         log('message: ${res.error!.message.toString()}');

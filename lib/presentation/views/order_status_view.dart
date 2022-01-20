@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:volt/models/order_history_model.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/presentation/views/views.dart';
 
 class OrderStatusView extends StatefulWidget {
   const OrderStatusView({Key? key}) : super(key: key);
@@ -60,9 +61,7 @@ class _OrderStatusViewState extends State<OrderStatusView> {
                                 child: ListView.builder(
                                   itemBuilder: (context, index) {
                                     return orders!.isEmpty
-                                        ? const Center(
-                                            child: EmptyContainer(
-                                                message: 'Orders'))
+                                        ? const NoLaundryView()
                                         : InkWell(
                                             onTap: () {
                                               setState(() {

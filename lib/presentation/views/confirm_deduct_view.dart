@@ -4,11 +4,11 @@ import 'package:volt/handlers/navigation_handler.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/constants.dart';
-import 'package:volt/utils/enums.dart';
 import 'package:volt/utils/locator.dart';
 
 class ConfirmDeductView extends StatelessWidget {
-  const ConfirmDeductView({Key? key}) : super(key: key);
+  final double amount;
+  const ConfirmDeductView({Key? key, required this.amount}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class ConfirmDeductView extends StatelessWidget {
                   flex: 10,
                 ),
                 Text(
-                  '90 VTC',
+                  '${amount.toString()} VTC',
                   style: GoogleFonts.lato(
                       fontSize: 50.sp,
                       fontWeight: FontWeight.w900,

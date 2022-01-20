@@ -28,3 +28,4 @@ export 'confirm_deduct_view.dart';
 export 'payment_method_view.dart';
 export 'bank_transfer_view.dart';
 export 'fund_vtc_wallet_view.dart';
+export 'no_laundry_view.dart';

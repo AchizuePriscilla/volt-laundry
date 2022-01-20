@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:volt/models/navigation/confirm_deduct_args.dart';
 import 'package:volt/models/navigation/laundry_details_args.dart';
 import 'package:volt/models/navigation/oops_args.dart';
 import 'package:volt/presentation/views/views.dart';
@@ -46,7 +47,15 @@ class RouteGenerator {
       case buyCoinViewRoute:
         return _getPageRoute(const BuyCoinView());
       case confirmDeductViewRoute:
-        return _getPageRoute(const ConfirmDeductView());
+        final confirmDeductArgs = settings.arguments;
+        if (confirmDeductArgs != null &&
+            confirmDeductArgs is ConfirmDeductArgs) {
+          return _getPageRoute(ConfirmDeductView(
+            amount: confirmDeductArgs.amount,
+          ));
+        }
+        return _getPageRoute(
+            _errorPage(message: "Amount parameter not passed"));
       case paymentMethodViewRoute:
         return _getPageRoute(const PaymentMethodView());
       case bankTransferViewRoute:

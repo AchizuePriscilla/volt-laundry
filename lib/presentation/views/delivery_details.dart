@@ -228,13 +228,13 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Text(
-                    'CHANGE',
-                    style: GoogleFonts.lato(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w700,
-                        color: Theme.of(context).primaryColor),
-                  ),
+                  // Text(
+                  //   'CHANGE',
+                  //   style: GoogleFonts.lato(
+                  //       fontSize: 16.sp,
+                  //       fontWeight: FontWeight.w700,
+                  //       color: Theme.of(context).primaryColor),
+                  // ),
                 ],
               ),
               const CustomSpacer(
