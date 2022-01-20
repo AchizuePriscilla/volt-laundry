@@ -15,22 +15,15 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final PageController _pageController = PageController();
   @override
   void initState() {
     super.initState();
     var homeVM = context.read<HomeVM>();
-    homeVM.init(_pageController);
+    context.read<AppProfileVM>().fetchUserData();
 
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
       homeVM.jumpToPage(0);
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose();
   }
 
   @override
@@ -140,9 +133,8 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
       builder: (_, size) {
-        return PageView(
-          controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
+        return IndexedStack(
+          index: homeVM.selectedIndex,
           children: const [
             HomePageView(),
             OrderStatusView(),

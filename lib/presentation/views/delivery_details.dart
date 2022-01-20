@@ -3,13 +3,23 @@ import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/constants.dart';
+import 'package:volt/utils/utils.dart';
 
-class DeliveryDetailsView extends StatelessWidget {
+class DeliveryDetailsView extends StatefulWidget {
   const DeliveryDetailsView({Key? key}) : super(key: key);
 
   @override
+  State<DeliveryDetailsView> createState() => _DeliveryDetailsViewState();
+}
+
+class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
+  DeliveryMethod deliveryMethod = DeliveryMethod.pickup;
+  @override
   Widget build(BuildContext context) {
     var laundryVM = context.read<LaundryVM>();
+    var profileVM = context.watch<AppProfileVM>();
+    var rxLaundryVM = context.watch<LaundryVM>();
+    double _total = 90.0;
     return ResponsiveWidget(
         appBar: CustomAppBar(
           text: 'Checkout',
@@ -150,10 +160,16 @@ class DeliveryDetailsView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Radio(
-                      value: 1,
-                      groupValue: 1,
-                      onChanged: (value) {},
+                  Radio<DeliveryMethod>(
+                      value: DeliveryMethod.pickup,
+                      groupValue: deliveryMethod,
+                      toggleable: true,
+                      onChanged: (DeliveryMethod? newValue) {
+                        setState(() {
+                          deliveryMethod = newValue!;
+                        });
+                        laundryVM.setDeliveryMethod(deliveryMethod);
+                      },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap),
                   const CustomSpacer(
                     flex: 2,
@@ -173,9 +189,15 @@ class DeliveryDetailsView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Radio(
-                      value: 2,
-                      groupValue: 2,
-                      onChanged: (value) {},
+                      value: DeliveryMethod.dropOff,
+                      groupValue: deliveryMethod,
+                      toggleable: true,
+                      onChanged: (DeliveryMethod? newValue) {
+                        setState(() {
+                          deliveryMethod = newValue!;
+                        });
+                        laundryVM.setDeliveryMethod(deliveryMethod);
+                      },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap),
                   const CustomSpacer(
                     flex: 2,
@@ -306,7 +328,7 @@ class DeliveryDetailsView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '90 VTC',
+                    '${_total.toString()} VTC',
                     style: GoogleFonts.lato(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w700,
@@ -317,8 +339,10 @@ class DeliveryDetailsView extends StatelessWidget {
               const CustomSpacer(flex: 7),
               Button(
                   text: 'Proceed',
-                  onPressed: () {
-                    laundryVM.navigateToRoute(confirmDeductViewRoute);
+                  loading: rxLaundryVM.loading,
+                  onPressed: () async {
+                    await laundryVM.transactionInit(
+                        email: profileVM.email, amount: _total);
                   }),
               const CustomSpacer(flex: 4),
             ]),

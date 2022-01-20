@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:volt/handlers/navigation_handler.dart';
 import 'dart:io';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
@@ -19,19 +18,19 @@ class LaundryDetails extends StatefulWidget {
 }
 
 class _LaundryDetailsState extends State<LaundryDetails> {
-  final List<Color> colors = <Color>[
-    Colors.red,
-    Colors.blue,
-    Colors.green,
-    Colors.yellow,
-    Colors.orange,
-    Colors.purple,
-    Colors.white,
-    Colors.black,
-    Colors.lightGreen,
+  final List<int> colors = <int>[
+    0xffff9800,
+    0xffffeb3b,
+    0xff4caf50,
+    0xff9c27b0,
+    0xfff44336,
+    0xff2196f3,
+    0xff2196f3,
+    0xffffffff,
+    0xff8bc34a,
   ];
 
-  List<Color> selectedColors = <Color>[];
+  List<int> selectedColors = <int>[];
 
   String getCurrency() {
     var format =
@@ -57,6 +56,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
   @override
   Widget build(BuildContext context) {
     var laundryVM = context.read<LaundryVM>();
+    var rxLaundryVM = context.watch<LaundryVM>();
 
     return ResponsiveWidget(
         resizeToAvoidBottomInset: true,
@@ -156,7 +156,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                         ),
                         Container(
                           height: 22.h,
-                          width: 47.h,
+                          width: 100.w,
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor,
                             borderRadius: BorderRadius.circular(10.w),
@@ -166,12 +166,13 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
+                                  padding: const EdgeInsets.all(0),
                                   onPressed: () {
                                     _decrementCloth();
                                   },
                                   icon: Icon(
                                     Icons.remove,
-                                    size: 15.w,
+                                    size: 14.w,
                                     color: Theme.of(context).primaryColorLight,
                                   ),
                                 ),
@@ -181,12 +182,13 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                                           Theme.of(context).primaryColorLight,
                                     )),
                                 IconButton(
+                                  padding: const EdgeInsets.all(0),
                                   onPressed: () {
                                     _incrementCloth();
                                   },
                                   icon: Icon(
                                     Icons.add,
-                                    size: 15.w,
+                                    size: 14.w,
                                     color: Theme.of(context).primaryColorLight,
                                   ),
                                 ),
@@ -214,7 +216,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                           itemCount: colors.length,
                           itemBuilder: (context, index) {
                             return ColorSelectorCircle(
-                              color: colors[index],
+                              color: Color(colors[index]),
                               selectedIndex: index,
                               onSelect: (bool value) {
                                 setState(() {
@@ -248,18 +250,27 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                     const CustomSpacer(
                       flex: 6,
                     ),
-                    Button(
-                      text: 'Add to cart',
-                      onPressed: () {
-                        locator<NavigationHandler>().goBack();
-                      },
-                      color: Palette.lightGreen,
-                    ),
+                    // Button(
+                    //   text: 'Add to cart',
+                    //   onPressed: () {
+                    //     locator<NavigationHandler>().goBack();
+                    //   },
+                    //   color: Palette.lightGreen,
+                    // ),
                     const CustomSpacer(flex: 3),
                     Button(
                         text: 'Proceed',
-                        onPressed: () {
-                          laundryVM.navigateToRoute(cartViewRoute);
+                        loading: rxLaundryVM.loading,
+                        onPressed: () async {
+                          if (_numberOfClothes != 0 &&
+                              selectedColors.isNotEmpty) {
+                            laundryVM.updateValues(
+                                clothType: widget.clothType,
+                                total: _numberOfClothes,
+                                colors: selectedColors,
+                                serviceType: widget.serviceType);
+                            laundryVM.navigateToRoute(deliveryDetailsViewRoute);
+                          }
                         }),
                     const CustomSpacer(flex: 3),
                   ],

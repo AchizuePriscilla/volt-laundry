@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
+import 'package:volt/models/api/credit_wallet_request.dart';
 import 'package:volt/models/api/transaction_reqests.dart';
 import 'package:volt/models/wallet_history_model.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
@@ -11,12 +12,12 @@ import 'package:volt/utils/utils.dart';
 class WalletVM extends BaseViewModel {
   late String accessCode;
   late WalletHistoryModel _walletHistory;
-
+  late CheckoutResponse _response;
   void navigateToRoute(String route) {
     navigationHandler.pushNamed(route);
   }
 
- List<History> get walletHistory {
+  List<History> get walletHistory {
     try {
       return _walletHistory.history;
     } catch (e) {
@@ -72,7 +73,6 @@ class WalletVM extends BaseViewModel {
   _chargeCard(
       {required String accessCode,
       required BuildContext context,
-      // required PaymentCard getCardFromUI,
       required int amount,
       required PaystackPlugin paystackPlugin,
       required String email}) async {
@@ -80,23 +80,21 @@ class WalletVM extends BaseViewModel {
       ..accessCode = accessCode
       ..amount = amount
       ..reference = getReference()
-      // ..card = getCardFromUI
       ..email = email;
 
     final response = await paystackPlugin.checkout(context,
         charge: charge, method: CheckoutMethod.card);
+    _response = response;
 
     log(response.status.toString());
     AppLogger.logger.d(response.message);
     // Use the response
   }
 
-  Future<void> transactionInit(
-      {required String email,
-      required double amount,
-      required BuildContext context,
-      // required PaymentCard getCardFromUI,
-      required PaystackPlugin paystackPlugin}) async {
+  Future<void> transactionInit({
+    required String email,
+    required double amount,
+  }) async {
     try {
       if (loading) return;
       toggleLoading(true);
@@ -107,17 +105,62 @@ class WalletVM extends BaseViewModel {
         accessCode = res.accessCode;
 
         log(accessCode);
-        _chargeCard(
-            accessCode: accessCode,
-            context: context,
-            // getCardFromUI: getCardFromUI,
-            amount: amount.toInt(),
-            paystackPlugin: paystackPlugin,
-            email: email);
       } else {
         //show error messagge
         log('message: ${res.error!.message.toString()}');
       }
+      toggleLoading(false);
+    } catch (e) {
+      AppLogger.logger.d(e);
+      toggleLoading(false);
+    }
+  }
+
+  Future<void> creditVTCWallet({required double amount}) async {
+    try {
+      if (loading) return;
+      toggleLoading(true);
+      creditwallet(amount: amount, paymentSource: 'VNGN');
+      toggleLoading(false);
+    } catch (e) {
+      AppLogger.logger.d(e);
+      toggleLoading(false);
+    }
+  }
+
+  Future<void> creditwallet(
+      {required double amount,
+      required String paymentSource,
+      CheckoutResponse? transactionResponse}) async {
+    try {
+      await walletService.creditWallet(CreditWalletRequest(
+          amount: amount,
+          paymentSource: paymentSource,
+          transactionResponse: transactionResponse));
+    } catch (e) {
+      AppLogger.logger.d(e);
+    }
+  }
+
+  Future<void> handleCardPayment(
+      {required String email,
+      required double amount,
+      required BuildContext context,
+      required PaystackPlugin paystackPlugin}) async {
+    try {
+      if (loading) return;
+      toggleLoading(true);
+      await transactionInit(email: email, amount: amount);
+      await _chargeCard(
+          accessCode: accessCode,
+          context: context,
+          amount: amount.toInt() * 100,
+          paystackPlugin: paystackPlugin,
+          email: email);
+      await creditwallet(
+          amount: amount,
+          paymentSource: 'CARD',
+          transactionResponse: _response);
       toggleLoading(false);
     } catch (e) {
       AppLogger.logger.d(e);

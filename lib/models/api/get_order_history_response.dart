@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:volt/models/api/api.dart';
-import 'package:volt/models/order_model.dart';
+import 'package:volt/models/order_history_model.dart';
 
 class GetOrderHistoryResponse extends Equatable {
     final bool success;

@@ -51,10 +51,15 @@ class RouteGenerator {
         return _getPageRoute(const PaymentMethodView());
       case bankTransferViewRoute:
         return _getPageRoute(const BankTransferView());
+      case fundVTCWalletViewRoute:
+        return _getPageRoute(const FundVTCWalletView());
       case laundryDetailsRoute:
         final laundryArgs = settings.arguments;
         if (laundryArgs != null && laundryArgs is LaundryDetailsArgs) {
-          return _getPageRoute(LaundryDetails(clothType: laundryArgs.clothType, serviceType: laundryArgs.serviceType,));
+          return _getPageRoute(LaundryDetails(
+            clothType: laundryArgs.clothType,
+            serviceType: laundryArgs.serviceType,
+          ));
         }
         return _getPageRoute(
             _errorPage(message: "ClothType parameter not passed"));

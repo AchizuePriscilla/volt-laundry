@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:volt/models/order_history_model.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/viewmodels/viewmodels.dart';
 
 class OrderStatusView extends StatefulWidget {
   const OrderStatusView({Key? key}) : super(key: key);
@@ -11,6 +16,7 @@ class OrderStatusView extends StatefulWidget {
 class _OrderStatusViewState extends State<OrderStatusView> {
   bool isDropdownVisible = true;
   int? selectedIndex;
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveWidget(
@@ -36,24 +42,57 @@ class _OrderStatusViewState extends State<OrderStatusView> {
                 const CustomSpacer(
                   flex: 2,
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          setState(() {
-                            selectedIndex = index;
-                          });
-                        },
-                        child: OrderStatusDropdown(
-                          isDropdownVisible:
-                              selectedIndex == index ? true : false,
-                          orderNo: 'Qi08208',
-                        ),
-                      );
-                    },
-                    itemCount: 4,
-                  ),
+                Consumer<LaundryVM>(
+                  builder: (context, value, child) {
+                    return FutureBuilder<List<Order>>(
+                        future: context.read<LaundryVM>().getOrderHistory(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            log('This is the data: ${snapshot.data}');
+                            var orders = snapshot.data;
+                            return Expanded(
+                              child: RefreshIndicator(
+                                onRefresh: () async {
+                                  await context
+                                      .read<LaundryVM>()
+                                      .getOrderHistory();
+                                },
+                                child: ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    return orders!.isEmpty
+                                        ? const Center(
+                                            child: EmptyContainer(
+                                                message: 'Orders'))
+                                        : InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedIndex = index;
+                                              });
+                                            },
+                                            child: OrderStatusDropdown(
+                                              isDropdownVisible:
+                                                  selectedIndex == index
+                                                      ? true
+                                                      : false,
+                                              orderNo: orders[index].orderNo,
+                                            ),
+                                          );
+                                  },
+                                  itemCount:
+                                      orders!.isEmpty ? 1 : orders.length,
+                                ),
+                              ),
+                            );
+                          }
+                          if (snapshot.hasError) {
+                            return const Center(
+                              child: Text('Sorry, an error occured, try again'),
+                            );
+                          }
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        });
+                  },
                 ),
               ],
             ),

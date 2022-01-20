@@ -126,7 +126,7 @@ class UserWear {
     });
 
     final String wearType;
-    final String wearColor;
+    final List wearColor;
     final int wearTotal;
     final DeliveryFee price;
 

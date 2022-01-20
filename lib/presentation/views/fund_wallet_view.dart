@@ -308,7 +308,7 @@ class _FundWalletViewState extends State<FundWalletView> {
               child: Container(
                 margin: EdgeInsets.only(bottom: 10.h),
                 child: Button(
-                  loading: rxWalletVM.loading,
+                  // loading: rxWalletVM.loading,
                   text: 'Buy ${getCoinType(isVNGN)}',
                   onPressed: () {
                     if (isVNGN) {
@@ -317,6 +317,8 @@ class _FundWalletViewState extends State<FundWalletView> {
                       // walletVM.transactionInit(
                       //     email: context.read<AppProfileVM>().email,
                       //     amount: 2000);
+                    } else {
+                      walletVM.navigateToRoute(fundVTCWalletViewRoute);
                     }
                   },
                   color: Palette.lightGreen,

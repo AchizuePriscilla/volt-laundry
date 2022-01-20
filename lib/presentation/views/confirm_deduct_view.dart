@@ -12,6 +12,8 @@ class ConfirmDeductView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var laundryVM = context.read<LaundryVM>();
+    var rxLaundryVM = context.watch<LaundryVM>();
     return ResponsiveWidget(
         appBar: CustomAppBar(
           text: 'Checkout',
@@ -46,10 +48,9 @@ class ConfirmDeductView extends StatelessWidget {
                 ),
                 Button(
                   text: 'Confirm',
-                  onPressed: () {
-                    context
-                        .read<WalletVM>()
-                        .showDialog(DialogContentType.success);
+                  loading: rxLaundryVM.loading,
+                  onPressed: () async {
+                    await laundryVM.processOrder();
                     locator<NavigationHandler>().popAndPushNamed(homeViewRoute);
                   },
                   color: Palette.lightGreen,
