@@ -6,7 +6,13 @@ import 'package:volt/utils/utils.dart';
 
 class TransactionHistory extends StatelessWidget {
   final ServiceType serviceType;
-  const TransactionHistory({Key? key, required this.serviceType})
+  final String date;
+  final int price;
+  const TransactionHistory(
+      {Key? key,
+      required this.serviceType,
+      required this.date,
+      required this.price})
       : super(key: key);
 
   @override
@@ -43,7 +49,7 @@ class TransactionHistory extends StatelessWidget {
                 flex: 1,
               ),
               Text(
-                'yesterday',
+                date,
                 style: GoogleFonts.lato(
                     fontWeight: FontWeight.w300,
                     fontSize: 13.sp,
@@ -53,7 +59,7 @@ class TransactionHistory extends StatelessWidget {
           ),
           const Expanded(child: SizedBox()),
           Text(
-            '₦6,000',
+            '₦${price.toString()}',
             style: GoogleFonts.roboto(
                 fontWeight: FontWeight.w300,
                 fontSize: 13.sp,

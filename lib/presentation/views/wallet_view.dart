@@ -112,14 +112,14 @@ class _WalletViewState extends State<WalletView> {
                 child: SizedBox(
                   child: ListView(
                     children: const [
-                      TransactionHistory(serviceType: ServiceType.ironing),
-                      TransactionHistory(serviceType: ServiceType.washAndIron),
-                      TransactionHistory(serviceType: ServiceType.dryCleaning),
-                      TransactionHistory(serviceType: ServiceType.ironing),
-                      TransactionHistory(serviceType: ServiceType.ironing),
-                      TransactionHistory(serviceType: ServiceType.washAndIron),
-                      TransactionHistory(serviceType: ServiceType.dryCleaning),
-                      TransactionHistory(serviceType: ServiceType.ironing)
+                      // TransactionHistory(serviceType: ServiceType.ironing),
+                      // TransactionHistory(serviceType: ServiceType.washAndIron),
+                      // TransactionHistory(serviceType: ServiceType.dryCleaning),
+                      // TransactionHistory(serviceType: ServiceType.ironing),
+                      // TransactionHistory(serviceType: ServiceType.ironing),
+                      // TransactionHistory(serviceType: ServiceType.washAndIron),
+                      // TransactionHistory(serviceType: ServiceType.dryCleaning),
+                      // TransactionHistory(serviceType: ServiceType.ironing)
                     ],
                   ),
                 ),

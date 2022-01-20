@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:volt/models/order_history_model.dart';
+import 'package:volt/models/wallet_history_model.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/string_utils.dart';
 import 'package:volt/utils/utils.dart';
 
 class FundWalletView extends StatefulWidget {
@@ -132,13 +135,12 @@ class _FundWalletViewState extends State<FundWalletView> {
   void initState() {
     super.initState();
     context.read<AppProfileVM>().fetchUserData();
-    context.read<WalletVM>().getWalletHistory();
   }
 
   @override
   Widget build(BuildContext context) {
     var walletVM = context.read<WalletVM>();
-    var rxWalletVM = context.watch<WalletVM>();
+    var laundryVM = context.read<LaundryVM>();
     var rxAppProfileVM = context.watch<AppProfileVM>();
     return ResponsiveWidget(builder: (_, size) {
       return DefaultTabController(
@@ -223,51 +225,92 @@ class _FundWalletViewState extends State<FundWalletView> {
                 Expanded(
                   flex: 7,
                   child: TabBarView(children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 15.w, vertical: 25.h),
-                      padding: EdgeInsets.symmetric(horizontal: 15.w),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.w),
-                        color: Palette.lightBlue,
-                      ),
-                      child: rxWalletVM.walletHistory.isEmpty
-                          ? const EmptyContainer(message: 'Transaction History')
-                          : ListView(children: const [
-                              AccountHistory(),
-                              AccountHistory(),
-                              AccountHistory(),
-                              AccountHistory(),
-                              AccountHistory(),
-                              AccountHistory(),
-                            ]),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 15.w, vertical: 25.h),
-                      padding: EdgeInsets.symmetric(horizontal: 15.w),
-                      child: rxWalletVM.walletHistory.isEmpty
-                          ? const EmptyContainer(message: 'Order History')
-                          : ListView(
-                              children: const [
-                                TransactionHistory(
-                                    serviceType: ServiceType.ironing),
-                                TransactionHistory(
-                                    serviceType: ServiceType.washAndIron),
-                                TransactionHistory(
-                                    serviceType: ServiceType.dryCleaning),
-                                TransactionHistory(
-                                    serviceType: ServiceType.ironing),
-                                TransactionHistory(
-                                    serviceType: ServiceType.ironing),
-                                TransactionHistory(
-                                    serviceType: ServiceType.washAndIron),
-                                TransactionHistory(
-                                    serviceType: ServiceType.dryCleaning),
-                                TransactionHistory(
-                                    serviceType: ServiceType.ironing)
-                              ],
+                    FutureBuilder<List<History>>(
+                      future: walletVM.getWalletHistory(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          var history = snapshot.data;
+                          return RefreshIndicator(
+                            onRefresh: () async {
+                              await walletVM.getWalletHistory();
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 15.w, vertical: 25.h),
+                              padding: EdgeInsets.symmetric(horizontal: 15.w),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.w),
+                                color: Palette.lightBlue,
+                              ),
+                              child: ListView.builder(
+                                  itemCount:
+                                      history!.isEmpty ? 1 : history.length,
+                                  itemBuilder: (context, index) {
+                                    return history.isEmpty
+                                        ? const EmptyContainer(
+                                            message: 'Transaction History')
+                                        : AccountHistory(
+                                            currency:
+                                                history[index].amount.currency,
+                                            transactionType:
+                                                history[index].transactionType,
+                                            amount:
+                                                history[index].amount.amount,
+                                            description:
+                                                history[index].description,
+                                          );
+                                  }),
                             ),
+                          );
+                        }
+                        if (snapshot.hasError) {
+                          return const Center(
+                            child: Text('Sorry, an error occured, try again'),
+                          );
+                        }
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                    ),
+                    FutureBuilder<List<Order>>(
+                      future: laundryVM.getOrderHistory(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          var orders = snapshot.data;
+                          return RefreshIndicator(
+                            onRefresh: () async {
+                              await laundryVM.getOrderHistory();
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 15.w, vertical: 25.h),
+                              padding: EdgeInsets.symmetric(horizontal: 15.w),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.w),
+                              ),
+                              child: ListView.builder(
+                                  itemCount:
+                                      orders!.isEmpty ? 1 : orders.length,
+                                  itemBuilder: (context, index) {
+                                    return orders.isEmpty
+                                        ? const EmptyContainer(
+                                            message: 'Order History')
+                                        : TransactionHistory(
+                                            serviceType:
+                                                laundryVM.getServiceTypeEnum(
+                                                    orders[index].serviceType),
+                                                    price: orders[index].netPrice.amount,
+                                                    date: StringUtils.getTimeAgo(orders[index].createdAt));
+                                  }),
+                            ),
+                          );
+                        }
+                        if (snapshot.hasError) {
+                          return const Center(
+                            child: Text('Sorry, an error occured, try again'),
+                          );
+                        }
+                        return const Center(child: CircularProgressIndicator());
+                      },
                     ),
                   ]),
                 ),
@@ -333,8 +376,16 @@ class _FundWalletViewState extends State<FundWalletView> {
 }
 
 class AccountHistory extends StatelessWidget {
+  final String currency;
+  final String transactionType;
+  final String description;
+  final double amount;
   const AccountHistory({
     Key? key,
+    required this.currency,
+    required this.transactionType,
+    required this.description,
+    required this.amount,
   }) : super(key: key);
 
   @override
@@ -346,14 +397,16 @@ class AccountHistory extends StatelessWidget {
           SizedBox(
             height: 33.h,
             width: 33.h,
-            child: Image.asset('assets/images/volt_coin_yellow.png'),
+            child: Image.asset(currency == 'VLTCOIN'
+                ? 'assets/images/volt_coin_yellow.png'
+                : 'assets/images/volt_naira_coin.png'),
           ),
           const CustomSpacer(
             flex: 2,
             horizontal: true,
           ),
           Text(
-            'Volt Coin',
+            currency == 'VLTCOIN' ? 'Volt Coin' : 'Volt Naira Coin',
             style: GoogleFonts.lato(
               fontSize: 18.sp,
               fontWeight: FontWeight.w600,
@@ -364,14 +417,16 @@ class AccountHistory extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                '+50%',
+                amount.toString(),
                 style: GoogleFonts.lato(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w700,
-                    color: Palette.lightGreen),
+                    color: transactionType == 'DEBIT'
+                        ? Colors.red
+                        : Palette.lightGreen),
               ),
               Text(
-                'NGN200',
+                description,
                 style: GoogleFonts.lato(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w400,

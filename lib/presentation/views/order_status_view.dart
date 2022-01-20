@@ -43,56 +43,47 @@ class _OrderStatusViewState extends State<OrderStatusView> {
                 const CustomSpacer(
                   flex: 2,
                 ),
-                Consumer<LaundryVM>(
-                  builder: (context, value, child) {
-                    return FutureBuilder<List<Order>>(
-                        future: context.read<LaundryVM>().getOrderHistory(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            log('This is the data: ${snapshot.data}');
-                            var orders = snapshot.data;
-                            return Expanded(
-                              child: RefreshIndicator(
-                                onRefresh: () async {
-                                  await context
-                                      .read<LaundryVM>()
-                                      .getOrderHistory();
-                                },
-                                child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    return orders!.isEmpty
-                                        ? const NoLaundryView()
-                                        : InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                selectedIndex = index;
-                                              });
-                                            },
-                                            child: OrderStatusDropdown(
-                                              isDropdownVisible:
-                                                  selectedIndex == index
-                                                      ? true
-                                                      : false,
-                                              orderNo: orders[index].orderNo,
-                                            ),
-                                          );
-                                  },
-                                  itemCount:
-                                      orders!.isEmpty ? 1 : orders.length,
-                                ),
-                              ),
-                            );
-                          }
-                          if (snapshot.hasError) {
-                            return const Center(
-                              child: Text('Sorry, an error occured, try again'),
-                            );
-                          }
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        });
-                  },
-                ),
+                FutureBuilder<List<Order>>(
+                    future: context.read<LaundryVM>().getOrderHistory(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        var orders = snapshot.data;
+                        return Expanded(
+                          child: RefreshIndicator(
+                            onRefresh: () async {
+                              await context.read<LaundryVM>().getOrderHistory();
+                            },
+                            child: ListView.builder(
+                              itemBuilder: (context, index) {
+                                return orders!.isEmpty
+                                    ? const NoLaundryView()
+                                    : InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            selectedIndex = index;
+                                          });
+                                        },
+                                        child: OrderStatusDropdown(
+                                          isDropdownVisible:
+                                              selectedIndex == index
+                                                  ? true
+                                                  : false,
+                                          orderNo: orders[index].orderNo,
+                                        ),
+                                      );
+                              },
+                              itemCount: orders!.isEmpty ? 1 : orders.length,
+                            ),
+                          ),
+                        );
+                      }
+                      if (snapshot.hasError) {
+                        return const Center(
+                          child: Text('Sorry, an error occured, try again'),
+                        );
+                      }
+                      return const Center(child: CircularProgressIndicator());
+                    }),
               ],
             ),
           );

@@ -88,6 +88,20 @@ class LaundryVM extends BaseViewModel {
     }
   }
 
+ ServiceType getServiceTypeEnum(String serviceType) {
+    switch (serviceType) {
+      case "IRON":
+        return ServiceType.ironing;
+      case "DRY_CLEAN":
+        return ServiceType.dryCleaning;
+      case "WASH_IRON":
+        return ServiceType.washAndIron;
+
+      default:
+        return ServiceType.washAndIron;
+    }
+  }
+
   String getServiceImagePath(ServiceType serviceType) {
     switch (serviceType) {
       case ServiceType.ironing:

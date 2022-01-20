@@ -65,9 +65,15 @@ class WalletVM extends BaseViewModel {
     return 'ChargedFrom${platform}_$thisDate';
   }
 
-  Future<void> getWalletHistory() async {
-    final response = await walletService.getWalletHistory();
-    _walletHistory = response.walletHistory!;
+  Future<List<History>> getWalletHistory() async {
+    try {
+      final response = await walletService.getWalletHistory();
+      _walletHistory = response.walletHistory!;
+      return _walletHistory.history;
+    } catch (e) {
+      AppLogger.logger.d(e);
+      return [];
+    }
   }
 
   _chargeCard(
