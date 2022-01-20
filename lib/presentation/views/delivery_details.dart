@@ -342,7 +342,24 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                   loading: rxLaundryVM.loading,
                   onPressed: () async {
                     await laundryVM.transactionInit(
-                        email: profileVM.email, amount: _total);
+                        email: profileVM.email,
+                        amount: _total,
+                        onFailure: () {
+                          return ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: Colors.red,
+                              content: SizedBox(
+                                height: 30.h,
+                                child: Center(
+                                  child: Text(
+                                    'Something went wrong, please try again',
+                                    style: TextStyle(fontSize: 14.sp),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        });
                   }),
               const CustomSpacer(flex: 4),
             ]),

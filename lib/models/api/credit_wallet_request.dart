@@ -4,7 +4,7 @@ import 'package:flutter_paystack/flutter_paystack.dart';
 class CreditWalletRequest extends Equatable {
   final double amount;
   final String paymentSource;
-  final CheckoutResponse? transactionResponse;
+  final String? transactionResponse;
 
   const CreditWalletRequest(
       {required this.amount,

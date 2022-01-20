@@ -10,7 +10,7 @@ import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
 class WalletVM extends BaseViewModel {
-  late String accessCode;
+  late String _accessCode;
   late WalletHistoryModel _walletHistory;
   late CheckoutResponse _response;
   void navigateToRoute(String route) {
@@ -108,9 +108,9 @@ class WalletVM extends BaseViewModel {
         TransactionInitRequest(email: email, amount: amount),
       );
       if (res.success) {
-        accessCode = res.accessCode;
+        _accessCode = res.accessCode;
 
-        log(accessCode);
+        log(_accessCode);
       } else {
         //show error messagge
         log('message: ${res.error!.message.toString()}');
@@ -137,7 +137,7 @@ class WalletVM extends BaseViewModel {
   Future<void> creditwallet(
       {required double amount,
       required String paymentSource,
-      CheckoutResponse? transactionResponse}) async {
+      String? transactionResponse}) async {
     try {
       await walletService.creditWallet(CreditWalletRequest(
           amount: amount,
@@ -152,21 +152,34 @@ class WalletVM extends BaseViewModel {
       {required String email,
       required double amount,
       required BuildContext context,
-      required PaystackPlugin paystackPlugin}) async {
+      required PaystackPlugin paystackPlugin,
+      required Function onFailure}) async {
     try {
       if (loading) return;
       toggleLoading(true);
-      await transactionInit(email: email, amount: amount);
-      await _chargeCard(
-          accessCode: accessCode,
-          context: context,
-          amount: amount.toInt() * 100,
-          paystackPlugin: paystackPlugin,
-          email: email);
-      await creditwallet(
-          amount: amount,
-          paymentSource: 'CARD',
-          transactionResponse: _response);
+      var res = await walletService.transactionInit(
+        TransactionInitRequest(email: email, amount: amount),
+      );
+      if (res.success) {
+        _accessCode = res.accessCode;
+
+        log(_accessCode);
+        await _chargeCard(
+            accessCode: _accessCode,
+            context: context,
+            amount: amount.toInt() * 100,
+            paystackPlugin: paystackPlugin,
+            email: email);
+        await creditwallet(
+            amount: amount,
+            paymentSource: 'CARD',
+            transactionResponse: _response.message);
+        toggleLoading(false);
+      } else {
+        //show error messagge
+        log('message: ${res.error!.message.toString()}');
+        onFailure();
+      }
       toggleLoading(false);
     } catch (e) {
       AppLogger.logger.d(e);

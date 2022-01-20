@@ -134,7 +134,8 @@ class _FundWalletViewState extends State<FundWalletView> {
   @override
   void initState() {
     super.initState();
-    context.read<AppProfileVM>().fetchUserData();
+    context.read<AppProfileVM>().fetchUserDataFromCache();
+    context.read<AppProfileVM>().getUser();
   }
 
   @override
@@ -298,8 +299,10 @@ class _FundWalletViewState extends State<FundWalletView> {
                                             serviceType:
                                                 laundryVM.getServiceTypeEnum(
                                                     orders[index].serviceType),
-                                                    price: orders[index].netPrice.amount,
-                                                    date: StringUtils.getTimeAgo(orders[index].createdAt));
+                                            price:
+                                                orders[index].netPrice.amount,
+                                            date: StringUtils.getTimeAgo(
+                                                orders[index].createdAt));
                                   }),
                             ),
                           );
@@ -351,15 +354,10 @@ class _FundWalletViewState extends State<FundWalletView> {
               child: Container(
                 margin: EdgeInsets.only(bottom: 10.h),
                 child: Button(
-                  // loading: rxWalletVM.loading,
                   text: 'Buy ${getCoinType(isVNGN)}',
                   onPressed: () {
                     if (isVNGN) {
                       walletVM.navigateToRoute(checkoutViewRoute);
-
-                      // walletVM.transactionInit(
-                      //     email: context.read<AppProfileVM>().email,
-                      //     amount: 2000);
                     } else {
                       walletVM.navigateToRoute(fundVTCWalletViewRoute);
                     }
@@ -379,7 +377,7 @@ class AccountHistory extends StatelessWidget {
   final String currency;
   final String transactionType;
   final String description;
-  final double amount;
+  final int amount;
   const AccountHistory({
     Key? key,
     required this.currency,

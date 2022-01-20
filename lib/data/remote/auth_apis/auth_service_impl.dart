@@ -4,6 +4,7 @@ import 'package:volt/data/local/local.dart';
 import 'package:volt/data/remote/auth_apis/auth_service.dart';
 import 'package:volt/models/api/api.dart';
 import 'package:volt/models/api/auth_requests.dart';
+import 'package:volt/models/api/get_user_response.dart';
 import 'package:volt/models/api/verification_response.dart';
 
 import 'auth_repo.dart';
@@ -49,6 +50,12 @@ class AuthServiceImpl implements AuthService {
       );
     }
 
+    return res;
+  }
+
+  @override
+  Future<GetUserResponse> getUser() async {
+    var res = await authRepo.getUser();
     return res;
   }
 }

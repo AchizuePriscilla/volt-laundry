@@ -4,6 +4,7 @@ import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+
 class CheckoutView extends StatefulWidget {
   const CheckoutView({Key? key}) : super(key: key);
 
@@ -247,13 +248,24 @@ class _CheckoutViewState extends State<CheckoutView> {
                                   email: context.read<AppProfileVM>().email,
                                   amount: _amount.toDouble(),
                                   context: context,
-                                  // getCardFromUI: PaymentCard(
-                                  //   number: _cardNumberController.text,
-                                  //   cvc: _cvvController.text,
-                                  //   expiryMonth: _expiryMonth,
-                                  //   expiryYear: _expiryYear,
-                                  // ),
-                                  paystackPlugin: paystackPlugin);
+                                  paystackPlugin: paystackPlugin,
+                                  onFailure: () {
+                                    return ScaffoldMessenger.of(context)
+                                        .showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: SizedBox(
+                                          height: 30.h,
+                                          child: Center(
+                                            child: Text(
+                                              'Something went wrong, please try again',
+                                              style: TextStyle(fontSize: 14.sp),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  });
                             }
                           },
                           color: Palette.lightGreen),

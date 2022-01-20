@@ -15,7 +15,8 @@ class OrderHistoryModel {
 
   final List<Order> orders;
 
-  factory OrderHistoryModel.fromMap(Map<String, dynamic> json) => OrderHistoryModel(
+  factory OrderHistoryModel.fromMap(Map<String, dynamic> json) =>
+      OrderHistoryModel(
         orders: List<Order>.from(json["orders"].map((x) => Order.fromMap(x))),
       );
 
@@ -174,7 +175,7 @@ class UserWear {
   });
 
   final String wearType;
-  final String wearColor;
+  final List wearColor;
   final int wearTotal;
   final DeliveryFee price;
 

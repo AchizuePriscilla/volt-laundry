@@ -88,7 +88,7 @@ class LaundryVM extends BaseViewModel {
     }
   }
 
- ServiceType getServiceTypeEnum(String serviceType) {
+  ServiceType getServiceTypeEnum(String serviceType) {
     switch (serviceType) {
       case "IRON":
         return ServiceType.ironing;
@@ -165,10 +165,10 @@ class LaundryVM extends BaseViewModel {
     }
   }
 
-  Future<void> transactionInit({
-    required String email,
-    required double amount,
-  }) async {
+  Future<void> transactionInit(
+      {required String email,
+      required double amount,
+      required Function onFailure}) async {
     try {
       if (loading) return;
       toggleLoading(true);
@@ -186,6 +186,7 @@ class LaundryVM extends BaseViewModel {
       } else {
         //show error messagge
         log('message: ${res.error!.message.toString()}');
+        onFailure();
       }
       toggleLoading(false);
     } catch (e) {
@@ -194,7 +195,7 @@ class LaundryVM extends BaseViewModel {
     }
   }
 
-  Future<void> processOrder() async {
+  Future<void> processOrder({required Function onFailure}) async {
     try {
       if (loading) return;
       toggleLoading(true);
@@ -215,9 +216,15 @@ class LaundryVM extends BaseViewModel {
             paymentRef: _paymentRef),
       );
       if (res.success) {
-        log('Order Id: ${res.orderId}');
+        dialogHandler.showDialog(
+            contentType: DialogContentType.success, message: res.message);
+        Future.delayed(const Duration(seconds: 3), () {
+          navigationHandler.pushNamed(homeViewRoute);
+        });
       } else {
         log(res.error!.message);
+
+        onFailure();
       }
 
       toggleLoading(false);

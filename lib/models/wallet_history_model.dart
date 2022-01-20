@@ -70,7 +70,7 @@ class Amount {
     });
 
     final String currency;
-    final double amount;
+    final int amount;
 
     factory Amount.fromMap(Map<String, dynamic> json) => Amount(
         currency: json["currency"],

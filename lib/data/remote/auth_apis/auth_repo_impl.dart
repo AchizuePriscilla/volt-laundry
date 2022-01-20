@@ -1,6 +1,7 @@
 import 'package:volt/data/config/base_api.dart';
 import 'package:volt/data/remote/auth_apis/auth_repo.dart';
 import 'package:volt/models/api/auth_requests.dart';
+import 'package:volt/models/api/get_user_response.dart';
 import 'package:volt/models/api/login_response.dart';
 import 'package:volt/models/api/verification_response.dart';
 
@@ -9,6 +10,7 @@ class AuthRepositoryImpl extends BaseApi implements AuthRepository {
   static const String phoneAuth = 'auth/phone-auth';
   static const String registerUser = 'user/register';
   static const String login = 'user/login';
+  static const String user = 'user';
   @override
   Future<VerifyAccountResponse> requestPhoneVerificationCode(
       PhoneVerificationRequest request) async {
@@ -34,5 +36,11 @@ class AuthRepositoryImpl extends BaseApi implements AuthRepository {
     );
 
     return LoginResponse.fromMap(response);
+  }
+
+  @override
+  Future<GetUserResponse> getUser() async {
+    var response = await get(user);
+    return GetUserResponse.fromMap(response);
   }
 }

@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:volt/models/user_model.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
 class AppProfileVM extends BaseViewModel {
   late UserModel _user;
+  late UserModel _rxUser;
 
   String get email {
     try {
@@ -31,7 +34,8 @@ class AppProfileVM extends BaseViewModel {
 
   int get vltNairaBalance {
     try {
-      return _user.vltNairaBalance;
+      log('Naira balance : ${_rxUser.vltNairaBalance}');
+      return _rxUser.vltNairaBalance;
     } catch (e) {
       return 0;
     }
@@ -39,14 +43,23 @@ class AppProfileVM extends BaseViewModel {
 
   int get vltCoinBalance {
     try {
-      return _user.vltCoinBalance;
+      return _rxUser.vltCoinBalance;
     } catch (e) {
       return 0;
     }
   }
 
+  Future<void> getUser() async {
+    try {
+      var user = await authService.getUser();
+      _rxUser = user.user!;
+    } catch (e) {
+      AppLogger.logger.d(e);
+    }
+  }
+
   ///Fetches user data from cache and parses it to a UserModel object
-  Future<void> fetchUserData() async {
+  Future<void> fetchUserDataFromCache() async {
     try {
       var userData = await localCache.getUserData();
       _user = UserModel.fromJson(userData);

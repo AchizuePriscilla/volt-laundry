@@ -15,17 +15,25 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final PageController _pageController = PageController();
   @override
   void initState() {
     super.initState();
     var homeVM = context.read<HomeVM>();
-    context.read<AppProfileVM>().fetchUserData();
-
+    homeVM.init(_pageController);
+    context.read<AppProfileVM>().fetchUserDataFromCache();
+    context.read<AppProfileVM>().getUser();
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
       homeVM.jumpToPage(0);
     });
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     var homeVM = context.read<HomeVM>();
@@ -133,8 +141,9 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
       builder: (_, size) {
-        return IndexedStack(
-          index: homeVM.selectedIndex,
+        return PageView(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
           children: const [
             HomePageView(),
             OrderStatusView(),
@@ -142,8 +151,7 @@ class _HomeViewState extends State<HomeView> {
             FundWalletView(),
             ProfileView()
           ],
-        );
-      },
+        );    },
     );
   }
 }

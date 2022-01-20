@@ -50,7 +50,22 @@ class ConfirmDeductView extends StatelessWidget {
                   text: 'Confirm',
                   loading: rxLaundryVM.loading,
                   onPressed: () async {
-                    await laundryVM.processOrder();
+                    await laundryVM.processOrder(onFailure: () {
+                      return ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.red,
+                          content: SizedBox(
+                            height: 30.h,
+                            child: Center(
+                              child: Text(
+                                'Something went wrong, please try again',
+                                style: TextStyle(fontSize: 14.sp),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    });
                     locator<NavigationHandler>().popAndPushNamed(homeViewRoute);
                   },
                   color: Palette.lightGreen,
