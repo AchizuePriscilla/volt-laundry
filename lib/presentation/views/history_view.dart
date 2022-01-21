@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:volt/models/order_history_model.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/utils.dart';
 
 class HistoryView extends StatefulWidget {
   const HistoryView({Key? key}) : super(key: key);
@@ -29,106 +31,148 @@ class _HistoryViewState extends State<HistoryView> {
             padding: EdgeInsets.symmetric(horizontal: 25.w),
             height: size.height,
             width: size.width,
-            child: laundryVM.orderHistory.isEmpty
-                ? const EmptyContainer(message: 'Order history')
-                : ListView.separated(
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: EdgeInsets.symmetric(vertical: 10.h),
-                        height: 30.h,
-                        width: size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(children: [
-                                    Text(
-                                      'Wash & Iron',
-                                      style: GoogleFonts.lato(
-                                          fontSize: 10.sp,
-                                          fontWeight: FontWeight.w300,
-                                          fontStyle: FontStyle.italic),
-                                    ),
-                                    const CustomSpacer(
-                                      flex: 2,
-                                      horizontal: true,
-                                    ),
-                                    Text(
-                                      'KGHJIJD',
-                                      style: GoogleFonts.lato(
-                                          fontSize: 10.sp,
-                                          fontWeight: FontWeight.w300,
-                                          fontStyle: FontStyle.italic),
-                                    )
-                                  ]),
-                                  const CustomSpacer(
-                                    flex: 2,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '4 Shirts, 6 Trousers',
-                                        style: GoogleFonts.lato(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      const CustomSpacer(
-                                        flex: 2,
-                                        horizontal: true,
-                                      ),
-                                      SizedBox(
-                                        height: 12.h,
-                                        width: 47.h,
-                                        // color: Colors.black,
-                                        child: ListView(
-                                          scrollDirection: Axis.horizontal,
-                                          children: [
-                                            Container(
-                                              width: 11.h,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.red,
-                                              ),
-                                            ),
-                                            Container(
-                                              width: 11.h,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.yellow,
-                                              ),
-                                            ),
-                                            Container(
-                                              width: 11.h,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.green,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ]),
-                            Text(
-                              '8,000',
-                              style: GoogleFonts.lato(
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.w700,
-                                  color: Theme.of(context).primaryColor),
-                            )
-                          ],
-                        ),
-                      );
+            child: FutureBuilder<List<Order>>(
+              future: laundryVM.getOrderHistory(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var orders = snapshot.data;
+
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      await laundryVM.getOrderHistory();
                     },
-                    separatorBuilder: (context, index) {
-                      return const Divider();
-                    },
-                    itemCount: 5),
+                    child: Container(
+                      padding: EdgeInsets.only(
+                          left: 15.w, right: 15.w, bottom: 20.h),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.w),
+                      ),
+                      child: ListView.separated(
+                          separatorBuilder: (context, index) {
+                            return const Divider();
+                          },
+                          itemCount: orders!.isEmpty ? 1 : orders.length,
+                          itemBuilder: (context, index) {
+                            return orders.isEmpty
+                                ? const EmptyContainer(message: 'Histories')
+                                : History(
+                                    wearType:
+                                        orders[index].userWears[0].wearType,
+                                    orderNo: orders[index].orderNo,
+                                    netPrice: orders[index]
+                                        .netPrice
+                                        .amount
+                                        .toString(),
+                                    serviceType: orders[index].serviceType,
+                                    colors: [orders[index]
+                                        .userWears],
+                                  );
+                          }),
+                    ),
+                  );
+                }
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text('Sorry, an error occured, try again'),
+                  );
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
           );
         });
+  }
+}
+
+class History extends StatelessWidget {
+  final String serviceType;
+  final String wearType;
+  final String orderNo;
+  final String netPrice;
+  final List colors;
+  const History({
+    required this.serviceType,
+    required this.orderNo,
+    required this.wearType,
+    required this.netPrice,
+    required this.colors,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10.h),
+      height: 30.h,
+      width: MediaQuery.of(context).size.width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(children: [
+              Text(
+                serviceType,
+                style: GoogleFonts.lato(
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w300,
+                    fontStyle: FontStyle.italic),
+              ),
+              const CustomSpacer(
+                flex: 2,
+                horizontal: true,
+              ),
+              Text(
+                orderNo,
+                style: GoogleFonts.lato(
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w300,
+                    fontStyle: FontStyle.italic),
+              )
+            ]),
+            const CustomSpacer(
+              flex: 2,
+            ),
+            Row(
+              children: [
+                Text(
+                  wearType,
+                  style: GoogleFonts.lato(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const CustomSpacer(
+                  flex: 2,
+                  horizontal: true,
+                ),
+                SizedBox(
+                  width: 50.w,
+                  height: 12.h,
+                  child: ListView.builder(
+                      itemCount: colors.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          width: 11.h,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(colors[index]),
+                          ),
+                        );
+                      }),
+                ),
+              ],
+            )
+          ]),
+          Text(
+            "$netPrice VTC",
+            style: GoogleFonts.lato(
+                fontSize: 17.sp,
+                fontWeight: FontWeight.w700,
+                color: Theme.of(context).primaryColor),
+          )
+        ],
+      ),
+    );
   }
 }
