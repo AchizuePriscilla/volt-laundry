@@ -64,8 +64,7 @@ class _HistoryViewState extends State<HistoryView> {
                                         .amount
                                         .toString(),
                                     serviceType: orders[index].serviceType,
-                                    colors: [orders[index]
-                                        .userWears],
+                                    colors: orders[index].userWears,
                                   );
                           }),
                     ),
@@ -89,7 +88,7 @@ class History extends StatelessWidget {
   final String wearType;
   final String orderNo;
   final String netPrice;
-  final List colors;
+  final List<UserWear> colors;
   const History({
     required this.serviceType,
     required this.orderNo,
@@ -156,7 +155,7 @@ class History extends StatelessWidget {
                           width: 11.h,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Color(colors[index]),
+                            color: Color(colors[index].wearColor[index]),
                           ),
                         );
                       }),

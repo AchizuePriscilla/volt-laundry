@@ -5,6 +5,10 @@ import 'package:volt/data/remote/auth_apis/auth_repo.dart';
 import 'package:volt/data/remote/auth_apis/auth_repo_impl.dart';
 import 'package:volt/data/remote/auth_apis/auth_service.dart';
 import 'package:volt/data/remote/auth_apis/auth_service_impl.dart';
+import 'package:volt/data/remote/chat_apis/chat_repo.dart';
+import 'package:volt/data/remote/chat_apis/chat_repo_impl.dart';
+import 'package:volt/data/remote/chat_apis/chat_service.dart';
+import 'package:volt/data/remote/chat_apis/chat_service_impl.dart';
 import 'package:volt/data/remote/connectivity_service.dart';
 import 'package:volt/data/remote/order_apis/order_repo.dart';
 import 'package:volt/data/remote/order_apis/order_repo_impl.dart';
@@ -60,6 +64,13 @@ Future<void> setupLocator({String baseApi = ''}) async {
     () => OrderServiceImpl(orderRepo: locator()),
   );
 
+  locator.registerLazySingleton<ChatService>(
+    () => ChatServiceImpl(
+      chatRepository: locator(),
+      localCache: locator(),
+    ),
+  );
+
 //Repos
 
   locator.registerLazySingleton<AuthRepository>(
@@ -71,5 +82,9 @@ Future<void> setupLocator({String baseApi = ''}) async {
 
   locator.registerLazySingleton<OrderRepo>(
     () => OrderRepoImpl(baseApi),
+  );
+
+  locator.registerLazySingleton<ChatRepository>(
+    () => ChatRepoImpl(baseApi),
   );
 }

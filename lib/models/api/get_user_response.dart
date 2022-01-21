@@ -28,5 +28,6 @@ class GetUserResponse extends Equatable {
   List<Object?> get props => [
         success,
         error,
+        user
       ];
 }

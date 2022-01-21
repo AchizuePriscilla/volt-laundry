@@ -105,3 +105,14 @@ class _ChatViewState extends State<ChatView> {
         });
   }
 }
+
+class MessagesStream extends StatelessWidget {
+  const MessagesStream({ Key? key }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
+    );
+  }
+}
