@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "858082998268",
+    "project_id": "volt-456cd",
+    "storage_bucket": "volt-456cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858082998268:android:4e5fabea9a84b2bcbe6479",
+        "android_client_info": {
+          "package_name": "com.volt.laundry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "858082998268-ifju155745igfggkqno9951jcato561d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6wG07Za9f6CfRGT4K5-cSqRdh5Cn7lWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "858082998268-ifju155745igfggkqno9951jcato561d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
