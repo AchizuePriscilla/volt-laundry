@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/presentation/views/laundry_view.dart';
 import 'package:volt/utils/constants.dart';
@@ -36,6 +37,16 @@ class HomeVM extends BaseViewModel {
     navigationHandler.pushNamed(
       cartViewRoute,
     );
+  }
+
+  Future<void> checkTokenExpiry(Function handleExpiry) async {
+    String? token = await localCache.getToken();
+    bool isTokenExpired = JwtDecoder.isExpired(token!);
+    if (isTokenExpired) {
+      await localCache.deleteToken();
+      handleExpiry();
+      navigationHandler.pushNamed(logInViewRoute);
+    }
   }
 
   ///Handles onWillPop of HomeView

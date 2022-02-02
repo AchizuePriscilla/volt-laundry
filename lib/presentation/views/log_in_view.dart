@@ -135,8 +135,8 @@ class _LogInViewState extends State<LogInView> {
                     text: 'Log In',
                     onPressed: () {
                       loginVM.login(
-                          email: _emailController.text,
-                          password: _passwordController.text);
+                          email: _emailController.text.trim(),
+                          password: _passwordController.text.trim());
                     }),
                 const CustomSpacer(flex: 3),
                 Row(

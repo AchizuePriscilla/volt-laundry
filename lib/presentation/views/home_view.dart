@@ -20,20 +20,38 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
     var homeVM = context.read<HomeVM>();
+    var appProfileVM = context.read<AppProfileVM>();
     homeVM.init(_pageController);
-    context.read<AppProfileVM>().fetchUserDataFromCache();
-    context.read<AppProfileVM>().getUser();
+    homeVM.checkTokenExpiry(() {
+      return ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: SizedBox(
+            height: 30.h,
+            child: Center(
+              child: Text(
+                'Session Expired, please login',
+                style: TextStyle(fontSize: 14.sp),
+              ),
+            ),
+          ),
+        ),
+      );
+    });
+
+    appProfileVM.fetchUserDataFromCache();
+    appProfileVM.getUser();
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
       homeVM.jumpToPage(0);
     });
   }
-
 
   @override
   void dispose() {
     super.dispose();
     _pageController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     var homeVM = context.read<HomeVM>();
@@ -151,7 +169,8 @@ class _HomeViewState extends State<HomeView> {
             FundWalletView(),
             ProfileView()
           ],
-        );    },
+        );
+      },
     );
   }
 }
