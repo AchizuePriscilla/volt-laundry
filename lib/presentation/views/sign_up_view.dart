@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import 'package:volt/handlers/handlers.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/constants.dart';
@@ -19,13 +21,15 @@ class _SignUpViewState extends State<SignUpView> {
   final _emailController = TextEditingController();
   final _phoneNumberController = TextEditingController();
   final _nameController = TextEditingController();
+  final _locationController = TextEditingController();
   bool buttonActive = false;
 
   void onListen() {
     if (_emailController.text.isEmpty ||
         _passwordController.text.isEmpty ||
         _phoneNumberController.text.isEmpty ||
-        _nameController.text.isEmpty) {
+        _nameController.text.isEmpty ||
+        _locationController.text.isEmpty) {
       setState(() {
         buttonActive = false;
       });
@@ -39,10 +43,12 @@ class _SignUpViewState extends State<SignUpView> {
   @override
   void initState() {
     super.initState();
+    Geolocator.requestPermission();
     _emailController.addListener(onListen);
     _passwordController.addListener(onListen);
     _phoneNumberController.addListener(onListen);
     _nameController.addListener(onListen);
+    _locationController.addListener(onListen);
   }
 
   @override
@@ -51,6 +57,7 @@ class _SignUpViewState extends State<SignUpView> {
     _passwordController.removeListener(onListen);
     _phoneNumberController.removeListener(onListen);
     _nameController.removeListener(onListen);
+    _locationController.removeListener(onListen);
     super.dispose();
   }
 
@@ -120,6 +127,19 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const CustomSpacer(flex: 3),
                 CustomTextField(
+                  controller: _locationController,
+                  onTap: () {
+                    signUpVM.setCurrentLocation();
+                  },
+                  fillColor: Theme.of(context).primaryColorLight,
+                  prefix: Icon(
+                    Icons.pin_drop,
+                    color: Theme.of(context).disabledColor.withOpacity(.6),
+                  ),
+                  hint: "Shipping Adress",
+                ),
+                const CustomSpacer(flex: 3),
+                CustomTextField(
                   controller: _emailController,
                   validator: (email) {
                     return signUpVM.validateEmail(email);
@@ -156,11 +176,7 @@ class _SignUpViewState extends State<SignUpView> {
                             email: _emailController.text,
                             password: _passwordController.text,
                             phoneNumber: _phoneNumberController.text,
-                            address: "address",
-                            country: "country",
-                            state: "state",
-                            latitude: "latitude",
-                            longitude: "longitude");
+                            address: _locationController.text);
                         await signUpVM.sendVerificationToken();
                       }
                     }),

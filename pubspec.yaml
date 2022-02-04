@@ -39,6 +39,10 @@ dependencies:
       url: https://github.com/Space-HQ/pretty_dio_logger.git
   flutter_paystack: ^1.0.5+1
   jwt_decoder: ^2.0.1
+  google_places_picker: ^3.0.2
+  geolocator: ^8.1.1
+  platform_maps_flutter: ^1.0.2
+  geocoding: ^2.0.2
 
 dev_dependencies:
   flutter_test:

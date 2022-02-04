@@ -29,3 +29,4 @@ export 'payment_method_view.dart';
 export 'bank_transfer_view.dart';
 export 'fund_vtc_wallet_view.dart';
 export 'no_laundry_view.dart';
+export 'address_search_view.dart';

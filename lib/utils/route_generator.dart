@@ -46,6 +46,8 @@ class RouteGenerator {
         return _getPageRoute(const ChatView());
       case buyCoinViewRoute:
         return _getPageRoute(const BuyCoinView());
+       case addressSearchViewRoute:
+        return _getPageRoute(const AddressSearchView());
       case confirmDeductViewRoute:
         final confirmDeductArgs = settings.arguments;
         if (confirmDeductArgs != null &&

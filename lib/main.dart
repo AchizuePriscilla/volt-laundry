@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as dot_env;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_places_picker/google_places_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/handlers/handlers.dart';
 import 'package:volt/presentation/theme/light_theme.dart';
@@ -16,6 +17,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await loadEnvFile();
   final url = dot_env.dotenv.env['STAGING_API']!;
+
   await setupLocator(baseApi: url);
   runZonedGuarded(
     () => runApp(const VoltApp()),
@@ -30,12 +32,10 @@ class VoltApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 630),
-      builder: () => MultiProvider(
-          providers: AppProviders.providers,
-          builder: (context, child) {
-            return MaterialApp(
+    return MultiProvider(
+        providers: AppProviders.providers,
+        builder: (context, child) {
+          return MaterialApp(
               supportedLocales: countries,
               localizationsDelegates: const [
                 CountryLocalizations.delegate,
@@ -47,15 +47,16 @@ class VoltApp extends StatelessWidget {
               navigatorKey: locator<NavigationHandler>().navigatorKey,
               onGenerateRoute: RouteGenerator.onGenerateRoute,
               initialRoute: splashScreenViewRoute,
-              builder: (context, widget) => Navigator(
-                onGenerateRoute: (settings) => CupertinoPageRoute(
-                  builder: (context) => DialogManager(
-                    child: widget!,
-                  ),
-                ),
-              ),
-            );
-          }),
-    );
+              builder: (context, widget) => ScreenUtilInit(
+                    designSize: const Size(360, 630),
+                    builder: () => Navigator(
+                      onGenerateRoute: (settings) => CupertinoPageRoute(
+                        builder: (context) => DialogManager(
+                          child: widget!,
+                        ),
+                      ),
+                    ),
+                  ));
+        });
   }
 }

@@ -102,3 +102,4 @@ const confirmDeductViewRoute = 'confirm-deduct-view';
 const paymentMethodViewRoute = 'payment-method-view';
 const bankTransferViewRoute = 'bank-transfer-view';
 const fundVTCWalletViewRoute = 'fund-vtc-wallet-view';
+const addressSearchViewRoute = 'address-search-view';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:volt/data/local/local_cache.dart';
 import 'package:volt/data/remote/auth_apis/auth_service.dart';
+import 'package:volt/data/remote/geolocator/geolocator_service.dart';
 import 'package:volt/data/remote/order_apis/order_service.dart';
 import 'package:volt/data/remote/wallet_apis/wallet_service.dart';
 import 'package:volt/handlers/handlers.dart';
@@ -15,6 +16,7 @@ class BaseViewModel extends ChangeNotifier {
   late AuthService authService;
   late WalletService walletService;
   late OrderService orderService;
+  late GeolocatorService geolocatorService;
 
   BaseViewModel(
       {NavigationHandler? navigationHandler,
@@ -22,13 +24,15 @@ class BaseViewModel extends ChangeNotifier {
       LocalCache? localCache,
       AuthService? authService,
       WalletService? walletService,
-      OrderService? orderService}) {
+      OrderService? orderService,
+      GeolocatorService? geolocatorService}) {
     this.navigationHandler = navigationHandler ?? locator();
     this.dialogHandler = dialogHandler ?? locator();
     this.localCache = localCache ?? locator();
     this.authService = authService ?? locator();
     this.walletService = walletService ?? locator();
     this.orderService = orderService ?? locator();
+    this.geolocatorService = geolocatorService ?? locator();
   }
 
   bool _loading = false;

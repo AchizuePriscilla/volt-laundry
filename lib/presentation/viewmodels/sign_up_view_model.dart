@@ -1,5 +1,6 @@
 import 'dart:developer';
-
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:volt/models/api/auth_requests.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
@@ -17,6 +18,20 @@ class SignUpViewModel extends BaseViewModel {
   late String timeOfUserCreation;
   late String timeOfUserUpdate;
   late String verificationCode;
+  late Position currentPosition;
+
+  void setCurrentLocation() async {
+    Geolocator.requestPermission();
+    currentPosition = await geolocatorService.getCurrentPosition();
+    latitude = currentPosition.latitude;
+    longitude = currentPosition.longitude;
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(latitude, longitude);
+    Placemark placemark = placemarks[0];
+    country = placemark.country!;
+    state = placemark.administrativeArea!;
+    notifyListeners();
+  }
 
   void navigateToRoute(String route) {
     navigationHandler.pushNamed(route);
@@ -42,20 +57,12 @@ class SignUpViewModel extends BaseViewModel {
     required String password,
     required String phoneNumber,
     required String address,
-    required String country,
-    required String state,
-    required String latitude,
-    required String longitude,
   }) {
     this.name = name;
     this.email = email;
     this.password = password;
     this.phoneNumber = phoneNumber;
     this.address = address;
-    this.country = country;
-    this.state = state;
-    this.latitude = 12323434;
-    this.longitude = 12980830;
     timeOfUserCreation = DateTime.now().toString();
     timeOfUserUpdate = DateTime.now().toString();
   }
@@ -120,8 +127,8 @@ class SignUpViewModel extends BaseViewModel {
         );
         if (res.success) {
           //remove cached data and navigate to HomeViewRoute
-           await localCache.removeFromLocalCache(lastPage);
-            await localCache.removeFromLocalCache(lastPhoneNumber);
+          await localCache.removeFromLocalCache(lastPage);
+          await localCache.removeFromLocalCache(lastPhoneNumber);
           navigationHandler.pushReplacementNamed(
             homeViewRoute,
           );
