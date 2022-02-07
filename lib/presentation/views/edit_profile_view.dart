@@ -44,9 +44,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                     Align(
                       alignment: Alignment.center,
                       child: ProfileAvatar(
-                        profilePicPath: context.watch<AppProfileVM>().profilePic,
+                          profilePicPath:
+                              context.watch<AppProfileVM>().profilePic,
                           canEdit: true,
-                          isSmall: true,
                           onPressed: () {
                             locator<BottomSheetHandler>()
                                 .triggerModalBottomSheet(context,
@@ -55,12 +55,16 @@ class _EditProfileViewState extends State<EditProfileView> {
                                         AvatarOption(
                                           text: 'Camera',
                                           icon: Icons.photo_camera,
-                                          onTap: () {},
+                                          onTap: () {
+                                            profileVM.pickImage(isCamera: true);
+                                          },
                                         ),
                                         AvatarOption(
                                           text: 'Gallery',
                                           icon: Icons.image,
-                                          onTap: () {},
+                                          onTap: () {
+                                            profileVM.pickImage();
+                                          },
                                         )
                                       ],
                                     ),

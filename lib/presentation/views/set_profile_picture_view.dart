@@ -82,7 +82,9 @@ class _SetProfilePictureViewState extends State<SetProfilePictureView> {
                           AvatarOption(
                             text: 'Camera',
                             icon: Icons.photo_camera,
-                            onTap: () {},
+                            onTap: () {
+                              signUp.pickImage(isCamera: true);
+                            },
                           ),
                           AvatarOption(
                             text: 'Gallery',

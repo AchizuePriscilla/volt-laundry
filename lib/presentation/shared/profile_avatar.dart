@@ -11,13 +11,13 @@ class ProfileAvatar extends StatelessWidget {
   final Function()? onPressed;
   final bool canEdit;
   final String profilePicPath;
-  const ProfileAvatar({
-    Key? key,
-    this.onPressed,
-    this.isSmall = false,
-    this.canEdit = true,
-    required this.profilePicPath
-  }) : super(key: key);
+  const ProfileAvatar(
+      {Key? key,
+      this.onPressed,
+      this.isSmall = false,
+      this.canEdit = true,
+      required this.profilePicPath})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,10 @@ class ProfileAvatar extends StatelessWidget {
       onTap: onPressed,
       child: Stack(
         children: [
-          _ImageContainer(isSmall: isSmall, profilePicPath: profilePicPath,),
+          _ImageContainer(
+            isSmall: isSmall,
+            profilePicPath: profilePicPath,
+          ),
           if (canEdit)
             Positioned(
               right: 2.w,
@@ -141,12 +144,13 @@ class _ImageContainer extends StatelessWidget {
     return CircleAvatar(
       radius: isSmall ? 65.w : 88.w,
       backgroundColor: Theme.of(context).backgroundColor,
-      backgroundImage: profilePicPath.isNotEmpty
-          ? FileImage(File(profilePicPath))
-          : Image.asset(
-              'assets/images/empty_profile_picture.png',
-              fit: BoxFit.cover,
-            ).image,
+      backgroundImage:
+          profilePicPath.isNotEmpty && profilePicPath != "undefined"
+              ? FileImage(File(profilePicPath))
+              : Image.asset(
+                  'assets/images/empty_profile_picture.png',
+                  fit: BoxFit.cover,
+                ).image,
     );
   }
 }

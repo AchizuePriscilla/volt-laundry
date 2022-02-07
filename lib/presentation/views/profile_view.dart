@@ -24,21 +24,11 @@ class ProfileView extends StatelessWidget {
         child: Column(
           children: [
             const CustomSpacer(
-              flex: 20,
+              flex: 15,
             ),
-            Container(
-              height: 170.w,
-              width: 170.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: Image.asset(
-                    'assets/images/me.jpg',
-                    fit: BoxFit.cover,
-                  ).image,
-                ),
-              ),
+            ProfileAvatar(
+              profilePicPath: profileVM.profilePic,
+              canEdit: false,
             ),
             const CustomSpacer(
               flex: 5,
