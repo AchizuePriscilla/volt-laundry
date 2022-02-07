@@ -95,7 +95,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
         ),
         builder: (_, size) {
           return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: SingleChildScrollView(
               child: SizedBox(
                 height: size.height,
@@ -158,7 +158,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                         ),
                         Container(
                           height: 22.h,
-                          width: 110.w,
+                          width: 115.w,
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor,
                             borderRadius: BorderRadius.circular(10.w),
@@ -252,13 +252,11 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                     const CustomSpacer(
                       flex: 6,
                     ),
-                    // Button(
-                    //   text: 'Add to cart',
-                    //   onPressed: () {
-                    //     locator<NavigationHandler>().goBack();
-                    //   },
-                    //   color: Palette.lightGreen,
-                    // ),
+                    Button(
+                      text: 'Add to cart',
+                      onPressed: () {},
+                      color: Palette.lightGreen,
+                    ),
                     const CustomSpacer(flex: 3),
                     Button(
                         text: 'Proceed',

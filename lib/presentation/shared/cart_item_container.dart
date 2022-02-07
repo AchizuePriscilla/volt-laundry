@@ -67,7 +67,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
             borderRadius: BorderRadius.circular(30.w),
           ),
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 25.w),
+            padding: EdgeInsets.only(left: 15.w, right: 8.w),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -141,7 +141,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
                   children: [
                     Container(
                       height: 22.h,
-                      width: 47.h,
+                      width: 110.w,
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(10.w),
@@ -151,64 +151,67 @@ class _CartItemContainerState extends State<CartItemContainer> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
-                              icon: Icon(
-                                Icons.remove,
-                                size: 15.w,
-                                color: Theme.of(context).primaryColorLight,
-                              ),
+                              padding: const EdgeInsets.all(0),
                               onPressed: () {
                                 _decrementCloth();
                               },
+                              icon: Icon(
+                                Icons.remove,
+                                size: 14.w,
+                                color: Theme.of(context).primaryColorLight,
+                              ),
                             ),
                             Text(_numberOfClothes.toString(),
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColorLight,
                                 )),
                             IconButton(
-                              icon: Icon(
-                                Icons.add,
-                                size: 15.w,
-                                color: Theme.of(context).primaryColorLight,
-                              ),
+                              padding: const EdgeInsets.all(0),
                               onPressed: () {
                                 _incrementCloth();
                               },
+                              icon: Icon(
+                                Icons.add,
+                                size: 14.w,
+                                color: Theme.of(context).primaryColorLight,
+                              ),
                             ),
                           ]),
                     ),
                     SizedBox(
-                        height: 22.h,
-                        width: 47.h,
-                        // color: Colors.black,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            Container(
-                              height: 17.h,
-                              width: 13.h,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.red,
-                              ),
+                      height: 22.h,
+                      width: 47.h,
+                      // color: Colors.black,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Container(
+                            height: 17.h,
+                            width: 13.h,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red,
                             ),
-                            Container(
-                              height: 17.h,
-                              width: 13.h,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.yellow,
-                              ),
+                          ),
+                          Container(
+                            height: 17.h,
+                            width: 13.h,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.yellow,
                             ),
-                            Container(
-                              height: 17.h,
-                              width: 13.h,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.green,
-                              ),
-                            )
-                          ],
-                        ))
+                          ),
+                          Container(
+                            height: 17.h,
+                            width: 13.h,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.green,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
                   ],
                 )
               ],

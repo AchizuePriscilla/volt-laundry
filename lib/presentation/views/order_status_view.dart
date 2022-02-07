@@ -57,19 +57,26 @@ class _OrderStatusViewState extends State<OrderStatusView> {
                               itemBuilder: (context, index) {
                                 return orders!.isEmpty
                                     ? const NoLaundryView()
-                                    : InkWell(
+                                    : OrderStatusDropdown(
                                         onTap: () {
                                           setState(() {
-                                            selectedIndex = index;
+                                            selectedIndex == index
+                                                ? selectedIndex = null
+                                                : selectedIndex = index;
                                           });
                                         },
-                                        child: OrderStatusDropdown(
-                                          isDropdownVisible:
-                                              selectedIndex == index
-                                                  ? true
-                                                  : false,
-                                          orderNo: orders[index].orderNo,
-                                        ),
+                                        onButtonTap: () {
+                                          setState(() {
+                                            selectedIndex == index
+                                                ? selectedIndex = null
+                                                : selectedIndex = index;
+                                          });
+                                        },
+                                        isDropdownVisible:
+                                            selectedIndex == index
+                                                ? true
+                                                : false,
+                                        order: orders[index],
                                       );
                               },
                               itemCount: orders!.isEmpty ? 1 : orders.length,
@@ -91,170 +98,184 @@ class _OrderStatusViewState extends State<OrderStatusView> {
   }
 }
 
-class OrderStatusDropdown extends StatelessWidget {
+class OrderStatusDropdown extends StatefulWidget {
   const OrderStatusDropdown(
-      {Key? key, required this.isDropdownVisible, required this.orderNo})
+      {Key? key,
+      required this.isDropdownVisible,
+      required this.order,
+      required this.onTap,
+      required this.onButtonTap})
       : super(key: key);
 
   final bool isDropdownVisible;
-  final String orderNo;
+  final VoidCallback onTap;
+  final VoidCallback onButtonTap;
+  final Order order;
 
   @override
+  State<OrderStatusDropdown> createState() => _OrderStatusDropdownState();
+}
+
+class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.w),
-            color: Palette.lightBlue,
-          ),
-          margin: EdgeInsets.symmetric(vertical: 5.h),
-          padding: EdgeInsets.all(5.h),
-          child: Row(
-            children: [
-              const CustomSpacer(
-                flex: 5,
-                horizontal: true,
-              ),
-              Text(
-                'Order No',
-                style: GoogleFonts.lato(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w800,
+    return InkWell(
+      onTap: widget.onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.w),
+              color: Palette.lightBlue,
+            ),
+            margin: EdgeInsets.symmetric(vertical: 5.h),
+            padding: EdgeInsets.all(5.h),
+            child: Row(
+              children: [
+                const CustomSpacer(
+                  flex: 5,
+                  horizontal: true,
                 ),
-              ),
-              const CustomSpacer(flex: 2, horizontal: true),
-              Text(
-                orderNo,
-                style: GoogleFonts.lato(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              const Expanded(child: SizedBox()),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                    isDropdownVisible
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                    size: 22.h),
-              ),
-            ],
-          ),
-        ),
-        Visibility(
-          visible: isDropdownVisible,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const OrderStageContainer(
-                imagePath: 'bike',
-                orderStage: 'Order Picked',
-              ),
-              Row(
-                children: [
-                  const CustomSpacer(flex: 6, horizontal: true),
-                  Container(
-                    height: 35.h,
-                    width: 1,
-                    color: Theme.of(context).disabledColor,
+                Text(
+                  'Order No',
+                  style: GoogleFonts.lato(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w800,
                   ),
-                ],
-              ),
-              const OrderStageContainer(
-                imagePath: 'wash',
-                orderStage: 'Cleaning',
-              ),
-              Row(
-                children: [
-                  const CustomSpacer(flex: 6, horizontal: true),
-                  Container(
-                    height: 35.h,
-                    width: 1,
-                    color: Theme.of(context).disabledColor,
-                  ),
-                ],
-              ),
-              const OrderStageContainer(
-                imagePath: 'bike',
-                orderStage: 'Courier is on the way',
-                hasArrivalTime: true,
-              ),
-              const CustomSpacer(
-                flex: 2,
-              ),
-              Row(children: [
-                CircleAvatar(
-                  radius: 27.w,
-                  backgroundImage: const AssetImage(
-                      'assets/images/empty_profile_picture.png'),
                 ),
                 const CustomSpacer(flex: 2, horizontal: true),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Paul David',
-                      style: GoogleFonts.lato(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      'Courier',
-                      style: GoogleFonts.lato(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
+                Text(
+                  widget.order.orderNo,
+                  style: GoogleFonts.lato(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
                 const Expanded(child: SizedBox()),
-                Text(
-                  'Close',
-                  style: GoogleFonts.lato(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(context).primaryColor),
+                IconButton(
+                  onPressed: widget.onButtonTap,
+                  icon: Icon(
+                      widget.isDropdownVisible
+                          ? Icons.keyboard_arrow_up
+                          : Icons.keyboard_arrow_down,
+                      size: 22.h),
                 ),
-              ]),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+              ],
+            ),
+          ),
+          Visibility(
+            visible: widget.isDropdownVisible,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const OrderStageContainer(
+                  imagePath: 'bike',
+                  orderStage: 'Order Picked',
+                ),
+                Row(
                   children: [
-                    Text(
-                      '08145518998',
-                      style: GoogleFonts.lato(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const CustomSpacer(flex: 2),
-                    Text(
-                      'Black in complexion',
-                      style: GoogleFonts.lato(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const CustomSpacer(flex: 2),
-                    Text(
-                      'Tall',
-                      style: GoogleFonts.lato(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    const CustomSpacer(flex: 6, horizontal: true),
+                    Container(
+                      height: 35.h,
+                      width: 1,
+                      color: Theme.of(context).disabledColor,
                     ),
                   ],
                 ),
-              )
-            ],
+                const OrderStageContainer(
+                  imagePath: 'wash',
+                  orderStage: 'Cleaning',
+                ),
+                Row(
+                  children: [
+                    const CustomSpacer(flex: 6, horizontal: true),
+                    Container(
+                      height: 35.h,
+                      width: 1,
+                      color: Theme.of(context).disabledColor,
+                    ),
+                  ],
+                ),
+                const OrderStageContainer(
+                  imagePath: 'bike',
+                  orderStage: 'Courier is on the way',
+                  hasArrivalTime: true,
+                ),
+                const CustomSpacer(
+                  flex: 2,
+                ),
+                Row(children: [
+                  CircleAvatar(
+                    radius: 27.w,
+                    backgroundImage: const AssetImage(
+                        'assets/images/empty_profile_picture.png'),
+                  ),
+                  const CustomSpacer(flex: 2, horizontal: true),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Paul David',
+                        style: GoogleFonts.lato(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        'Courier',
+                        style: GoogleFonts.lato(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Expanded(child: SizedBox()),
+                  Text(
+                    'Close',
+                    style: GoogleFonts.lato(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        color: Theme.of(context).primaryColor),
+                  ),
+                ]),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        '08145518998',
+                        style: GoogleFonts.lato(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      const CustomSpacer(flex: 2),
+                      Text(
+                        'Black in complexion',
+                        style: GoogleFonts.lato(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      const CustomSpacer(flex: 2),
+                      Text(
+                        'Tall',
+                        style: GoogleFonts.lato(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

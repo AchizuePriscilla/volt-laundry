@@ -11,10 +11,8 @@ import 'package:volt/utils/utils.dart';
 class LaundryVM extends BaseViewModel {
   late order_history.OrderHistoryModel _orderHistoryModel;
   late ServiceType _serviceType;
-  late ClothType _clothType;
   List<int> _colors = <int>[];
   List<UserWear> userWears = <UserWear>[];
-  // late int _numberOfClothes;
   DeliveryMethod _deliveryMethod = DeliveryMethod.pickup;
   late PaymentRef _paymentRef;
   late DeliveryFee _price;
