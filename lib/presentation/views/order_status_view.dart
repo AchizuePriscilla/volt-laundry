@@ -6,6 +6,7 @@ import 'package:volt/models/order_history_model.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/presentation/views/views.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class OrderStatusView extends StatefulWidget {
   const OrderStatusView({Key? key}) : super(key: key);
@@ -119,6 +120,22 @@ class OrderStatusDropdown extends StatefulWidget {
 class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
   @override
   Widget build(BuildContext context) {
+    var latitude = context.watch<AppProfileVM>().latitude!;
+    var longitude = context.watch<AppProfileVM>().longitude!;
+    Marker userPositionMarker = Marker(
+        markerId: const MarkerId('userPosition'),
+        infoWindow: const InfoWindow(title: 'My Position'),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+        position: LatLng(latitude, longitude));
+    Marker driverPositionMarker = Marker(
+        markerId: const MarkerId('driverPosition'),
+        infoWindow: const InfoWindow(title: 'Courier Position'),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        position: LatLng(widget.order.currentLocation.lat,
+            widget.order.currentLocation.lng));
+
+    CameraPosition userPosition =
+        CameraPosition(target: LatLng(latitude, longitude), zoom: 15);
     return InkWell(
       onTap: widget.onTap,
       child: Column(
@@ -205,72 +222,94 @@ class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
                 const CustomSpacer(
                   flex: 2,
                 ),
-                Row(children: [
-                  CircleAvatar(
-                    radius: 27.w,
-                    backgroundImage: const AssetImage(
-                        'assets/images/empty_profile_picture.png'),
+                Visibility(
+                  visible: widget.order.status == 'PLACED',
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * .5,
+                    color: Colors.red,
+                    child: GoogleMap(
+                      mapType: MapType.terrain,
+                      initialCameraPosition: userPosition,
+                      markers: {userPositionMarker, driverPositionMarker},
+                    ),
                   ),
-                  const CustomSpacer(flex: 2, horizontal: true),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Paul David',
-                        style: GoogleFonts.lato(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        'Courier',
-                        style: GoogleFonts.lato(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Expanded(child: SizedBox()),
-                  Text(
-                    'Close',
-                    style: GoogleFonts.lato(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        color: Theme.of(context).primaryColor),
-                  ),
-                ]),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
+                ),
+                const CustomSpacer(
+                  flex: 2,
+                ),
+                Visibility(
+                  visible: widget.order.status == 'ASSIGNED',
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
-                        '08145518998',
-                        style: GoogleFonts.lato(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
+                      Row(children: [
+                        CircleAvatar(
+                          radius: 27.w,
+                          backgroundImage: const AssetImage(
+                              'assets/images/empty_profile_picture.png'),
                         ),
-                      ),
-                      const CustomSpacer(flex: 2),
-                      Text(
-                        'Black in complexion',
-                        style: GoogleFonts.lato(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
+                        const CustomSpacer(flex: 2, horizontal: true),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Paul David',
+                              style: GoogleFonts.lato(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              'Courier',
+                              style: GoogleFonts.lato(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      const CustomSpacer(flex: 2),
-                      Text(
-                        'Tall',
-                        style: GoogleFonts.lato(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
+                        const Expanded(child: SizedBox()),
+                        Text(
+                          'Close',
+                          style: GoogleFonts.lato(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                              color: Palette.buttonColor),
                         ),
-                      ),
+                      ]),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              '08145518998',
+                              style: GoogleFonts.lato(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            const CustomSpacer(flex: 2),
+                            Text(
+                              'Black in complexion',
+                              style: GoogleFonts.lato(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            const CustomSpacer(flex: 2),
+                            Text(
+                              'Tall',
+                              style: GoogleFonts.lato(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),

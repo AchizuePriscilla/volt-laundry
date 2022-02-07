@@ -60,6 +60,7 @@ class UserModel extends Equatable {
       'email': email,
       'phone': phoneNumber,
       'name': name,
+      'avatar': avatar,
       'location': {
         "address": address,
         "state": state,

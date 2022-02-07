@@ -149,8 +149,6 @@ class AppProfileVM extends BaseViewModel {
           url: downloadUrl,
           savePath:
               "volt" + imageName + ".${StringUtils.getExtension(downloadUrl)}");
-
-      log(name);
       notifyListeners();
       toggleLoading(false);
     } catch (e) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
+import 'package:volt/presentation/viewmodels/app_profile_view_model.dart';
 import 'package:volt/presentation/viewmodels/splash_screen_view_model.dart';
 
 class SplashScreenView extends StatefulWidget {
@@ -14,6 +15,9 @@ class _SplashScreenViewState extends State<SplashScreenView> {
   @override
   void initState() {
     super.initState();
+    var appProfileVM = context.read<AppProfileVM>();
+    appProfileVM.fetchUserDataFromCache();
+    appProfileVM.getUser();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await context.read<SplashScreenVM>().handleNavigation();
     });

@@ -121,7 +121,7 @@ class _HomeViewState extends State<HomeView> {
                       color: Palette.buttonColor.withOpacity(.7),
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: Image.asset(
+                        image: Image.network(
                           appProfileVM.profilePic == "undefined"
                               ? 'assets/images/empty_profile_picture.png'
                               : appProfileVM.profilePic,
@@ -147,7 +147,7 @@ class _HomeViewState extends State<HomeView> {
                       color: Palette.buttonColor.withOpacity(.7),
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: Image.asset(
+                        image: Image.network(
                           appProfileVM.profilePic == "undefined"
                               ? 'assets/images/empty_profile_picture.png'
                               : appProfileVM.profilePic,

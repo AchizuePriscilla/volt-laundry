@@ -1,10 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:volt/presentation/shared/shared.dart';
-import 'package:volt/presentation/viewmodels/app_profile_view_model.dart';
 
 class ProfileAvatar extends StatelessWidget {
   final bool isSmall;
@@ -69,7 +65,9 @@ class _ImageContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (profilePicPath.isNotEmpty && profilePicPath.startsWith("http")) {
+    if (profilePicPath.isNotEmpty &&
+        profilePicPath.startsWith("http") &&
+        profilePicPath != "undefined") {
       return CachedNetworkImage(
         imageUrl: profilePicPath,
         placeholder: (_, __) {
@@ -112,7 +110,7 @@ class _ImageContainer extends StatelessWidget {
                 color: Palette.buttonColor.withOpacity(.7),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: Image.asset(
+                  image: Image.network(
                     profilePicPath,
                     fit: BoxFit.cover,
                   ).image,
@@ -140,17 +138,15 @@ class _ImageContainer extends StatelessWidget {
           );
         },
       );
+    } else {
+      return CircleAvatar(
+        radius: isSmall ? 65.w : 88.w,
+        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundImage: Image.asset(
+          'assets/images/empty_profile_picture.png',
+          fit: BoxFit.cover,
+        ).image,
+      );
     }
-    return CircleAvatar(
-      radius: isSmall ? 65.w : 88.w,
-      backgroundColor: Theme.of(context).backgroundColor,
-      backgroundImage:
-          profilePicPath.isNotEmpty && profilePicPath != "undefined"
-              ? FileImage(File(profilePicPath))
-              : Image.asset(
-                  'assets/images/empty_profile_picture.png',
-                  fit: BoxFit.cover,
-                ).image,
-    );
   }
 }
