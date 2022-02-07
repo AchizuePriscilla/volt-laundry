@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:volt/models/navigation/delivery_details_args.dart';
 import 'dart:io';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
@@ -157,7 +158,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                         ),
                         Container(
                           height: 22.h,
-                          width: 100.w,
+                          width: 110.w,
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor,
                             borderRadius: BorderRadius.circular(10.w),
@@ -267,10 +268,13 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                               selectedColors.isNotEmpty) {
                             laundryVM.updateValues(
                                 clothType: widget.clothType,
-                                total: _numberOfClothes,
+                                total: _numberOfClothes * 50,
                                 colors: selectedColors,
                                 serviceType: widget.serviceType);
-                            laundryVM.navigateToRoute(deliveryDetailsViewRoute);
+                            laundryVM.navigateToRoute(
+                                deliveryDetailsViewRoute,
+                                DeliveryDetailsArgs(
+                                    numberOfWears: _numberOfClothes));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(

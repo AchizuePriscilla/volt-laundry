@@ -17,7 +17,7 @@ class LaundryVM extends BaseViewModel {
   // late int _numberOfClothes;
   DeliveryMethod _deliveryMethod = DeliveryMethod.pickup;
   late PaymentRef _paymentRef;
-  late DeliveryFee _deliveryFee;
+  late DeliveryFee _price;
   void setDeliveryMethod(DeliveryMethod deliveryMethod) {
     _deliveryMethod = deliveryMethod;
     _paymentRef = PaymentRef.fromMap({'json': ''});
@@ -28,11 +28,11 @@ class LaundryVM extends BaseViewModel {
       required int total,
       required ServiceType serviceType,
       required List<int> colors}) {
-    _deliveryFee = DeliveryFee(currency: 'VLTCOIN', amount: 20);
+    _price = DeliveryFee(currency: 'VLTCOIN', amount: total);
     _colors = colors;
     userWears.add(
       UserWear(
-          price: _deliveryFee,
+          price: _price,
           wearColor: _colors,
           wearType: getDesc(clothType),
           wearTotal: total),
@@ -142,8 +142,8 @@ class LaundryVM extends BaseViewModel {
         arg: LaundryDetailsArgs(clothType, serviceType));
   }
 
-  void navigateToRoute(String route) {
-    navigationHandler.pushNamed(route);
+  void navigateToRoute(String route, dynamic args) {
+    navigationHandler.pushNamed(route, arg: args);
   }
 
   List<order_history.Order> get orderHistory {
@@ -168,6 +168,7 @@ class LaundryVM extends BaseViewModel {
   Future<void> transactionInit(
       {required String email,
       required double amount,
+      required int deliveryFee,
       required Function onFailure}) async {
     try {
       if (loading) return;
@@ -181,7 +182,7 @@ class LaundryVM extends BaseViewModel {
         log("PaymentRef: ${_paymentRef.toString()}");
         navigationHandler.pushNamed(
           confirmDeductViewRoute,
-          arg: ConfirmDeductArgs(amount: amount),
+          arg: ConfirmDeductArgs(amount: amount, deliveryFee: deliveryFee),
         );
       } else {
         //show error messagge
@@ -195,7 +196,8 @@ class LaundryVM extends BaseViewModel {
     }
   }
 
-  Future<void> processOrder({required Function onFailure}) async {
+  Future<void> processOrder(
+      {required Function onFailure, required int deliveryFee}) async {
     try {
       if (loading) return;
       toggleLoading(true);
@@ -204,8 +206,8 @@ class LaundryVM extends BaseViewModel {
             serviceType: getServiceType(_serviceType),
             deliveryMode: _deliveryMethod.name.toUpperCase(),
             userWears: userWears,
-            price: _deliveryFee,
-            deliveryFee: _deliveryFee,
+            price: _price,
+            deliveryFee: DeliveryFee(amount: deliveryFee, currency: 'VLTCOIN'),
             paymentMethod: 'COIN',
             origin: CurrentLocation(address: 'UNN', lat: 6.8645, lng: 7.4083),
             destination: CurrentLocation(
@@ -216,6 +218,7 @@ class LaundryVM extends BaseViewModel {
             paymentRef: _paymentRef),
       );
       if (res.success) {
+        userWears.clear();
         dialogHandler.showDialog(
             contentType: DialogContentType.success,
             title: 'Success',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
+import 'package:volt/models/navigation/delivery_details_args.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
@@ -20,45 +21,51 @@ class CartItemContainer extends StatefulWidget {
 
 class _CartItemContainerState extends State<CartItemContainer> {
   String selectedValue = 'Men';
+  int _numberOfClothes = 0;
+
+  void _incrementCloth() {
+    setState(() {
+      _numberOfClothes++;
+    });
+  }
+
+  void _decrementCloth() {
+    setState(() {
+      _numberOfClothes == 0 ? null : _numberOfClothes--;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     var laundryDetailsVM = context.read<LaundryVM>();
-    return InkWell(
-      onTap: widget.onTap ??
-          () {
-            laundryDetailsVM.navigateToRoute(deliveryDetailsViewRoute);
-          },
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 10.h),
-        constraints: BoxConstraints.tight(Size(
-          MediaQuery.of(context).size.width * .8,
-          60.h,
-        )),
-        decoration: BoxDecoration(
+    return Slidable(
+      endActionPane:
+          ActionPane(motion: const ScrollMotion(), extentRatio: .3, children: [
+        Container(
+            height: 30.h,
+            width: 30.h,
+            margin: EdgeInsets.only(left: 15.w),
+            decoration:
+                const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+            child: Icon(Icons.close,
+                color: Theme.of(context).primaryColorLight, size: 20.h))
+      ]),
+      child: InkWell(
+        onTap: widget.onTap ??
+            () {
+              laundryDetailsVM.navigateToRoute(deliveryDetailsViewRoute,
+                  DeliveryDetailsArgs(numberOfWears: _numberOfClothes));
+            },
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 10.h),
+          constraints: BoxConstraints.tight(Size(
+            MediaQuery.of(context).size.width * .9,
+            60.h,
+          )),
+          decoration: BoxDecoration(
             color: Theme.of(context).primaryColorLight,
             borderRadius: BorderRadius.circular(30.w),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xff08141B).withOpacity(.05),
-                spreadRadius: 10,
-                blurRadius: 7,
-                offset: const Offset(0, 15),
-              )
-            ]),
-        child: Slidable(
-          endActionPane: ActionPane(
-              motion: const ScrollMotion(),
-              extentRatio: .3,
-              children: [
-                Container(
-                    height: 30.h,
-                    width: 30.h,
-                    decoration: const BoxDecoration(
-                        color: Colors.red, shape: BoxShape.circle),
-                    child: Icon(Icons.close,
-                        color: Theme.of(context).primaryColorLight, size: 20.h))
-              ]),
+          ),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 25.w),
             child: Row(
@@ -143,19 +150,29 @@ class _CartItemContainerState extends State<CartItemContainer> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(
-                              Icons.remove,
-                              size: 15.w,
-                              color: Theme.of(context).primaryColorLight,
+                            IconButton(
+                              icon: Icon(
+                                Icons.remove,
+                                size: 15.w,
+                                color: Theme.of(context).primaryColorLight,
+                              ),
+                              onPressed: () {
+                                _decrementCloth();
+                              },
                             ),
-                            Text('4',
+                            Text(_numberOfClothes.toString(),
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColorLight,
                                 )),
-                            Icon(
-                              Icons.add,
-                              size: 15.w,
-                              color: Theme.of(context).primaryColorLight,
+                            IconButton(
+                              icon: Icon(
+                                Icons.add,
+                                size: 15.w,
+                                color: Theme.of(context).primaryColorLight,
+                              ),
+                              onPressed: () {
+                                _incrementCloth();
+                              },
                             ),
                           ]),
                     ),

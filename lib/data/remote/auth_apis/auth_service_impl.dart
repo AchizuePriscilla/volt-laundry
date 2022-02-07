@@ -68,8 +68,8 @@ class AuthServiceImpl implements AuthService {
         phoneNumber: request.phoneNumber,
         avatar: request.avatar,
         address: request.address,
-        latitude: int.parse(request.latitude.toString()),
-        longitude: int.parse(request.longitude.toString()),
+        latitude: request.latitude,
+        longitude: request.longitude
       );
     }
     return res;

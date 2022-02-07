@@ -1,0 +1,61 @@
+{
+    "order": {
+      "id": "61e5f257373085bac6424cf6",
+      "serviceType": "DRY_CLEAN",
+      "userWears": [
+        {
+          "wearType": "T-Shirt",
+          "wearColor": [
+            "#000000"
+          ],
+          "wearTotal": 1,
+          "price": {
+            "currency": "VLTCOIN",
+            "amount": 50
+          }
+        }
+      ],
+      "price": {
+        "currency": "VLTCOIN",
+        "amount": 50
+      },
+      "deliveryFee": {
+        "currency": "VLTCOIN",
+        "amount": 10
+      },
+      "netPrice": {
+        "currency": "VLTCOIN",
+        "amount": 60
+      },
+      "paymentMethod": "COIN",
+      "paymentRef": {},
+      "origin": {
+        "address": "UNN",
+        "country": "",
+        "state": "",
+        "lat": 6.8645,
+        "lng": 7.4083
+      },
+      "destination": {
+        "address": "VLT Factory",
+        "country": "",
+        "state": "",
+        "lat": 7.4083,
+        "lng": 7.4083
+      },
+      "currentLocation": {
+        "address": "UNN",
+        "country": "",
+        "state": "",
+        "lat": 6.8645,
+        "lng": 7.4083
+      },
+      "deliveryMode": "PICKUP",
+      "status": "PLACED",
+      "orderNo": "nh9ih",
+      "assignedTo": "",
+      "createdAt": "2022-01-17T22:48:46.341Z",
+      "createdBy": "61cb97930d1b648920d70364",
+      "updatedAt": "2022-01-17T22:48:46.341Z"
+    }
+  }

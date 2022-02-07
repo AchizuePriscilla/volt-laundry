@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:volt/models/navigation/delivery_details_args.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
@@ -43,7 +44,8 @@ class _CartViewState extends State<CartView> {
                 Button(
                     text: 'Proceed',
                     onPressed: () {
-                      laundryVM.navigateToRoute(deliveryDetailsViewRoute);
+                      laundryVM.navigateToRoute(deliveryDetailsViewRoute,
+                          DeliveryDetailsArgs(numberOfWears: 2));
                     }),
               ],
             ),

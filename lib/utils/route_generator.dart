@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:volt/models/navigation/confirm_deduct_args.dart';
+import 'package:volt/models/navigation/delivery_details_args.dart';
 import 'package:volt/models/navigation/laundry_details_args.dart';
 import 'package:volt/models/navigation/oops_args.dart';
 import 'package:volt/presentation/views/views.dart';
@@ -39,7 +40,15 @@ class RouteGenerator {
       case checkoutViewRoute:
         return _getPageRoute(const CheckoutView());
       case deliveryDetailsViewRoute:
-        return _getPageRoute(const DeliveryDetailsView());
+        final deliveryDetailsArgs = settings.arguments;
+        if (deliveryDetailsArgs != null &&
+            deliveryDetailsArgs is DeliveryDetailsArgs) {
+          return _getPageRoute(DeliveryDetailsView(
+            numberOfWears: deliveryDetailsArgs.numberOfWears,
+          ));
+        }
+        return _getPageRoute(
+            _errorPage(message: "Number of wears parameter not passed"));
       case historyViewRoute:
         return _getPageRoute(const HistoryView());
       case chatViewRoute:
@@ -56,6 +65,7 @@ class RouteGenerator {
             confirmDeductArgs is ConfirmDeductArgs) {
           return _getPageRoute(ConfirmDeductView(
             amount: confirmDeductArgs.amount,
+            deliveryFee: confirmDeductArgs.deliveryFee,
           ));
         }
         return _getPageRoute(

@@ -6,7 +6,9 @@ import 'package:volt/utils/constants.dart';
 import 'package:volt/utils/utils.dart';
 
 class DeliveryDetailsView extends StatefulWidget {
-  const DeliveryDetailsView({Key? key}) : super(key: key);
+  final int numberOfWears;
+  const DeliveryDetailsView({Key? key, required this.numberOfWears})
+      : super(key: key);
 
   @override
   State<DeliveryDetailsView> createState() => _DeliveryDetailsViewState();
@@ -20,7 +22,10 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
     var laundryVM = context.read<LaundryVM>();
     var profileVM = context.watch<AppProfileVM>();
     var rxLaundryVM = context.watch<LaundryVM>();
-    double _total = 90.0;
+
+    int _deliveryFee = deliveryMethod == DeliveryMethod.pickup ? 20 : 0;
+    double _total = ((widget.numberOfWears * 50) + _deliveryFee).toDouble();
+
     return ResponsiveWidget(
         appBar: CustomAppBar(
           text: 'Checkout',
@@ -289,7 +294,7 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                     ),
                   ),
                   Text(
-                    '90 VTC',
+                    '${_total.toString()} VTC',
                     style: GoogleFonts.lato(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
@@ -309,7 +314,7 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                     ),
                   ),
                   Text(
-                    '00 VTC',
+                    deliveryMethod == DeliveryMethod.dropOff ? '00' : '20',
                     style: GoogleFonts.lato(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
@@ -344,6 +349,7 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                   onPressed: () async {
                     await laundryVM.transactionInit(
                         email: profileVM.email!,
+                        deliveryFee: _deliveryFee,
                         amount: _total,
                         onFailure: () {
                           return ScaffoldMessenger.of(context).showSnackBar(

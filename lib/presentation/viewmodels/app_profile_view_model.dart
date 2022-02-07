@@ -73,23 +73,23 @@ class AppProfileVM extends BaseViewModel {
 
   String get profilePic {
     try {
-      return _rxUser.avatar!;
+      return _user.avatar!;
     } catch (e) {
       return '';
     }
   }
 
-  int? get latitude {
+  double? get latitude {
     try {
-      return _user.latitude;
+      return _rxUser.latitude;
     } catch (e) {
       return 0;
     }
   }
 
-  int? get longitude {
+  double? get longitude {
     try {
-      return _user.longitude;
+      return _rxUser.longitude;
     } catch (e) {
       return 0;
     }

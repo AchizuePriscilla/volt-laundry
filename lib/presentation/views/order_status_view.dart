@@ -188,7 +188,8 @@ class OrderStatusDropdown extends StatelessWidget {
               Row(children: [
                 CircleAvatar(
                   radius: 27.w,
-                  backgroundImage: const AssetImage('assets/images/me.jpg'),
+                  backgroundImage: const AssetImage(
+                      'assets/images/empty_profile_picture.png'),
                 ),
                 const CustomSpacer(flex: 2, horizontal: true),
                 Column(

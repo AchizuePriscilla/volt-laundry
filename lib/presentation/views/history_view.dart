@@ -36,7 +36,6 @@ class _HistoryViewState extends State<HistoryView> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   var orders = snapshot.data;
-
                   return RefreshIndicator(
                     onRefresh: () async {
                       await laundryVM.getOrderHistory();
@@ -64,7 +63,7 @@ class _HistoryViewState extends State<HistoryView> {
                                         .amount
                                         .toString(),
                                     serviceType: orders[index].serviceType,
-                                    colors: orders[index].userWears,
+                                    userWears: orders[index].userWears,
                                   );
                           }),
                     ),
@@ -88,13 +87,13 @@ class History extends StatelessWidget {
   final String wearType;
   final String orderNo;
   final String netPrice;
-  final List<UserWear> colors;
+  final List<UserWear> userWears;
   const History({
     required this.serviceType,
     required this.orderNo,
     required this.wearType,
     required this.netPrice,
-    required this.colors,
+    required this.userWears,
     Key? key,
   }) : super(key: key);
 
@@ -102,7 +101,7 @@ class History extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.h),
-      height: 30.h,
+      height: 32.h,
       width: MediaQuery.of(context).size.width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -131,36 +130,39 @@ class History extends StatelessWidget {
             const CustomSpacer(
               flex: 2,
             ),
-            Row(
-              children: [
-                Text(
-                  wearType,
-                  style: GoogleFonts.lato(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w600,
+            SizedBox(
+              width: MediaQuery.of(context).size.width * .58,
+              height: 10.h,
+              child: Row(
+                children: [
+                  Text(
+                    wearType,
+                    style: GoogleFonts.lato(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                const CustomSpacer(
-                  flex: 2,
-                  horizontal: true,
-                ),
-                SizedBox(
-                  width: 50.w,
-                  height: 12.h,
-                  child: ListView.builder(
-                      itemCount: colors.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          width: 11.h,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(colors[index].wearColor[index]),
-                          ),
-                        );
-                      }),
-                ),
-              ],
+                  const CustomSpacer(
+                    flex: 2,
+                    horizontal: true,
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        ...userWears[0].wearColor.map(
+                              (e) => Container(
+                                width: 11.h,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(e),
+                                ),
+                              ),
+                            ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             )
           ]),
           Text(

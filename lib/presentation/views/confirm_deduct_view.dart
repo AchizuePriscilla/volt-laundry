@@ -8,7 +8,8 @@ import 'package:volt/utils/locator.dart';
 
 class ConfirmDeductView extends StatelessWidget {
   final double amount;
-  const ConfirmDeductView({Key? key, required this.amount}) : super(key: key);
+  final int deliveryFee;
+  const ConfirmDeductView({Key? key, required this.amount, required this.deliveryFee}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,10 @@ class ConfirmDeductView extends StatelessWidget {
                   text: 'Confirm',
                   loading: rxLaundryVM.loading,
                   onPressed: () async {
-                    await laundryVM.processOrder(onFailure: () {
+                    await laundryVM.processOrder(
+                      deliveryFee: deliveryFee,
+                      onFailure: () {
+
                       return ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: Colors.red,

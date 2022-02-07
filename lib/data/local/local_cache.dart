@@ -30,8 +30,8 @@ abstract class LocalCache {
   Future<void> updateUserData({
    String? phoneNumber,
       String? address,
-      int? latitude,
-      int? longitude,
+      double? latitude,
+      double? longitude,
       String? avatar
   });
 }

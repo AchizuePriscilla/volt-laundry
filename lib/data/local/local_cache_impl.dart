@@ -101,8 +101,8 @@ class LocalCacheImpl implements LocalCache {
   Future<void> updateUserData({String? name,
       String? phoneNumber,
       String? address,
-      int? latitude,
-      int? longitude,
+      double? latitude,
+      double? longitude,
       String? avatar}) async {
      try {
       final userDataJson = await getUserData();

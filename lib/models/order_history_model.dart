@@ -175,13 +175,15 @@ class UserWear {
   });
 
   final String wearType;
-  final List wearColor;
+  final List<int> wearColor;
   final int wearTotal;
   final DeliveryFee price;
 
   factory UserWear.fromMap(Map<String, dynamic> json) => UserWear(
         wearType: json["wearType"],
-        wearColor: json["wearColor"],
+        wearColor: List<int>.from(
+          (json["wearColor"] ?? []),
+        ),
         wearTotal: json["wearTotal"],
         price: DeliveryFee.fromMap(json["price"]),
       );
