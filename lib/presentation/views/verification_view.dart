@@ -4,6 +4,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+
 class VerificationView extends StatefulWidget {
   const VerificationView({Key? key}) : super(key: key);
 
@@ -49,7 +50,7 @@ class _VerificationViewState extends State<VerificationView> {
   @override
   void dispose() {
     _errorController!.close();
-    _controller.removeListener(onListen);
+    // _controller.removeListener(onListen);
     super.dispose();
   }
 
@@ -67,7 +68,17 @@ class _VerificationViewState extends State<VerificationView> {
               padding: EdgeInsets.symmetric(horizontal: 25.w),
               child: Column(
                 children: [
-                  const CustomSpacer(flex: 25),
+                  const CustomSpacer(flex: 8),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: CustomBackButton(
+                      color: Palette.blackColor,
+                      onTap: () {
+                        verificationVM.onPop();
+                      },
+                    ),
+                  ),
+                  const CustomSpacer(flex: 20),
                   Text(
                     context.watch<VerificationViewModel>().getTime,
                     textAlign: TextAlign.center,
@@ -131,7 +142,9 @@ class _VerificationViewState extends State<VerificationView> {
                     loading: context.watch<SignUpViewModel>().loading,
                     text: 'Next',
                     onPressed: () {
-                      context.read<SignUpViewModel>().signUp(_controller.text);
+                      context
+                          .read<SignUpViewModel>()
+                          .verifyCode(_controller.text);
                     },
                     isSmall: true,
                   ),

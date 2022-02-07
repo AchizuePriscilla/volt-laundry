@@ -25,6 +25,8 @@ class SignUpRequest extends Equatable {
   final double longitude;
   final String timeOfUserCreation;
   final String timeOfUserUpdate;
+  final String? id;
+  final String avatar;
 
   const SignUpRequest(
       {required this.name,
@@ -37,13 +39,17 @@ class SignUpRequest extends Equatable {
       required this.latitude,
       required this.longitude,
       required this.timeOfUserCreation,
-      required this.timeOfUserUpdate});
+      required this.timeOfUserUpdate,
+      required this.avatar,
+      this.id});
 
   Map<String, dynamic> toMap() {
     return {
       "email": email,
       "password": password,
       "name": name,
+      "id": id,
+      "avatar": avatar,
       "phone": phoneNumber,
       "location": {
         "address": address,
@@ -68,6 +74,8 @@ class SignUpRequest extends Equatable {
         phoneNumber,
         timeOfUserUpdate,
         timeOfUserCreation,
+        id,
+        avatar,
       ];
 }
 

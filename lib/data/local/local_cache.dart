@@ -25,4 +25,13 @@ abstract class LocalCache {
 
   ///Deletes cached current user data
   Future<void> deleteUserData();
+
+   ///Updates data of current user
+  Future<void> updateUserData({
+   String? phoneNumber,
+      String? address,
+      int? latitude,
+      int? longitude,
+      String? avatar
+  });
 }

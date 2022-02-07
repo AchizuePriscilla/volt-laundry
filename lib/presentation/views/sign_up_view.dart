@@ -43,7 +43,7 @@ class _SignUpViewState extends State<SignUpView> {
   @override
   void initState() {
     super.initState();
-    Geolocator.requestPermission();
+    context.read<SignUpViewModel>().setCurrentLocation();
     _emailController.addListener(onListen);
     _passwordController.addListener(onListen);
     _phoneNumberController.addListener(onListen);
@@ -59,6 +59,35 @@ class _SignUpViewState extends State<SignUpView> {
     _nameController.removeListener(onListen);
     _locationController.removeListener(onListen);
     super.dispose();
+  }
+
+  Future<void> _determineLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: SizedBox(
+          height: 30.h,
+          child: Center(
+            child: Text(
+              'Location permissions are permanently denied, we cannot request permissions.',
+              style: TextStyle(fontSize: 14.sp),
+            ),
+          ),
+        ),
+      ));
+    }
+    context.read<SignUpViewModel>().setCurrentLocation();
   }
 
   @override
@@ -123,14 +152,11 @@ class _SignUpViewState extends State<SignUpView> {
                     Icons.phone,
                     color: Theme.of(context).disabledColor.withOpacity(.6),
                   ),
-                  hint: "Phone Number, E.g: 08145518998",
+                  hint: "Phone Number, E.g: 081XXXX8998",
                 ),
                 const CustomSpacer(flex: 3),
                 CustomTextField(
                   controller: _locationController,
-                  onTap: () {
-                    signUpVM.setCurrentLocation();
-                  },
                   fillColor: Theme.of(context).primaryColorLight,
                   prefix: Icon(
                     Icons.pin_drop,
@@ -171,6 +197,7 @@ class _SignUpViewState extends State<SignUpView> {
                     text: 'Sign Up',
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
+                        await _determineLocation();
                         signUpVM.updateFields(
                             name: _nameController.text,
                             email: _emailController.text,

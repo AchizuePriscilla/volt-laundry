@@ -158,16 +158,10 @@ class _FundWalletViewState extends State<FundWalletView> {
                     color: Theme.of(context).primaryColor,
                     child: Column(
                       children: [
-                        const CustomSpacer(flex: 2),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: CustomBackButton(
-                              color: Theme.of(context).primaryColorLight),
-                        ),
-                        const CustomSpacer(flex: 1),
+                        const CustomSpacer(flex: 10),
                         Container(
                           height: 35.h,
-                          width: 125.h,
+                          width: 200.w,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(23.w),
                               color: Theme.of(context).primaryColorLight),
@@ -208,14 +202,14 @@ class _FundWalletViewState extends State<FundWalletView> {
                         Text(
                           'VTC ${rxAppProfileVM.vltCoinBalance.toString()}',
                           style: GoogleFonts.lato(
-                              fontSize: 36.sp,
+                              fontSize: 30.sp,
                               fontWeight: FontWeight.w900,
                               color: Theme.of(context).primaryColorLight),
                         ),
                         Text(
                           "VNGN ${rxAppProfileVM.vltNairaBalance.toString()}",
                           style: GoogleFonts.lato(
-                              fontSize: 18.sp,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w300,
                               color: Theme.of(context).primaryColorLight),
                         )

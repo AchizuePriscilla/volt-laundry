@@ -151,7 +151,7 @@ class ProfileView extends StatelessWidget {
                           fontWeight: FontWeight.w400),
                     ),
                     Container(
-                        height: 50.h,
+                        height: 45.h,
                         width: 90.w,
                         decoration: const BoxDecoration(
                           image: DecorationImage(

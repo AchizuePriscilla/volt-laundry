@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 
@@ -61,14 +61,14 @@ class _FundVTCWalletViewState extends State<FundVTCWalletView> {
                   ),
                   const CustomSpacer(flex: 2),
                   Text(
-                    'VTC ${rxAppProfileVM.vltCoinBalance.toString()}',
+                    'VNGN ${rxAppProfileVM.vltNairaBalance.toString()}',
                     style: GoogleFonts.lato(
                         fontSize: 36.sp,
                         fontWeight: FontWeight.w900,
                         color: Theme.of(context).primaryColorLight),
                   ),
                   Text(
-                    "VNGN ${rxAppProfileVM.vltNairaBalance.toString()}",
+                    "VTC ${rxAppProfileVM.vltCoinBalance.toString()}",
                     style: GoogleFonts.lato(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w300,

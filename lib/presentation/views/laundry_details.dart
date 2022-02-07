@@ -104,7 +104,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                       flex: 8,
                     ),
                     SizedBox(
-                      height: 40.h,
+                      height: 44.h,
                       child: DropdownButtonFormField(
                         value: selectedValue,
                         onChanged: (String? value) {
@@ -118,7 +118,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                           // size: 24.w,
                         ),
                         style: GoogleFonts.lato(
-                            fontSize: 18.sp,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
                             color: Colors.black),
                         decoration: const InputDecoration(

@@ -61,15 +61,18 @@ class SuccessDialog extends StatelessWidget {
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                        padding: EdgeInsets.all(20.h),
-                        height: 160.w,
-                        width: 150.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.w),
-                          color: Theme.of(context).primaryColorLight,
-                        ),
-                        child: Image.asset(
-                            'assets/images/${request.imagePath}.png')),
+                      alignment: Alignment.topCenter,
+                      height: 40.h,
+                      width: 40.h,
+                      decoration: const BoxDecoration(
+                        color: Palette.lightGreen,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child:
+                            Icon(Icons.check, size: 20.h, color: Colors.white),
+                      ),
+                    ),
                     const CustomSpacer(
                       flex: 3,
                     ),

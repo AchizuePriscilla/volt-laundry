@@ -104,4 +104,9 @@ class VerificationViewModel extends BaseViewModel {
   void navigateToRoute(String route) {
     navigationHandler.pushNamed(route);
   }
+
+  void onPop() {
+    navigationHandler.popAndPushNamed(signUpViewRoute);
+    resetTimer();
+  }
 }

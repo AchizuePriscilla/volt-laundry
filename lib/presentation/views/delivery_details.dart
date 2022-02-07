@@ -14,6 +14,7 @@ class DeliveryDetailsView extends StatefulWidget {
 
 class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
   DeliveryMethod deliveryMethod = DeliveryMethod.pickup;
+
   @override
   Widget build(BuildContext context) {
     var laundryVM = context.read<LaundryVM>();
@@ -43,7 +44,7 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
-                    Icons.store,
+                    Icons.location_on,
                     color: Palette.buttonColor,
                     size: 20.h,
                   ),
@@ -55,7 +56,7 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'From Volt Store',
+                        'From',
                         style: GoogleFonts.lato(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
@@ -65,11 +66,36 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                         flex: 1,
                       ),
                       Text(
-                        '13, University Road Nsukka',
+                        profileVM.address,
                         style: GoogleFonts.lato(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w700,
                         ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            '${profileVM.name}  ',
+                            style: GoogleFonts.lato(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Container(
+                            height: 3.h,
+                            width: 3.h,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Theme.of(context).disabledColor),
+                          ),
+                          Text(
+                            '  ${profileVM.number}',
+                            style: GoogleFonts.lato(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
                       )
                     ],
                   )
@@ -82,7 +108,7 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
-                    Icons.location_on,
+                    Icons.store,
                     color: Palette.lightGreen,
                     size: 20.h,
                   ),
@@ -94,7 +120,7 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'To',
+                        'To Volt Store',
                         style: GoogleFonts.lato(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
@@ -110,48 +136,23 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Plot 18, Jedidah Estate, Enugu',
+                              '13, University Road Nsukka',
                               style: GoogleFonts.lato(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Theme.of(context).disabledColor,
-                              size: 14.h,
-                            ),
+                            // Icon(
+                            //   Icons.arrow_forward_ios,
+                            //   color: Theme.of(context).disabledColor,
+                            //   size: 14.h,
+                            // ),
                           ],
                         ),
                       ),
                       const CustomSpacer(
                         flex: 1,
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'Ade John  ',
-                            style: GoogleFonts.lato(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          Container(
-                            height: 3.h,
-                            width: 3.h,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(context).disabledColor),
-                          ),
-                          Text(
-                            '  08145518998',
-                            style: GoogleFonts.lato(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      )
                     ],
                   )
                 ],
@@ -342,7 +343,7 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                   loading: rxLaundryVM.loading,
                   onPressed: () async {
                     await laundryVM.transactionInit(
-                        email: profileVM.email,
+                        email: profileVM.email!,
                         amount: _total,
                         onFailure: () {
                           return ScaffoldMessenger.of(context).showSnackBar(

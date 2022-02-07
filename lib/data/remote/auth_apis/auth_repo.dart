@@ -8,5 +8,6 @@ abstract class AuthRepository {
       PhoneVerificationRequest request);
   Future<LoginResponse> signUp(SignUpRequest request);
   Future<LoginResponse> logIn(LoginRequest request);
-   Future<GetUserResponse> getUser();
+  Future<GetUserResponse> getUser();
+  Future<GetUserResponse> editUser(SignUpRequest request);
 }

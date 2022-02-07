@@ -29,6 +29,13 @@
             {
               "client_id": "858082998268-ifju155745igfggkqno9951jcato561d.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "858082998268-qijreua7qkg11s5bhppv60bpchnes3oj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.volt.laundry"
+              }
             }
           ]
         }

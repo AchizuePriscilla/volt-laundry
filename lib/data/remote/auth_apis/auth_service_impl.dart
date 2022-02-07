@@ -58,4 +58,20 @@ class AuthServiceImpl implements AuthService {
     var res = await authRepo.getUser();
     return res;
   }
+
+  @override
+  Future<GetUserResponse> editUser(SignUpRequest request) async {
+    await authRepo.editUser(request);
+    var res = await getUser();
+    if (res.success) {
+      await cache.updateUserData(
+        phoneNumber: request.phoneNumber,
+        avatar: request.avatar,
+        address: request.address,
+        latitude: int.parse(request.latitude.toString()),
+        longitude: int.parse(request.longitude.toString()),
+      );
+    }
+    return res;
+  }
 }

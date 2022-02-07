@@ -41,7 +41,7 @@ class DrawerMenuRow extends StatelessWidget {
                 Text(
                   label,
                   style: GoogleFonts.poppins(
-                      fontSize: 25.sp,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.w600,
                       color: Theme.of(context).primaryColorLight),
                 )

@@ -55,10 +55,11 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     var homeVM = context.read<HomeVM>();
+    var appProfileVM = context.read<AppProfileVM>();
     return ResponsiveWidget(
       onWillPop: () => homeVM.onWillPop(),
       bottomNavigationBar: SizedBox(
-        height: 70.h,
+        height: 80.h,
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           iconSize: 27.w,
@@ -121,7 +122,9 @@ class _HomeViewState extends State<HomeView> {
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: Image.asset(
-                          'assets/images/me.jpg',
+                          appProfileVM.profilePic == "undefined"
+                              ? 'assets/images/empty_profile_picture.png'
+                              : appProfileVM.profilePic,
                           fit: BoxFit.cover,
                         ).image,
                       ),
@@ -145,7 +148,9 @@ class _HomeViewState extends State<HomeView> {
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: Image.asset(
-                          'assets/images/me.jpg',
+                          appProfileVM.profilePic == "undefined"
+                              ? 'assets/images/empty_profile_picture.png'
+                              : appProfileVM.profilePic,
                           fit: BoxFit.cover,
                         ).image,
                       ),

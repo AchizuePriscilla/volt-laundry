@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_paystack/flutter_paystack.dart';
 
 class CreditWalletRequest extends Equatable {
   final double amount;

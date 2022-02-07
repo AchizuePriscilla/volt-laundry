@@ -1,5 +1,8 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:volt/data/remote/geolocator/geolocator_service.dart';
+
+abstract class GeolocatorService {
+  Future<Position> getCurrentPosition();
+}
 
 class GeolocatorServiceImpl implements GeolocatorService {
   @override

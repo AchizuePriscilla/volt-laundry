@@ -245,7 +245,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               await walletVM.handleCardPayment(
-                                  email: context.read<AppProfileVM>().email,
+                                  email: context.read<AppProfileVM>().email!,
                                   amount: _amount.toDouble(),
                                   context: context,
                                   paystackPlugin: paystackPlugin,

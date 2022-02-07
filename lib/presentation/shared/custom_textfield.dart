@@ -18,6 +18,7 @@ class CustomTextField extends StatelessWidget {
   final Function(String)? onChanged;
   final Color? fillColor;
   final bool obscure;
+  final String? initialValue;
 
   const CustomTextField({
     Key? key,
@@ -36,6 +37,7 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.fillColor,
     this.obscure = false,
+    this.initialValue,
     this.textCapitalization = TextCapitalization.none,
   }) : super(key: key);
 
@@ -61,6 +63,7 @@ class CustomTextField extends StatelessWidget {
         }
       },
       onChanged: onChanged ?? (val){},
+      initialValue: initialValue,
       decoration: InputDecoration(
         alignLabelWithHint: true,
         labelText: label,

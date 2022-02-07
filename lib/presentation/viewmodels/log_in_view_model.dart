@@ -29,7 +29,7 @@ class LogInViewModel extends BaseViewModel {
 
       if (res.success) {
         navigationHandler.pushReplacementNamed(homeViewRoute);
-        log(res.user!.email);
+        log(res.user!.email!);
       } else {
         //show error messagge
         log('An error occured');

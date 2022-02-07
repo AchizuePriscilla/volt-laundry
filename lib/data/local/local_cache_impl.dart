@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:volt/data/local/local_cache.dart';
 import 'package:volt/data/local/secure_storage.dart';
+import 'package:volt/models/user_model.dart';
 import 'package:volt/utils/logger.dart';
 
 class LocalCacheImpl implements LocalCache {
@@ -95,4 +96,30 @@ class LocalCacheImpl implements LocalCache {
     var res = getFromLocalCache(user) as String? ?? '{}';
     return Map<String, dynamic>.from(json.decode(res));
   }
-}
+
+  @override
+  Future<void> updateUserData({String? name,
+      String? phoneNumber,
+      String? address,
+      int? latitude,
+      int? longitude,
+      String? avatar}) async {
+     try {
+      final userDataJson = await getUserData();
+
+      final user = UserModel.fromJson(userDataJson).copyWith(
+       name: name,
+       phoneNumber: phoneNumber,
+       address: address,
+       latitude: latitude,
+       longitude: longitude,
+       avatar: avatar
+      );
+
+      await cacheUserData(value: json.encode(user.toJson()));
+    } catch (e) {
+      AppLogger.logger.d(e);
+    }
+  }
+  }
+

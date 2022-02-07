@@ -10,8 +10,7 @@ import 'package:volt/data/remote/chat_apis/chat_repo_impl.dart';
 import 'package:volt/data/remote/chat_apis/chat_service.dart';
 import 'package:volt/data/remote/chat_apis/chat_service_impl.dart';
 import 'package:volt/data/remote/connectivity_service.dart';
-import 'package:volt/data/remote/geolocator/geolocator_service.dart';
-import 'package:volt/data/remote/geolocator/geolocator_service_impl.dart';
+import 'package:volt/services/services.dart';
 import 'package:volt/data/remote/order_apis/order_repo.dart';
 import 'package:volt/data/remote/order_apis/order_repo_impl.dart';
 import 'package:volt/data/remote/order_apis/order_service.dart';
@@ -75,6 +74,14 @@ Future<void> setupLocator({String baseApi = ''}) async {
 
   locator.registerLazySingleton<GeolocatorService>(
     () => GeolocatorServiceImpl(),
+  );
+
+    locator.registerLazySingleton<ImagePickerService>(
+    () => ImagePickerServiceImpl(),
+  );
+
+   locator.registerLazySingleton<FileDownloadService>(
+    () => FileDownloadServiceImpl(),
   );
 
 //Repos

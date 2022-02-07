@@ -16,6 +16,10 @@ class SplashScreenVM extends BaseViewModel {
         verificationViewRoute,
       );
     }
+    if (lastpage == setProfilePictureViewRoute) {
+      isCached = true;
+      navigationHandler.pushReplacementNamed(setProfilePictureViewRoute);
+    }
     return isCached;
   }
 

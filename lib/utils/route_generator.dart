@@ -44,9 +44,11 @@ class RouteGenerator {
         return _getPageRoute(const HistoryView());
       case chatViewRoute:
         return _getPageRoute(const ChatView());
+      case setProfilePictureViewRoute:
+        return _getPageRoute(const SetProfilePictureView());
       case buyCoinViewRoute:
         return _getPageRoute(const BuyCoinView());
-       case addressSearchViewRoute:
+      case addressSearchViewRoute:
         return _getPageRoute(const AddressSearchView());
       case confirmDeductViewRoute:
         final confirmDeductArgs = settings.arguments;
