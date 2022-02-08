@@ -199,10 +199,10 @@ class _SignUpViewState extends State<SignUpView> {
                       if (_formKey.currentState!.validate()) {
                         await _determineLocation();
                         signUpVM.updateFields(
-                            name: _nameController.text,
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                            phoneNumber: _phoneNumberController.text,
+                            name: _nameController.text.trim(),
+                            email: _emailController.text.trim(),
+                            password: _passwordController.text.trim(),
+                            phoneNumber: _phoneNumberController.text.trim(),
                             address: _locationController.text);
                         await signUpVM.sendVerificationToken();
                       }

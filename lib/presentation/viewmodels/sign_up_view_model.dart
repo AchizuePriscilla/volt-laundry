@@ -140,8 +140,8 @@ class SignUpViewModel extends BaseViewModel {
   ///Picks images from user's gallery
   Future<void> pickImage({bool isCamera = false}) async {
     try {
-      if (loading) return;
-      toggleLoading(true);
+      if (isProfilePhotoUploading) return;
+      togglePhotoUploading(true);
       _pickedImage = await imagePickerService.pickImage(camera: isCamera);
       String imageName = path.basename(_pickedImage!.path);
 
@@ -155,12 +155,12 @@ class SignUpViewModel extends BaseViewModel {
           savePath:
               "volt" + imageName + ".${StringUtils.getExtension(downloadUrl)}");
       setImage = await downloadedImage;
-      log(name);
+      log(setImage);
       notifyListeners();
-      toggleLoading(false);
+      togglePhotoUploading(false);
     } catch (e) {
       AppLogger.logger.d(e);
-      toggleLoading(false);
+      togglePhotoUploading(false);
     }
   }
 

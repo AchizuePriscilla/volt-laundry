@@ -27,6 +27,8 @@ class SignUpRequest extends Equatable {
   final String timeOfUserUpdate;
   final String? id;
   final String avatar;
+  final String? currency;
+  final int? balance;
 
   const SignUpRequest(
       {required this.name,
@@ -41,7 +43,9 @@ class SignUpRequest extends Equatable {
       required this.timeOfUserCreation,
       required this.timeOfUserUpdate,
       required this.avatar,
-      this.id});
+      this.id,
+      this.balance,
+      this.currency = 'VNGN'});
 
   Map<String, dynamic> toMap() {
     return {
@@ -57,7 +61,8 @@ class SignUpRequest extends Equatable {
         "state": state,
         "lat": latitude,
         "lng": longitude
-      }
+      },
+      "fund": {"currency": currency, "amount": balance}
     };
   }
 
@@ -76,6 +81,8 @@ class SignUpRequest extends Equatable {
         timeOfUserCreation,
         id,
         avatar,
+        balance,
+        currency
       ];
 }
 

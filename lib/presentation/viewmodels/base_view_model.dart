@@ -44,8 +44,16 @@ class BaseViewModel extends ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
 
+  bool _isProfilePhotoUploading = false;
+  bool get isProfilePhotoUploading => _isProfilePhotoUploading;
+
   void toggleLoading(bool val) {
     _loading = val;
+    notifyListeners();
+  }
+
+  void togglePhotoUploading(bool val) {
+    _isProfilePhotoUploading = val;
     notifyListeners();
   }
 }
