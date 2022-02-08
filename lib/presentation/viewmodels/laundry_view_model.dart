@@ -5,6 +5,7 @@ import 'package:volt/models/navigation/confirm_deduct_args.dart';
 import 'package:volt/models/navigation/laundry_details_args.dart';
 import 'package:volt/models/order_history_model.dart' as order_history;
 import 'package:volt/models/process_order_model.dart';
+import 'package:volt/models/user_model.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
@@ -16,6 +17,7 @@ class LaundryVM extends BaseViewModel {
   DeliveryMethod _deliveryMethod = DeliveryMethod.pickup;
   late PaymentRef _paymentRef;
   late DeliveryFee _price;
+  late UserModel driverDetails;
   void setDeliveryMethod(DeliveryMethod deliveryMethod) {
     _deliveryMethod = deliveryMethod;
     _paymentRef = PaymentRef.fromMap({'json': ''});
@@ -160,6 +162,17 @@ class LaundryVM extends BaseViewModel {
     } catch (e) {
       AppLogger.logger.d(e);
       return [];
+    }
+  }
+
+  Future<void> getDriverDetails(String id) async {
+    try {
+      final response = await orderService.getDriverDetails(id);
+      if (response.success) {
+        driverDetails = response.user!;
+      }
+    } catch (e) {
+      AppLogger.logger.d(e);
     }
   }
 

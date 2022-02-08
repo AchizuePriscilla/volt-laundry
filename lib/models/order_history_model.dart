@@ -67,25 +67,25 @@ class Order {
   final DateTime updatedAt;
 
   factory Order.fromMap(Map<String, dynamic> json) => Order(
-        id: json["id"],
-        serviceType: json["serviceType"],
+        id: json["id"] ?? '',
+        serviceType: json["serviceType"] ?? '',
         userWears: List<UserWear>.from(
             json["userWears"].map((x) => UserWear.fromMap(x))),
-        price: DeliveryFee.fromMap(json["price"]),
-        deliveryFee: DeliveryFee.fromMap(json["deliveryFee"]),
-        netPrice: DeliveryFee.fromMap(json["netPrice"]),
-        paymentMethod: json["paymentMethod"],
-        paymentRef: PaymentRef.fromMap(json["paymentRef"]),
-        origin: CurrentLocation.fromMap(json["origin"]),
-        destination: CurrentLocation.fromMap(json["destination"]),
-        currentLocation: CurrentLocation.fromMap(json["currentLocation"]),
-        deliveryMode: json["deliveryMode"],
-        status: json["status"],
-        orderNo: json["orderNo"],
-        assignedTo: json["assignedTo"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        createdBy: json["createdBy"],
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        price: DeliveryFee.fromMap(json["price"] ?? ''),
+        deliveryFee: DeliveryFee.fromMap(json["deliveryFee"] ?? ''),
+        netPrice: DeliveryFee.fromMap(json["netPrice"] ?? ''),
+        paymentMethod: json["paymentMethod"] ?? '',
+        paymentRef: PaymentRef.fromMap(json["paymentRef"] ?? ''),
+        origin: CurrentLocation.fromMap(json["origin"] ?? ''),
+        destination: CurrentLocation.fromMap(json["destination"] ?? ''),
+        currentLocation: CurrentLocation.fromMap(json["currentLocation"] ?? ''),
+        deliveryMode: json["deliveryMode"] ?? '',
+        status: json["status"] ?? '',
+        orderNo: json["orderNo"] ?? '',
+        assignedTo: json["assignedTo"] ?? '',
+        createdAt: DateTime.parse(json["createdAt"] ?? ''),
+        createdBy: json["createdBy"] ?? '',
+        updatedAt: DateTime.parse(json["updatedAt"] ?? ''),
       );
 
   Map<String, dynamic> toMap() => {

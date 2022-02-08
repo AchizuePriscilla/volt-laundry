@@ -11,7 +11,7 @@ import 'package:path/path.dart' as path;
 class AppProfileVM extends BaseViewModel {
   late UserModel _user;
   late UserModel _rxUser;
-  late String downloadUrl;
+  String downloadUrl = '';
   File? _pickedImage;
   FirebaseStorage storage = FirebaseStorage.instance;
 
@@ -135,8 +135,8 @@ class AppProfileVM extends BaseViewModel {
   ///Picks images from user's gallery
   Future<void> pickImage({bool isCamera = false}) async {
     try {
-      if (loading) return;
-      toggleLoading(true);
+      if (isProfilePhotoUploading) return;
+      togglePhotoUploading(true);
       _pickedImage = await imagePickerService.pickImage(camera: isCamera);
       String imageName = path.basename(_pickedImage!.path);
 
@@ -150,10 +150,11 @@ class AppProfileVM extends BaseViewModel {
           savePath:
               "volt" + imageName + ".${StringUtils.getExtension(downloadUrl)}");
       notifyListeners();
-      toggleLoading(false);
+      togglePhotoUploading(false);
     } catch (e) {
       AppLogger.logger.d(e);
-      toggleLoading(false);
+      togglePhotoUploading(false);
+      downloadUrl = '';
     }
   }
 
@@ -162,28 +163,43 @@ class AppProfileVM extends BaseViewModel {
       required String phoneNumber,
       required String address,
       required double latitude,
-      required double longitude}) async {
+      required double longitude,
+      required Function onFailure}) async {
     try {
       if (loading) return;
       toggleLoading(true);
-      var res = await authService.editUser(SignUpRequest(
-          name: name,
-          phoneNumber: phoneNumber,
-          email: email!,
-          password: password,
-          address: address,
-          country: _user.country!,
-          state: _user.state!,
-          latitude: latitude,
-          longitude: longitude,
-          timeOfUserCreation: timeOfCreation!,
-          timeOfUserUpdate: DateTime.now().toString(),
-          avatar: downloadUrl.isEmpty
-              ? _user.avatar != "undefined"
-                  ? _user.avatar!
-                  : "undefined"
-              : downloadUrl));
-    } catch (e) {}
+      var res = await authService.editUser(
+        SignUpRequest(
+            name: name,
+            phoneNumber: phoneNumber,
+            email: email!,
+            password: password,
+            address: address,
+            country: _user.country!,
+            state: _user.state!,
+            latitude: latitude,
+            id: id,
+            longitude: longitude,
+            timeOfUserCreation: timeOfCreation!,
+            balance: vltNairaBalance,
+            timeOfUserUpdate: DateTime.now().toString(),
+            avatar: downloadUrl.isEmpty
+                ? _user.avatar != "undefined"
+                    ? _user.avatar!
+                    : "undefined"
+                : downloadUrl),
+      );
+      if (res.success) {
+        navigationHandler.goBack();
+      } else {
+        onFailure();
+      }
+      toggleLoading(false);
+    } catch (e) {
+      AppLogger.logger.d(e);
+      toggleLoading(false);
+      onFailure();
+    }
   }
 
   void navigateToEditProfileView() {

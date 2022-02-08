@@ -34,7 +34,6 @@ class SplashScreenVM extends BaseViewModel {
     await Future.delayed(const Duration(seconds: 2)).then((value) async {
       await localCache.getToken().then(
         (token) async {
-          log('getting token from cache: $token');
           //check if user is logged in
           if (token != null && token.isNotEmpty) {
             //if user is logged in,

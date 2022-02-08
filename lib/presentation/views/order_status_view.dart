@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:volt/handlers/handlers.dart';
 import 'package:volt/models/navigation/map_view_args.dart';
 import 'package:volt/models/order_history_model.dart';
+import 'package:volt/models/user_model.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/presentation/views/views.dart';
@@ -60,7 +61,9 @@ class _OrderStatusViewState extends State<OrderStatusView> {
                             },
                             child: ListView.builder(
                               itemBuilder: (context, index) {
-                                return orders!.isEmpty
+                                context.read<LaundryVM>().getDriverDetails(
+                                    orders![index].assignedTo);
+                                return orders.isEmpty
                                     ? const NoLaundryView()
                                     : OrderStatusDropdown(
                                         onTap: () {
@@ -77,6 +80,9 @@ class _OrderStatusViewState extends State<OrderStatusView> {
                                                 : selectedIndex = index;
                                           });
                                         },
+                                        driver: context
+                                            .watch<LaundryVM>()
+                                            .driverDetails,
                                         isDropdownVisible:
                                             selectedIndex == index
                                                 ? true
@@ -109,13 +115,15 @@ class OrderStatusDropdown extends StatefulWidget {
       required this.isDropdownVisible,
       required this.order,
       required this.onTap,
-      required this.onButtonTap})
+      required this.onButtonTap,
+      required this.driver})
       : super(key: key);
 
   final bool isDropdownVisible;
   final VoidCallback onTap;
   final VoidCallback onButtonTap;
   final Order order;
+  final UserModel driver;
 
   @override
   State<OrderStatusDropdown> createState() => _OrderStatusDropdownState();
@@ -204,11 +212,13 @@ class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
                   imagePath: 'bike',
                   orderStage: 'Order Picked',
                   isDotVisible: widget.order.status == 'PLACED' ||
+                      widget.order.status == 'ASSIGNED' ||
                       widget.order.status == 'PICKED' ||
                       widget.order.status == 'IN-PROGRESS' ||
                       widget.order.status == 'DELIVERING' ||
                       widget.order.status == 'DELIVERED',
-                  dotColor: widget.order.status == 'PLACED'
+                  dotColor: widget.order.status == 'PLACED' ||
+                          widget.order.status == 'ASSIGNED'
                       ? Colors.yellow
                       : Palette.lightGreen,
                 ),
@@ -284,15 +294,20 @@ class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
                       Row(children: [
                         CircleAvatar(
                           radius: 27.w,
-                          backgroundImage: const AssetImage(
-                              'assets/images/empty_profile_picture.png'),
+                          backgroundImage: widget.driver.avatar == null ||
+                                  widget.driver.avatar!.isEmpty ||
+                                  widget.driver.avatar == "undefined"
+                              ? const AssetImage(
+                                  'assets/images/empty_profile_picture.png')
+                              : NetworkImage(widget.driver.avatar!)
+                                  as ImageProvider,
                         ),
                         const CustomSpacer(flex: 2, horizontal: true),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Paul David',
+                              widget.driver.name!,
                               style: GoogleFonts.lato(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w600,
@@ -322,28 +337,28 @@ class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              '08145518998',
+                              widget.driver.phoneNumber!,
                               style: GoogleFonts.lato(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                            const CustomSpacer(flex: 2),
-                            Text(
-                              'Black in complexion',
-                              style: GoogleFonts.lato(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            const CustomSpacer(flex: 2),
-                            Text(
-                              'Tall',
-                              style: GoogleFonts.lato(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
+                            // const CustomSpacer(flex: 2),
+                            // Text(
+                            //   'Black in complexion',
+                            //   style: GoogleFonts.lato(
+                            //     fontSize: 14.sp,
+                            //     fontWeight: FontWeight.w400,
+                            //   ),
+                            // ),
+                            // const CustomSpacer(flex: 2),
+                            // Text(
+                            //   'Tall',
+                            //   style: GoogleFonts.lato(
+                            //     fontSize: 14.sp,
+                            //     fontWeight: FontWeight.w400,
+                            //   ),
+                            // ),
                           ],
                         ),
                       )
