@@ -104,3 +104,4 @@ const bankTransferViewRoute = 'bank-transfer-view';
 const fundVTCWalletViewRoute = 'fund-vtc-wallet-view';
 const addressSearchViewRoute = 'address-search-view';
 const setProfilePictureViewRoute = 'set-profile-picture-view';
+const mapViewRoute = 'map-view-route';

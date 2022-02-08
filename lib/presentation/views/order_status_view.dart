@@ -2,11 +2,15 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:volt/handlers/handlers.dart';
+import 'package:volt/models/navigation/map_view_args.dart';
 import 'package:volt/models/order_history_model.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/presentation/views/views.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:volt/utils/constants.dart';
+import 'package:volt/utils/locator.dart';
 
 class OrderStatusView extends StatefulWidget {
   const OrderStatusView({Key? key}) : super(key: key);
@@ -45,7 +49,7 @@ class _OrderStatusViewState extends State<OrderStatusView> {
                   flex: 2,
                 ),
                 FutureBuilder<List<Order>>(
-                    future: context.read<LaundryVM>().getOrderHistory(),
+                    future: context.watch<LaundryVM>().getOrderHistory(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         var orders = snapshot.data;
@@ -122,20 +126,30 @@ class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
   Widget build(BuildContext context) {
     var latitude = context.watch<AppProfileVM>().latitude!;
     var longitude = context.watch<AppProfileVM>().longitude!;
+    LatLng userPosition = LatLng(latitude, longitude);
+    LatLng driverPosition = LatLng(
+        widget.order.currentLocation.lat, widget.order.currentLocation.lng);
     Marker userPositionMarker = Marker(
         markerId: const MarkerId('userPosition'),
         infoWindow: const InfoWindow(title: 'My Position'),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-        position: LatLng(latitude, longitude));
+        position: userPosition);
+
     Marker driverPositionMarker = Marker(
         markerId: const MarkerId('driverPosition'),
         infoWindow: const InfoWindow(title: 'Courier Position'),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-        position: LatLng(widget.order.currentLocation.lat,
-            widget.order.currentLocation.lng));
+        position: driverPosition);
 
-    CameraPosition userPosition =
-        CameraPosition(target: LatLng(latitude, longitude), zoom: 15);
+    CameraPosition cameraPosition =
+        CameraPosition(target: LatLng(latitude, longitude), zoom: 13);
+
+    Polyline polyline = Polyline(
+        color: Palette.buttonColor,
+        width: 5,
+        jointType: JointType.round,
+        polylineId: const PolylineId('kPolyline'),
+        points: [userPosition, driverPosition]);
     return InkWell(
       onTap: widget.onTap,
       child: Column(
@@ -186,9 +200,17 @@ class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const OrderStageContainer(
+                OrderStageContainer(
                   imagePath: 'bike',
                   orderStage: 'Order Picked',
+                  isDotVisible: widget.order.status == 'PLACED' ||
+                      widget.order.status == 'PICKED' ||
+                      widget.order.status == 'IN-PROGRESS' ||
+                      widget.order.status == 'DELIVERING' ||
+                      widget.order.status == 'DELIVERED',
+                  dotColor: widget.order.status == 'PLACED'
+                      ? Colors.yellow
+                      : Palette.lightGreen,
                 ),
                 Row(
                   children: [
@@ -200,9 +222,15 @@ class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
                     ),
                   ],
                 ),
-                const OrderStageContainer(
+                OrderStageContainer(
                   imagePath: 'wash',
                   orderStage: 'Cleaning',
+                  isDotVisible: widget.order.status == 'IN-PROGRESS' ||
+                      widget.order.status == 'DELIVERING' ||
+                      widget.order.status == 'DELIVERED',
+                  dotColor: widget.order.status == 'IN-PROGRESS'
+                      ? Colors.yellow
+                      : Palette.lightGreen,
                 ),
                 Row(
                   children: [
@@ -214,23 +242,35 @@ class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
                     ),
                   ],
                 ),
-                const OrderStageContainer(
+                OrderStageContainer(
                   imagePath: 'bike',
                   orderStage: 'Courier is on the way',
                   hasArrivalTime: true,
+                  isDotVisible: widget.order.status == 'DELIVERING' ||
+                      widget.order.status == 'DELIVERED',
+                  dotColor: widget.order.status == 'DELIVERING'
+                      ? Colors.yellow
+                      : Palette.lightGreen,
                 ),
                 const CustomSpacer(
                   flex: 2,
                 ),
                 Visibility(
-                  visible: widget.order.status == 'PLACED',
-                  child: Container(
+                  visible: widget.order.status == 'DELIVERING',
+                  child: SizedBox(
                     height: MediaQuery.of(context).size.height * .5,
-                    color: Colors.red,
                     child: GoogleMap(
                       mapType: MapType.terrain,
-                      initialCameraPosition: userPosition,
+                      initialCameraPosition: cameraPosition,
+                      trafficEnabled: true,
                       markers: {userPositionMarker, driverPositionMarker},
+                      polylines: {polyline},
+                      onTap: (latlng) {
+                        locator<NavigationHandler>().pushNamed(
+                          mapViewRoute,
+                          arg: MapViewArgs(order: widget.order),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -323,27 +363,49 @@ class OrderStageContainer extends StatelessWidget {
   final String imagePath;
   final String orderStage;
   final bool? hasArrivalTime;
+  final bool isDotVisible;
+  final Color dotColor;
   const OrderStageContainer(
       {Key? key,
       required this.imagePath,
       required this.orderStage,
-      this.hasArrivalTime = false})
+      this.hasArrivalTime = false,
+      required this.isDotVisible,
+      required this.dotColor})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          padding: EdgeInsets.all(15.w),
-          margin: EdgeInsets.symmetric(vertical: 2.h),
-          height: 50.h,
-          width: 50.h,
-          decoration: BoxDecoration(
-            color: Palette.buttonColor,
-            borderRadius: BorderRadius.circular(10.w),
-          ),
-          child: Image.asset('assets/images/volt_$imagePath.png'),
+        Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.all(15.w),
+              margin: EdgeInsets.symmetric(vertical: 2.h),
+              height: 50.h,
+              width: 50.h,
+              decoration: BoxDecoration(
+                color: Palette.buttonColor,
+                borderRadius: BorderRadius.circular(10.w),
+              ),
+              child: Image.asset('assets/images/volt_$imagePath.png'),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Visibility(
+                visible: isDotVisible,
+                child: Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  height: 10,
+                  width: 10,
+                  decoration:
+                      BoxDecoration(shape: BoxShape.circle, color: dotColor),
+                ),
+              ),
+            )
+          ],
         ),
         const CustomSpacer(flex: 3, horizontal: true),
         Column(
@@ -357,12 +419,15 @@ class OrderStageContainer extends StatelessWidget {
                   color: Palette.blackColor),
             ),
             if (hasArrivalTime!)
-              Text(
-                'Arrival is in 5 minutes',
-                style: GoogleFonts.lato(
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w300,
-                    color: Palette.blackColor),
+              Visibility(
+                visible: orderStage == 'DELIVERING',
+                child: Text(
+                  'Arrival is in 5 minutes',
+                  style: GoogleFonts.lato(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w300,
+                      color: Palette.blackColor),
+                ),
               ),
           ],
         ),

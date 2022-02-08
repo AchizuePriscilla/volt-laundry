@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:volt/models/navigation/confirm_deduct_args.dart';
 import 'package:volt/models/navigation/delivery_details_args.dart';
 import 'package:volt/models/navigation/laundry_details_args.dart';
+import 'package:volt/models/navigation/map_view_args.dart';
 import 'package:volt/models/navigation/oops_args.dart';
 import 'package:volt/presentation/views/views.dart';
 import 'package:volt/utils/utils.dart';
@@ -49,6 +50,15 @@ class RouteGenerator {
         }
         return _getPageRoute(
             _errorPage(message: "Number of wears parameter not passed"));
+       case mapViewRoute:
+        final mapViewArgs = settings.arguments;
+        if (mapViewArgs != null &&
+            mapViewArgs is MapViewArgs) {
+          return _getPageRoute(MapView(
+            order: mapViewArgs.order),);
+        }
+        return _getPageRoute(
+            _errorPage(message: "Order parameter not passed"));
       case historyViewRoute:
         return _getPageRoute(const HistoryView());
       case chatViewRoute:
