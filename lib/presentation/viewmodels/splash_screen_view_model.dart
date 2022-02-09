@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:volt/utils/utils.dart';
-
 import 'base_view_model.dart';
 
 class SplashScreenVM extends BaseViewModel {

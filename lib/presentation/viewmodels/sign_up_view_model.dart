@@ -90,8 +90,10 @@ class SignUpViewModel extends BaseViewModel {
     try {
       if (loading) return;
       toggleLoading(true);
+      var formattedNumber = phoneNumber.substring(1);
+      var finalNumber = '234' + formattedNumber;
       var res = await authService.phoneVerification(
-          PhoneVerificationRequest(phoneNumber: phoneNumber));
+          PhoneVerificationRequest(phoneNumber: finalNumber));
 
       if (res.success) {
         verificationCode = res.code;

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/handlers/handlers.dart';
@@ -59,13 +57,15 @@ class _OrderStatusViewState extends State<OrderStatusView> {
                             onRefresh: () async {
                               await context.read<LaundryVM>().getOrderHistory();
                             },
-                            child: ListView.builder(
-                              itemBuilder: (context, index) {
-                                context.read<LaundryVM>().getDriverDetails(
-                                    orders![index].assignedTo);
-                                return orders.isEmpty
-                                    ? const NoLaundryView()
-                                    : OrderStatusDropdown(
+                            child: orders!.isEmpty
+                                ? const NoLaundryView()
+                                : ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      context
+                                          .read<LaundryVM>()
+                                          .getDriverDetails(
+                                              orders[index].assignedTo);
+                                      return OrderStatusDropdown(
                                         onTap: () {
                                           setState(() {
                                             selectedIndex == index
@@ -89,9 +89,9 @@ class _OrderStatusViewState extends State<OrderStatusView> {
                                                 : false,
                                         order: orders[index],
                                       );
-                              },
-                              itemCount: orders!.isEmpty ? 1 : orders.length,
-                            ),
+                                    },
+                                    itemCount: orders.length,
+                                  ),
                           ),
                         );
                       }

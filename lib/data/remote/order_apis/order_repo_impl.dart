@@ -1,7 +1,7 @@
 import 'package:volt/data/config/base_api.dart';
 import 'package:volt/data/remote/order_apis/order_repo.dart';
 import 'package:volt/models/api/get_order_history_response.dart';
-import 'package:volt/models/api/login_response.dart';
+import 'package:volt/models/api/get_user_response.dart';
 import 'package:volt/models/process_order_model.dart';
 import 'package:volt/models/api/process_order_response.dart';
 
@@ -24,8 +24,8 @@ class OrderRepoImpl extends BaseApi implements OrderRepo {
   }
 
   @override
-  Future<LoginResponse> getDriverDetails(String id) async {
+  Future<GetUserResponse> getDriverDetails(String id) async {
     var response = await get(driver + id);
-    return LoginResponse.fromMap(response);
+    return GetUserResponse.fromMap(response);
   }
 }

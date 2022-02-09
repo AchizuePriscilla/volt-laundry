@@ -162,7 +162,7 @@ class _SignUpViewState extends State<SignUpView> {
                     Icons.pin_drop,
                     color: Theme.of(context).disabledColor.withOpacity(.6),
                   ),
-                  hint: "Shipping Adress",
+                  hint: "Shipping Adress (Please be descriptive)",
                 ),
                 const CustomSpacer(flex: 3),
                 CustomTextField(

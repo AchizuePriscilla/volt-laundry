@@ -65,6 +65,8 @@ class UserModel extends Equatable {
         "address": address,
         "state": state,
         "country": country,
+        "lat": latitude,
+        "lng": longitude
       },
       'wallet': {
         'VLT_COIN': {'amount': vltCoinBalance},
