@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/models/navigation/delivery_details_args.dart';
 import 'package:volt/presentation/shared/shared.dart';
-import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/presentation/viewmodels/cart_view_model.dart';
 import 'package:volt/utils/utils.dart';
 
 class CartView extends StatefulWidget {
@@ -15,7 +15,7 @@ class CartView extends StatefulWidget {
 class _CartViewState extends State<CartView> {
   @override
   Widget build(BuildContext context) {
-    var laundryVM = context.read<LaundryVM>();
+    var cartVM = context.watch<CartVM>();
     return ResponsiveWidget(
         appBar: CustomAppBar(
           text: 'Cart',
@@ -26,27 +26,39 @@ class _CartViewState extends State<CartView> {
             width: size.width,
             color: const Color(0xffF5F5F8),
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: ListView(
+            child: Column(
               children: [
-                const CartItemContainer(
-                  clothType: ClothType.tShirt,
+                Expanded(
+                  child: ListView.builder(
+                    itemBuilder: (BuildContext context, int index) {
+                      return CartItemContainer(
+                        clothType: cartVM
+                            .getClothTypeEnum(cartVM.userWears[index].wearType),
+                        userWear: cartVM.userWears[index],
+                        onTap: () {
+                          cartVM.userWears.remove(cartVM.userWears[index]);
+                          setState(() {});
+                        },
+                      );
+                    },
+                    itemCount: cartVM.userWears.length,
+                  ),
                 ),
-                const CartItemContainer(
-                  clothType: ClothType.shorts,
-                ),
-                const CartItemContainer(
-                  clothType: ClothType.dresses,
-                ),
-                const CartItemContainer(
-                  clothType: ClothType.others,
-                ),
-                const CustomSpacer(flex: 7),
-                Button(
-                    text: 'Proceed',
-                    onPressed: () {
-                      laundryVM.navigateToRoute(deliveryDetailsViewRoute,
-                          DeliveryDetailsArgs(numberOfWears: 2));
-                    }),
+                Visibility(
+                    visible: cartVM.userWears.isNotEmpty,
+                    child: Column(
+                      children: [
+                        Button(
+                            text: 'Proceed',
+                            onPressed: () {
+                              cartVM.navigateToRoute(deliveryDetailsViewRoute,
+                                  DeliveryDetailsArgs(numberOfWears: 2));
+                            }),
+                        const CustomSpacer(
+                          flex: 10,
+                        )
+                      ],
+                    ))
               ],
             ),
           );

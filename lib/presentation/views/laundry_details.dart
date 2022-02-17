@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:volt/handlers/handlers.dart';
 import 'package:volt/models/navigation/delivery_details_args.dart';
 import 'dart:io';
 import 'package:volt/presentation/shared/shared.dart';
@@ -254,7 +255,16 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                     ),
                     Button(
                       text: 'Add to cart',
-                      onPressed: () {},
+                      onPressed: () {
+                        context.read<CartVM>().addToCart(
+                            clothType: widget.clothType,
+                            wearColor: selectedColors,
+                            wearTotal: _numberOfClothes,
+                            amount: _numberOfClothes * 50,
+                            serviceType: widget.serviceType);
+                        locator<NavigationHandler>()
+                            .popAndPushNamed(cartViewRoute);
+                      },
                       color: Palette.lightGreen,
                     ),
                     const CustomSpacer(flex: 3),
@@ -269,9 +279,8 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                                 total: _numberOfClothes * 50,
                                 colors: selectedColors,
                                 serviceType: widget.serviceType);
-                            laundryVM.navigateToRoute(
-                                deliveryDetailsViewRoute,
-                                DeliveryDetailsArgs(
+                            laundryVM.navigateToRoute(deliveryDetailsViewRoute,
+                                args: DeliveryDetailsArgs(
                                     numberOfWears: _numberOfClothes));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(

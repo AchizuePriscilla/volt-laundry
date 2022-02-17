@@ -17,7 +17,7 @@ class LaundryVM extends BaseViewModel {
   DeliveryMethod _deliveryMethod = DeliveryMethod.pickup;
   late PaymentRef _paymentRef;
   late DeliveryFee _price;
-UserModel? driverDetails;
+  UserModel? driverDetails;
   void setDeliveryMethod(DeliveryMethod deliveryMethod) {
     _deliveryMethod = deliveryMethod;
     _paymentRef = PaymentRef.fromMap({'json': ''});
@@ -143,9 +143,10 @@ UserModel? driverDetails;
         arg: LaundryDetailsArgs(clothType, serviceType));
   }
 
-  void navigateToRoute(String route, dynamic args) {
+  void navigateToRoute(String route, {dynamic args}) {
     navigationHandler.pushNamed(route, arg: args);
   }
+  
 
   List<order_history.Order> get orderHistory {
     try {
