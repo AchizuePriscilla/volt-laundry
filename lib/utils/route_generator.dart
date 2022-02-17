@@ -46,6 +46,7 @@ class RouteGenerator {
             deliveryDetailsArgs is DeliveryDetailsArgs) {
           return _getPageRoute(DeliveryDetailsView(
             numberOfWears: deliveryDetailsArgs.numberOfWears,
+            isCartOrder: deliveryDetailsArgs.isCartOrder!,
           ));
         }
         return _getPageRoute(
@@ -76,6 +77,7 @@ class RouteGenerator {
           return _getPageRoute(ConfirmDeductView(
             amount: confirmDeductArgs.amount,
             deliveryFee: confirmDeductArgs.deliveryFee,
+            isCartOrder: confirmDeductArgs.isCartOrder,
           ));
         }
         return _getPageRoute(

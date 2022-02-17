@@ -51,8 +51,11 @@ class _CartViewState extends State<CartView> {
                         Button(
                             text: 'Proceed',
                             onPressed: () {
-                              cartVM.navigateToRoute(deliveryDetailsViewRoute,
-                                  DeliveryDetailsArgs(numberOfWears: 2));
+                              cartVM.navigateToRoute(
+                                  deliveryDetailsViewRoute,
+                                  DeliveryDetailsArgs(
+                                      numberOfWears: cartVM.totalUserWears,
+                                      isCartOrder: true));
                             }),
                         const CustomSpacer(
                           flex: 10,

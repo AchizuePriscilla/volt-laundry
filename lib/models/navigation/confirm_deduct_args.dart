@@ -1,5 +1,6 @@
 class ConfirmDeductArgs {
   final double amount;
   final int deliveryFee;
-  ConfirmDeductArgs({required this.amount, required this.deliveryFee});
+  final bool isCartOrder;
+  ConfirmDeductArgs({required this.amount, required this.deliveryFee, required this.isCartOrder});
 }

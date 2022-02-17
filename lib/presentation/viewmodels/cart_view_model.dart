@@ -1,10 +1,28 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
 import 'package:volt/presentation/viewmodels/base_view_model.dart';
 import 'package:volt/utils/utils.dart';
 
+import '../../models/api/transaction_reqests.dart';
+import '../../models/navigation/confirm_deduct_args.dart';
 import '../../models/process_order_model.dart';
+import '../shared/snackbar.dart';
 
 class CartVM extends BaseViewModel {
   List<UserWear> userWears = <UserWear>[];
+  late PaymentRef _paymentRef;
+  DeliveryMethod _deliveryMethod = DeliveryMethod.pickup;
+  void setDeliveryMethod(DeliveryMethod deliveryMethod) {
+    _deliveryMethod = deliveryMethod;
+    _paymentRef = PaymentRef.fromMap({'json': ''});
+  }
+
+  int get totalUserWears => userWears.fold(
+      0, (previousValue, element) => previousValue + element.wearTotal);
+
+  int get totalPrice => userWears.fold(
+      0, (previousValue, element) => previousValue + element.price.amount);
 
   void navigateToRoute(String route, dynamic args) {
     navigationHandler.pushNamed(route, arg: args);
@@ -30,7 +48,7 @@ class CartVM extends BaseViewModel {
     }
   }
 
-String getImagePath(ClothType clothType) {
+  String getImagePath(ClothType clothType) {
     switch (clothType) {
       case ClothType.tShirt:
         return "shirt";
@@ -49,7 +67,8 @@ String getImagePath(ClothType clothType) {
         return "Unknown";
     }
   }
- String getServiceType(ServiceType serviceType) {
+
+  String getServiceType(ServiceType serviceType) {
     switch (serviceType) {
       case ServiceType.ironing:
         return "IRON";
@@ -63,7 +82,7 @@ String getImagePath(ClothType clothType) {
     }
   }
 
-String getDesc(ClothType clothType) {
+  String getDesc(ClothType clothType) {
     switch (clothType) {
       case ClothType.tShirt:
         return "T-Shirts";
@@ -82,6 +101,7 @@ String getDesc(ClothType clothType) {
         return "Unknown";
     }
   }
+
   void addToCart(
       {required ClothType clothType,
       required List<dynamic> wearColor,
@@ -95,4 +115,81 @@ String getDesc(ClothType clothType) {
         price: DeliveryFee(currency: 'VLTCOIN', amount: amount),
         serviceType: getServiceType(serviceType)));
   }
+
+  Future<void> transactionInit(
+      {required String email,
+      required double amount,
+      required int deliveryFee,
+      required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
+    try {
+      if (loading) return;
+      toggleLoading(true);
+      var res = await walletService.transactionInit(
+        TransactionInitRequest(email: email, amount: amount),
+      );
+      if (res.success) {
+        _paymentRef = PaymentRef.fromMap({'ref': res.reference});
+
+        log("PaymentRef: ${_paymentRef.toString()}");
+        navigationHandler.pushNamed(
+          confirmDeductViewRoute,
+          arg: ConfirmDeductArgs(amount: amount, deliveryFee: deliveryFee, isCartOrder: true),
+        );
+      } else {
+        //show error messagge
+        log('message: ${res.error!.message.toString()}');
+        showSnackbar("Error", res.error!.message, Colors.red, scaffoldKey);
+      }
+      toggleLoading(false);
+    } catch (e) {
+      AppLogger.logger.d(e);
+      toggleLoading(false);
+    }
+  }
+
+  Future<void> processOrder(
+      {required int deliveryFee,
+      required int totalPrice,
+      required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
+    try {
+      if (loading) return;
+      toggleLoading(true);
+      var res = await orderService.processOrder(
+        ProcessOrderModel(
+            deliveryMode: _deliveryMethod.name.toUpperCase(),
+            userWears: userWears,
+            price: DeliveryFee(amount: totalPrice, currency: 'VLTCOIN'),
+            deliveryFee: DeliveryFee(amount: deliveryFee, currency: 'VLTCOIN'),
+            paymentMethod: 'COIN',
+            origin: CurrentLocation(address: 'UNN', lat: 6.8645, lng: 7.4083),
+            destination: CurrentLocation(
+                address: 'Volt factory', lat: 7.4083, lng: 7.4083),
+            currentLocation:
+                CurrentLocation(address: 'UNN', lat: 6.8645, lng: 7.4083),
+            status: 'PLACED',
+            paymentRef: _paymentRef),
+      );
+      if (res.success) {
+        userWears.clear();
+        dialogHandler.showDialog(
+            contentType: DialogContentType.success,
+            title: 'Success',
+            message: 'Order placed successfully',
+            autoDismiss: true);
+        Future.delayed(const Duration(seconds: 3), () {
+          navigationHandler.pushNamed(homeViewRoute);
+        });
+      } else {
+        log(res.error!.message);
+        showSnackbar("Error", res.error!.message, Colors.red, scaffoldKey);
+      }
+
+      toggleLoading(false);
+    } catch (e) {
+      AppLogger.logger.d(e);
+      toggleLoading(false);
+    }
+  }
 }
+
+

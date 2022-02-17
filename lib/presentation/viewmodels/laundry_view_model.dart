@@ -195,7 +195,7 @@ class LaundryVM extends BaseViewModel {
         log("PaymentRef: ${_paymentRef.toString()}");
         navigationHandler.pushNamed(
           confirmDeductViewRoute,
-          arg: ConfirmDeductArgs(amount: amount, deliveryFee: deliveryFee),
+          arg: ConfirmDeductArgs(amount: amount, deliveryFee: deliveryFee, isCartOrder: false),
         );
       } else {
         //show error messagge

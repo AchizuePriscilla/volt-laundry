@@ -1,4 +1,5 @@
 class DeliveryDetailsArgs {
   final int numberOfWears;
-  DeliveryDetailsArgs({required this.numberOfWears});
+  final bool? isCartOrder;
+  DeliveryDetailsArgs({required this.numberOfWears, this.isCartOrder = false});
 }

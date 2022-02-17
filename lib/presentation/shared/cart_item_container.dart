@@ -64,11 +64,10 @@ class _CartItemContainerState extends State<CartItemContainer> {
         )
       ]),
       child: InkWell(
-        onTap: widget.onTap ??
-            () {
-              cartVM.navigateToRoute(deliveryDetailsViewRoute,
-                  DeliveryDetailsArgs(numberOfWears: _numberOfClothes));
-            },
+        onTap: () {
+          cartVM.navigateToRoute(deliveryDetailsViewRoute,
+              DeliveryDetailsArgs(numberOfWears: widget.userWear.wearTotal));
+        },
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 10.h),
           constraints: BoxConstraints.tight(Size(
@@ -80,7 +79,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
             borderRadius: BorderRadius.circular(30.w),
           ),
           child: Container(
-            padding: EdgeInsets.only(left: 15.w, right: 8.w),
+            padding: EdgeInsets.only(left: 15.w, right: 15.w),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -154,47 +153,50 @@ class _CartItemContainerState extends State<CartItemContainer> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const CustomSpacer(
-                      flex: 2,
+                      flex: 3,
                     ),
-                    Container(
-                      height: 22.h,
-                      width: 110.w,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(10.w),
-                      ),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              padding: const EdgeInsets.all(0),
-                              onPressed: () {
-                                _decrementCloth();
-                              },
-                              icon: Icon(
-                                Icons.remove,
-                                size: 14.w,
-                                color: Theme.of(context).primaryColorLight,
-                              ),
-                            ),
-                            Text(_numberOfClothes.toString(),
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                )),
-                            IconButton(
-                              padding: const EdgeInsets.all(0),
-                              onPressed: () {
-                                _incrementCloth();
-                              },
-                              icon: Icon(
-                                Icons.add,
-                                size: 14.w,
-                                color: Theme.of(context).primaryColorLight,
-                              ),
-                            ),
-                          ]),
-                    ),
+                    Text(widget.userWear.wearTotal.toString() +
+                        " " +
+                        widget.userWear.wearType),
+                    // Container(
+                    //   height: 22.h,
+                    //   width: 110.w,
+                    //   decoration: BoxDecoration(
+                    //     color: Theme.of(context).primaryColor,
+                    //     borderRadius: BorderRadius.circular(10.w),
+                    //   ),
+                    //   child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //       mainAxisSize: MainAxisSize.min,
+                    //       children: [
+                    //         IconButton(
+                    //           padding: const EdgeInsets.all(0),
+                    //           onPressed: () {
+                    //             _decrementCloth();
+                    //           },
+                    //           icon: Icon(
+                    //             Icons.remove,
+                    //             size: 14.w,
+                    //             color: Theme.of(context).primaryColorLight,
+                    //           ),
+                    //         ),
+                    //         Text(_numberOfClothes.toString(),
+                    //             style: TextStyle(
+                    //               color: Theme.of(context).primaryColorLight,
+                    //             )),
+                    //         IconButton(
+                    //           padding: const EdgeInsets.all(0),
+                    //           onPressed: () {
+                    //             _incrementCloth();
+                    //           },
+                    //           icon: Icon(
+                    //             Icons.add,
+                    //             size: 14.w,
+                    //             color: Theme.of(context).primaryColorLight,
+                    //           ),
+                    //         ),
+                    //       ]),
+                    // ),
                     Expanded(
                       child: Row(
                         children: [
@@ -211,7 +213,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
@@ -6,7 +8,9 @@ import 'package:volt/utils/utils.dart';
 
 class DeliveryDetailsView extends StatefulWidget {
   final int numberOfWears;
-  const DeliveryDetailsView({Key? key, required this.numberOfWears})
+  final bool isCartOrder;
+  const DeliveryDetailsView(
+      {Key? key, required this.numberOfWears, required this.isCartOrder})
       : super(key: key);
 
   @override
@@ -23,6 +27,7 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
     var laundryVM = context.read<LaundryVM>();
     var profileVM = context.watch<AppProfileVM>();
     var rxLaundryVM = context.watch<LaundryVM>();
+    var cartVM = context.watch<CartVM>();
 
     int _deliveryFee = deliveryMethod == DeliveryMethod.pickup ? 20 : 0;
     double _total = ((widget.numberOfWears * 50) + _deliveryFee).toDouble();
@@ -175,7 +180,10 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                         setState(() {
                           deliveryMethod = newValue!;
                         });
-                        laundryVM.setDeliveryMethod(deliveryMethod);
+
+                        widget.isCartOrder
+                            ? cartVM.setDeliveryMethod(deliveryMethod)
+                            : laundryVM.setDeliveryMethod(deliveryMethod);
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap),
                   const CustomSpacer(
@@ -203,7 +211,9 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                         setState(() {
                           deliveryMethod = newValue!;
                         });
-                        laundryVM.setDeliveryMethod(deliveryMethod);
+                        widget.isCartOrder
+                            ? cartVM.setDeliveryMethod(deliveryMethod)
+                            : laundryVM.setDeliveryMethod(deliveryMethod);
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap),
                   const CustomSpacer(
@@ -346,13 +356,22 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
               const CustomSpacer(flex: 7),
               Button(
                   text: 'Proceed',
-                  loading: rxLaundryVM.loading,
+                  loading:
+                      widget.isCartOrder ? cartVM.loading : rxLaundryVM.loading,
                   onPressed: () async {
-                    await laundryVM.transactionInit(
-                        email: profileVM.email!,
-                        deliveryFee: _deliveryFee,
-                        scaffoldKey: _scaffoldKey,
-                        amount: _total,);
+                    widget.isCartOrder
+                        ? await cartVM.transactionInit(
+                            email: profileVM.email!,
+                            deliveryFee: _deliveryFee,
+                            scaffoldKey: _scaffoldKey,
+                            amount: _total,
+                          )
+                        : await laundryVM.transactionInit(
+                            email: profileVM.email!,
+                            deliveryFee: _deliveryFee,
+                            scaffoldKey: _scaffoldKey,
+                            amount: _total,
+                          );
                   }),
               const CustomSpacer(flex: 4),
             ]),

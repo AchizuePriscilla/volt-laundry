@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/handlers/navigation_handler.dart';
@@ -9,14 +11,22 @@ import 'package:volt/utils/locator.dart';
 class ConfirmDeductView extends StatelessWidget {
   final double amount;
   final int deliveryFee;
-  const ConfirmDeductView({Key? key, required this.amount, required this.deliveryFee}) : super(key: key);
+  final bool isCartOrder;
+  const ConfirmDeductView(
+      {Key? key,
+      required this.amount,
+      required this.deliveryFee,
+      required this.isCartOrder})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var laundryVM = context.read<LaundryVM>();
     var rxLaundryVM = context.watch<LaundryVM>();
+    var cartVM = context.read<CartVM>();
+    var rxcartVM = context.watch<CartVM>();
 
-  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+    final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
     return ResponsiveWidget(
         appBar: CustomAppBar(
           text: 'Checkout',
@@ -51,12 +61,16 @@ class ConfirmDeductView extends StatelessWidget {
                 ),
                 Button(
                   text: 'Confirm',
-                  loading: rxLaundryVM.loading,
+                  loading: isCartOrder ? rxcartVM.loading : rxLaundryVM.loading,
                   onPressed: () async {
-                    await laundryVM.processOrder(
-                      deliveryFee: deliveryFee,
-                      scaffoldKey: _scaffoldKey
-                   );
+                    isCartOrder
+                        ? await cartVM.processOrder(
+                            deliveryFee: deliveryFee,
+                            totalPrice: cartVM.totalPrice,
+                            scaffoldKey: _scaffoldKey)
+                        : await laundryVM.processOrder(
+                            deliveryFee: deliveryFee,
+                            scaffoldKey: _scaffoldKey);
                     locator<NavigationHandler>().popAndPushNamed(homeViewRoute);
                   },
                   color: Palette.lightGreen,

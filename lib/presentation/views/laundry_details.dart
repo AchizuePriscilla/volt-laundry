@@ -256,14 +256,32 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                     Button(
                       text: 'Add to cart',
                       onPressed: () {
-                        context.read<CartVM>().addToCart(
-                            clothType: widget.clothType,
-                            wearColor: selectedColors,
-                            wearTotal: _numberOfClothes,
-                            amount: _numberOfClothes * 50,
-                            serviceType: widget.serviceType);
-                        locator<NavigationHandler>()
-                            .popAndPushNamed(cartViewRoute);
+                        if (_numberOfClothes != 0 &&
+                            selectedColors.isNotEmpty) {
+                          context.read<CartVM>().addToCart(
+                              clothType: widget.clothType,
+                              wearColor: selectedColors,
+                              wearTotal: _numberOfClothes,
+                              amount: _numberOfClothes * 50,
+                              serviceType: widget.serviceType);
+                          locator<NavigationHandler>()
+                              .popAndPushNamed(cartViewRoute);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: Colors.red,
+                              content: SizedBox(
+                                height: 30.h,
+                                child: Center(
+                                  child: Text(
+                                    'Select at least a color and add at least one cloth',
+                                    style: TextStyle(fontSize: 14.sp),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
                       },
                       color: Palette.lightGreen,
                     ),
