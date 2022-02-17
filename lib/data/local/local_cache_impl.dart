@@ -32,6 +32,7 @@ class LocalCacheImpl implements LocalCache {
       return sharedPreferences.get(key);
     } catch (e) {
       AppLogger.logger.d(e);
+      return null;
     }
   }
 
@@ -41,6 +42,7 @@ class LocalCacheImpl implements LocalCache {
       return await storage.read(userToken);
     } catch (e) {
       AppLogger.logger.d(e);
+      return null;
     }
   }
 
@@ -98,28 +100,27 @@ class LocalCacheImpl implements LocalCache {
   }
 
   @override
-  Future<void> updateUserData({String? name,
+  Future<void> updateUserData(
+      {String? name,
       String? phoneNumber,
       String? address,
       double? latitude,
       double? longitude,
       String? avatar}) async {
-     try {
+    try {
       final userDataJson = await getUserData();
 
       final user = UserModel.fromJson(userDataJson).copyWith(
-       name: name,
-       phoneNumber: phoneNumber,
-       address: address,
-       latitude: latitude,
-       longitude: longitude,
-       avatar: avatar
-      );
+          name: name,
+          phoneNumber: phoneNumber,
+          address: address,
+          latitude: latitude,
+          longitude: longitude,
+          avatar: avatar);
 
       await cacheUserData(value: json.encode(user.toJson()));
     } catch (e) {
       AppLogger.logger.d(e);
     }
   }
-  }
-
+}

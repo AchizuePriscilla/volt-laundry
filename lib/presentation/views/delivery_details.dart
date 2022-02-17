@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
-import 'package:volt/utils/constants.dart';
 import 'package:volt/utils/utils.dart';
 
 class DeliveryDetailsView extends StatefulWidget {
@@ -16,6 +15,8 @@ class DeliveryDetailsView extends StatefulWidget {
 
 class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
   DeliveryMethod deliveryMethod = DeliveryMethod.pickup;
+
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
@@ -350,23 +351,8 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                     await laundryVM.transactionInit(
                         email: profileVM.email!,
                         deliveryFee: _deliveryFee,
-                        amount: _total,
-                        onFailure: () {
-                          return ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor: Colors.red,
-                              content: SizedBox(
-                                height: 30.h,
-                                child: Center(
-                                  child: Text(
-                                    'Something went wrong, please try again',
-                                    style: TextStyle(fontSize: 14.sp),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        });
+                        scaffoldKey: _scaffoldKey,
+                        amount: _total,);
                   }),
               const CustomSpacer(flex: 4),
             ]),

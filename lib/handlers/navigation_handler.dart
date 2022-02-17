@@ -58,6 +58,7 @@ class NavigationHandlerImpl implements NavigationHandler {
     if (state != null) {
       return state!.popAndPushNamed(destinationRoute, arguments: arg);
     }
+    return null;
   }
 
   @override
@@ -72,6 +73,7 @@ class NavigationHandlerImpl implements NavigationHandler {
     if (state != null) {
       return state!.pushNamed(destinationRoute, arguments: arg);
     }
+    return null;
   }
 
   @override
@@ -84,6 +86,7 @@ class NavigationHandlerImpl implements NavigationHandler {
         arguments: arg,
       );
     }
+    return null;
   }
 
   @override
@@ -91,5 +94,6 @@ class NavigationHandlerImpl implements NavigationHandler {
     if (state != null) {
       return state!.pushReplacementNamed(destinationRoute, arguments: arg);
     }
+    return null;
   }
 }

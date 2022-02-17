@@ -14,6 +14,7 @@ class CheckoutView extends StatefulWidget {
 
 class _CheckoutViewState extends State<CheckoutView> {
   final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   final paystackPlugin = PaystackPlugin();
   // final _cardNumberController = TextEditingController();
   // final _expiryMonthController = TextEditingController();
@@ -245,27 +246,12 @@ class _CheckoutViewState extends State<CheckoutView> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               await walletVM.handleCardPayment(
-                                  email: context.read<AppProfileVM>().email!,
-                                  amount: _amount.toDouble(),
-                                  context: context,
-                                  paystackPlugin: paystackPlugin,
-                                  onFailure: () {
-                                    return ScaffoldMessenger.of(context)
-                                        .showSnackBar(
-                                      SnackBar(
-                                        backgroundColor: Colors.red,
-                                        content: SizedBox(
-                                          height: 30.h,
-                                          child: Center(
-                                            child: Text(
-                                              'Something went wrong, please try again',
-                                              style: TextStyle(fontSize: 14.sp),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  });
+                                email: context.read<AppProfileVM>().email!,
+                                amount: _amount.toDouble(),
+                                context: context,
+                                paystackPlugin: paystackPlugin,
+                                scaffoldKey: _scaffoldKey
+                              );
                             }
                           },
                           color: Palette.lightGreen),

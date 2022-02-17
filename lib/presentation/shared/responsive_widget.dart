@@ -12,7 +12,7 @@ class ResponsiveWidget extends StatelessWidget {
   final Function? onTap;
   final Widget? floatingActionButton;
   final Widget? bottomNavigationBar;
-  final GlobalKey<ScaffoldState>? scaffoldKey;
+  final GlobalKey<ScaffoldMessengerState>? scaffoldKey;
 
   const ResponsiveWidget({
     Key? key,

@@ -17,6 +17,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   @override
   void initState() {
     context.read<AppProfileVM>().downloadUrl = '';
@@ -179,24 +180,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                     address: addressController.text,
                                     latitude: profileVM.latitude!,
                                     longitude: profileVM.longitude!,
-                                    onFailure: () {
-                                      return ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          backgroundColor: Colors.red,
-                                          content: SizedBox(
-                                            height: 30.h,
-                                            child: Center(
-                                              child: Text(
-                                                'Something went wrong, please try again',
-                                                style:
-                                                    TextStyle(fontSize: 14.sp),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    });
+                                    scaffoldKey: _scaffoldKey);
                               }
                             }),
                       ),

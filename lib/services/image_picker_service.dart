@@ -18,5 +18,6 @@ class ImagePickerServiceImpl implements ImagePickerService {
       source: camera ? ImageSource.camera : ImageSource.gallery,
     );
     if (pickedImage != null) return File(pickedImage.path);
+    return null;
   }
 }

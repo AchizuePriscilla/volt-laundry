@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
-import 'package:volt/handlers/navigation_handler.dart';
+import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 

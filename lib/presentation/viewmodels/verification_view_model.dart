@@ -50,6 +50,7 @@ class VerificationViewModel extends BaseViewModel {
       return timer;
     } catch (e) {
       log(e.toString());
+      return null;
     }
   }
 

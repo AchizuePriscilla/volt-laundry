@@ -6,6 +6,7 @@ import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:volt/models/api/credit_wallet_request.dart';
 import 'package:volt/models/api/transaction_reqests.dart';
 import 'package:volt/models/wallet_history_model.dart';
+import 'package:volt/presentation/shared/snackbar.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
@@ -122,8 +123,8 @@ class WalletVM extends BaseViewModel {
     }
   }
 
-  Future<void> creditVTCWallet(
-      {required double amount, required Function onFailure}) async {
+  Future<void> creditVTCWallet({required double amount, 
+    required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
     try {
       if (loading) return;
       toggleLoading(true);
@@ -143,7 +144,7 @@ class WalletVM extends BaseViewModel {
         });
       } else {
         log(res.error!.message);
-        onFailure();
+        showSnackbar("Error", res.error!.message, Colors.red, scaffoldKey);
         toggleLoading(false);
       }
       toggleLoading(false);
@@ -167,12 +168,13 @@ class WalletVM extends BaseViewModel {
     }
   }
 
-  Future<void> handleCardPayment(
-      {required String email,
-      required double amount,
-      required BuildContext context,
-      required PaystackPlugin paystackPlugin,
-      required Function onFailure}) async {
+  Future<void> handleCardPayment({
+    required String email,
+    required double amount,
+    required BuildContext context,
+    required PaystackPlugin paystackPlugin, 
+    required GlobalKey<ScaffoldMessengerState>? scaffoldKey
+  }) async {
     try {
       if (loading) return;
       toggleLoading(true);
@@ -197,7 +199,7 @@ class WalletVM extends BaseViewModel {
       } else {
         //show error messagge
         log('message: ${res.error!.message.toString()}');
-        onFailure();
+        showSnackbar("Error", res.error!.message, Colors.red, scaffoldKey);
       }
       toggleLoading(false);
     } catch (e) {

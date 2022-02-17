@@ -1,11 +1,12 @@
 import 'dart:developer';
-import 'package:flutter/painting.dart';
+import 'package:flutter/material.dart';
 import 'package:volt/models/api/transaction_reqests.dart';
 import 'package:volt/models/navigation/confirm_deduct_args.dart';
 import 'package:volt/models/navigation/laundry_details_args.dart';
 import 'package:volt/models/order_history_model.dart' as order_history;
 import 'package:volt/models/process_order_model.dart';
 import 'package:volt/models/user_model.dart';
+import 'package:volt/presentation/shared/snackbar.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
@@ -35,9 +36,9 @@ class LaundryVM extends BaseViewModel {
           price: _price,
           wearColor: _colors,
           wearType: getDesc(clothType),
-          wearTotal: total),
+          wearTotal: total,
+          serviceType: getServiceType(_serviceType),),
     );
-    _serviceType = serviceType;
   }
 
   String getDesc(ClothType clothType) {
@@ -180,7 +181,7 @@ class LaundryVM extends BaseViewModel {
       {required String email,
       required double amount,
       required int deliveryFee,
-      required Function onFailure}) async {
+    required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
     try {
       if (loading) return;
       toggleLoading(true);
@@ -198,7 +199,7 @@ class LaundryVM extends BaseViewModel {
       } else {
         //show error messagge
         log('message: ${res.error!.message.toString()}');
-        onFailure();
+       showSnackbar("Error", res.error!.message, Colors.red, scaffoldKey);
       }
       toggleLoading(false);
     } catch (e) {
@@ -207,14 +208,14 @@ class LaundryVM extends BaseViewModel {
     }
   }
 
-  Future<void> processOrder(
-      {required Function onFailure, required int deliveryFee}) async {
+  Future<void> processOrder({required int deliveryFee, 
+    required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
     try {
       if (loading) return;
       toggleLoading(true);
       var res = await orderService.processOrder(
         ProcessOrderModel(
-            serviceType: getServiceType(_serviceType),
+           
             deliveryMode: _deliveryMethod.name.toUpperCase(),
             userWears: userWears,
             price: _price,
@@ -240,7 +241,7 @@ class LaundryVM extends BaseViewModel {
         });
       } else {
         log(res.error!.message);
-        onFailure();
+        showSnackbar("Error", res.error!.message, Colors.red, scaffoldKey);
       }
 
       toggleLoading(false);

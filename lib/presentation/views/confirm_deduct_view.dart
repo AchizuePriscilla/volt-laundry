@@ -15,6 +15,8 @@ class ConfirmDeductView extends StatelessWidget {
   Widget build(BuildContext context) {
     var laundryVM = context.read<LaundryVM>();
     var rxLaundryVM = context.watch<LaundryVM>();
+
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
     return ResponsiveWidget(
         appBar: CustomAppBar(
           text: 'Checkout',
@@ -53,23 +55,8 @@ class ConfirmDeductView extends StatelessWidget {
                   onPressed: () async {
                     await laundryVM.processOrder(
                       deliveryFee: deliveryFee,
-                      onFailure: () {
-
-                      return ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: Colors.red,
-                          content: SizedBox(
-                            height: 30.h,
-                            child: Center(
-                              child: Text(
-                                'Something went wrong, please try again',
-                                style: TextStyle(fontSize: 14.sp),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    });
+                      scaffoldKey: _scaffoldKey
+                   );
                     locator<NavigationHandler>().popAndPushNamed(homeViewRoute);
                   },
                   color: Palette.lightGreen,

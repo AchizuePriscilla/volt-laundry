@@ -18,6 +18,7 @@ class Validators {
     if (value.length < 16) {
       return 'Card number cannot be less than 16 characters';
     }
+    return null;
   }
 
   static String? validateExpiryMonth(String? value) {
@@ -70,6 +71,7 @@ class Validators {
     if (value.length < 6) {
       return 'Password must contain at least 6 characters';
     }
+    return null;
   }
 
   static String? validateConfirmPassword(String? value, String? password) {

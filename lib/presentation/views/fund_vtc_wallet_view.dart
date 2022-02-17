@@ -12,6 +12,7 @@ class FundVTCWalletView extends StatefulWidget {
 
 class _FundVTCWalletViewState extends State<FundVTCWalletView> {
   final _amountController = TextEditingController();
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   bool buttonActive = false;
   late int _amount;
   void onListen() {
@@ -124,23 +125,7 @@ class _FundVTCWalletViewState extends State<FundVTCWalletView> {
                               .read<WalletVM>()
                               .creditVTCWallet(
                                   amount: _amount.toDouble(),
-                                  onFailure: () {
-                                    return ScaffoldMessenger.of(context)
-                                        .showSnackBar(
-                                      SnackBar(
-                                        backgroundColor: Colors.red,
-                                        content: SizedBox(
-                                          height: 30.h,
-                                          child: Center(
-                                            child: Text(
-                                              'Something went wrong, please try again',
-                                              style: TextStyle(fontSize: 14.sp),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  })
+                                  scaffoldKey: _scaffoldKey)
                               .then((value) => _amountController.clear());
                         },
                         color: Palette.lightGreen),

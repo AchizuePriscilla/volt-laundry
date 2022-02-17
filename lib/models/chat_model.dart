@@ -1,8 +1,6 @@
 // To parse this JSON data, do
 //
 //     final chatModel = chatModelFromMap(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 ChatModel chatModelFromMap(String str) => ChatModel.fromMap(json.decode(str));

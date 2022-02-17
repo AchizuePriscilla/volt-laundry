@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:volt/presentation/viewmodels/sign_up_view_model.dart';
@@ -19,7 +19,7 @@ class _AddressSearchViewState extends State<AddressSearchView> {
       builder: (context, size) {
         return Column(
           children: [
-            CustomSpacer(
+           const CustomSpacer(
               flex: 4,
             ),
             CustomTextField(

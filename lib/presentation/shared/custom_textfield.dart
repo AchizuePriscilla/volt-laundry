@@ -61,8 +61,9 @@ class CustomTextField extends StatelessWidget {
         if (validator != null) {
           return validator!(value ?? "");
         }
+        return '';
       },
-      onChanged: onChanged ?? (val){},
+      onChanged: onChanged ?? (val) {},
       initialValue: initialValue,
       decoration: InputDecoration(
         alignLabelWithHint: true,

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:volt/models/order_history_model.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
-import 'package:volt/utils/utils.dart';
 
 class HistoryView extends StatefulWidget {
   const HistoryView({Key? key}) : super(key: key);
@@ -62,7 +61,7 @@ class _HistoryViewState extends State<HistoryView> {
                                         .netPrice
                                         .amount
                                         .toString(),
-                                    serviceType: orders[index].serviceType,
+                                    serviceType: orders[index].userWears[0].serviceType,
                                     userWears: orders[index].userWears,
                                   );
                           }),

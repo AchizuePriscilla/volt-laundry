@@ -28,7 +28,6 @@ class OrderHistoryModel {
 class Order {
   Order({
     required this.id,
-    required this.serviceType,
     required this.userWears,
     required this.price,
     required this.deliveryFee,
@@ -48,7 +47,6 @@ class Order {
   });
 
   final String id;
-  final String serviceType;
   final List<UserWear> userWears;
   final DeliveryFee price;
   final DeliveryFee deliveryFee;
@@ -68,7 +66,6 @@ class Order {
 
   factory Order.fromMap(Map<String, dynamic> json) => Order(
         id: json["id"] ?? '',
-        serviceType: json["serviceType"] ?? '',
         userWears: List<UserWear>.from(
             json["userWears"].map((x) => UserWear.fromMap(x))),
         price: DeliveryFee.fromMap(json["price"] ?? ''),
@@ -90,7 +87,6 @@ class Order {
 
   Map<String, dynamic> toMap() => {
         "id": id,
-        "serviceType": serviceType,
         "userWears": List<dynamic>.from(userWears.map((x) => x.toMap())),
         "price": price.toMap(),
         "deliveryFee": deliveryFee.toMap(),
@@ -172,15 +168,18 @@ class UserWear {
     required this.wearColor,
     required this.wearTotal,
     required this.price,
+    required this.serviceType
   });
 
   final String wearType;
   final List<int> wearColor;
   final int wearTotal;
   final DeliveryFee price;
+  final String serviceType;
 
   factory UserWear.fromMap(Map<String, dynamic> json) => UserWear(
         wearType: json["wearType"],
+        serviceType: json["serviceType"],
         wearColor: List<int>.from(
           (json["wearColor"] ?? []),
         ),

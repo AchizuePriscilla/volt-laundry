@@ -16,7 +16,6 @@ class FundWalletView extends StatefulWidget {
 
 class _FundWalletViewState extends State<FundWalletView> {
   bool isVNGN = true;
-
   String getCoinType(bool isVNGN) {
     if (isVNGN) {
       return 'Volt Naira coin';
@@ -294,7 +293,7 @@ class _FundWalletViewState extends State<FundWalletView> {
                                         : TransactionHistory(
                                             serviceType:
                                                 laundryVM.getServiceTypeEnum(
-                                                    orders[index].serviceType),
+                                                    orders[index].userWears[0].serviceType),
                                             price:
                                                 orders[index].netPrice.amount,
                                             date: StringUtils.getTimeAgo(
