@@ -163,13 +163,12 @@ class PaymentRef {
 }
 
 class UserWear {
-  UserWear({
-    required this.wearType,
-    required this.wearColor,
-    required this.wearTotal,
-    required this.price,
-    required this.serviceType
-  });
+  UserWear(
+      {required this.wearType,
+      required this.wearColor,
+      required this.wearTotal,
+      required this.price,
+      required this.serviceType});
 
   final String wearType;
   final List<int> wearColor;
@@ -191,6 +190,7 @@ class UserWear {
         "wearType": wearType,
         "wearColor": wearColor,
         "wearTotal": wearTotal,
+        "serviceType": serviceType,
         "price": price.toMap(),
       };
 }

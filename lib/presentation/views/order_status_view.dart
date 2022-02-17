@@ -80,9 +80,6 @@ class _OrderStatusViewState extends State<OrderStatusView> {
                                                 : selectedIndex = index;
                                           });
                                         },
-                                        driver: context
-                                            .watch<LaundryVM>()
-                                            .driverDetails,
                                         isDropdownVisible:
                                             selectedIndex == index
                                                 ? true
@@ -110,20 +107,18 @@ class _OrderStatusViewState extends State<OrderStatusView> {
 }
 
 class OrderStatusDropdown extends StatefulWidget {
-  const OrderStatusDropdown(
-      {Key? key,
-      required this.isDropdownVisible,
-      required this.order,
-      required this.onTap,
-      required this.onButtonTap,
-      required this.driver})
-      : super(key: key);
+  const OrderStatusDropdown({
+    Key? key,
+    required this.isDropdownVisible,
+    required this.order,
+    required this.onTap,
+    required this.onButtonTap,
+  }) : super(key: key);
 
   final bool isDropdownVisible;
   final VoidCallback onTap;
   final VoidCallback onButtonTap;
   final Order order;
-  final UserModel driver;
 
   @override
   State<OrderStatusDropdown> createState() => _OrderStatusDropdownState();
@@ -134,6 +129,7 @@ class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
   Widget build(BuildContext context) {
     var latitude = context.watch<AppProfileVM>().latitude!;
     var longitude = context.watch<AppProfileVM>().longitude!;
+    UserModel? driver = context.watch<LaundryVM>().driverDetails;
     LatLng userPosition = LatLng(latitude, longitude);
     LatLng driverPosition = LatLng(
         widget.order.currentLocation.lat, widget.order.currentLocation.lng);
@@ -287,84 +283,84 @@ class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
                 const CustomSpacer(
                   flex: 2,
                 ),
-                Visibility(
-                  visible: widget.order.status == 'ASSIGNED',
-                  child: Column(
-                    children: [
-                      Row(children: [
-                        CircleAvatar(
-                          radius: 27.w,
-                          backgroundImage: widget.driver.avatar == null ||
-                                  widget.driver.avatar!.isEmpty ||
-                                  widget.driver.avatar == "undefined"
-                              ? const AssetImage(
-                                  'assets/images/empty_profile_picture.png')
-                              : NetworkImage(widget.driver.avatar!)
-                                  as ImageProvider,
-                        ),
-                        const CustomSpacer(flex: 2, horizontal: true),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.driver.name!,
-                              style: GoogleFonts.lato(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
+                if (driver != null)
+                  Visibility(
+                    visible: widget.order.status == 'ASSIGNED',
+                    child: Column(
+                      children: [
+                        Row(children: [
+                          CircleAvatar(
+                            radius: 27.w,
+                            backgroundImage: driver.avatar == null ||
+                                    driver.avatar!.isEmpty ||
+                                    driver.avatar == "undefined"
+                                ? const AssetImage(
+                                    'assets/images/empty_profile_picture.png')
+                                : NetworkImage(driver.avatar!) as ImageProvider,
+                          ),
+                          const CustomSpacer(flex: 2, horizontal: true),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                driver.name!,
+                                style: GoogleFonts.lato(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                            Text(
-                              'Courier',
-                              style: GoogleFonts.lato(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w300,
+                              Text(
+                                'Courier',
+                                style: GoogleFonts.lato(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w300,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const Expanded(child: SizedBox()),
-                        Text(
-                          'Close',
-                          style: GoogleFonts.lato(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: Palette.buttonColor),
-                        ),
-                      ]),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              widget.driver.phoneNumber!,
-                              style: GoogleFonts.lato(
+                            ],
+                          ),
+                          const Expanded(child: SizedBox()),
+                          Text(
+                            'Close',
+                            style: GoogleFonts.lato(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w400,
+                                color: Palette.buttonColor),
+                          ),
+                        ]),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                driver.phoneNumber!,
+                                style: GoogleFonts.lato(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
-                            ),
-                            // const CustomSpacer(flex: 2),
-                            // Text(
-                            //   'Black in complexion',
-                            //   style: GoogleFonts.lato(
-                            //     fontSize: 14.sp,
-                            //     fontWeight: FontWeight.w400,
-                            //   ),
-                            // ),
-                            // const CustomSpacer(flex: 2),
-                            // Text(
-                            //   'Tall',
-                            //   style: GoogleFonts.lato(
-                            //     fontSize: 14.sp,
-                            //     fontWeight: FontWeight.w400,
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                      )
-                    ],
+                              // const CustomSpacer(flex: 2),
+                              // Text(
+                              //   'Black in complexion',
+                              //   style: GoogleFonts.lato(
+                              //     fontSize: 14.sp,
+                              //     fontWeight: FontWeight.w400,
+                              //   ),
+                              // ),
+                              // const CustomSpacer(flex: 2),
+                              // Text(
+                              //   'Tall',
+                              //   style: GoogleFonts.lato(
+                              //     fontSize: 14.sp,
+                              //     fontWeight: FontWeight.w400,
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
           ),

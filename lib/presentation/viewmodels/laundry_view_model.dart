@@ -12,13 +12,12 @@ import 'package:volt/utils/utils.dart';
 
 class LaundryVM extends BaseViewModel {
   late order_history.OrderHistoryModel _orderHistoryModel;
-  late ServiceType _serviceType;
   List<int> _colors = <int>[];
   List<UserWear> userWears = <UserWear>[];
   DeliveryMethod _deliveryMethod = DeliveryMethod.pickup;
   late PaymentRef _paymentRef;
   late DeliveryFee _price;
-  late UserModel driverDetails;
+UserModel? driverDetails;
   void setDeliveryMethod(DeliveryMethod deliveryMethod) {
     _deliveryMethod = deliveryMethod;
     _paymentRef = PaymentRef.fromMap({'json': ''});
@@ -33,11 +32,12 @@ class LaundryVM extends BaseViewModel {
     _colors = colors;
     userWears.add(
       UserWear(
-          price: _price,
-          wearColor: _colors,
-          wearType: getDesc(clothType),
-          wearTotal: total,
-          serviceType: getServiceType(_serviceType),),
+        price: _price,
+        wearColor: _colors,
+        wearType: getDesc(clothType),
+        wearTotal: total,
+        serviceType: getServiceType(serviceType),
+      ),
     );
   }
 
@@ -181,7 +181,7 @@ class LaundryVM extends BaseViewModel {
       {required String email,
       required double amount,
       required int deliveryFee,
-    required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
+      required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
     try {
       if (loading) return;
       toggleLoading(true);
@@ -199,7 +199,7 @@ class LaundryVM extends BaseViewModel {
       } else {
         //show error messagge
         log('message: ${res.error!.message.toString()}');
-       showSnackbar("Error", res.error!.message, Colors.red, scaffoldKey);
+        showSnackbar("Error", res.error!.message, Colors.red, scaffoldKey);
       }
       toggleLoading(false);
     } catch (e) {
@@ -208,14 +208,14 @@ class LaundryVM extends BaseViewModel {
     }
   }
 
-  Future<void> processOrder({required int deliveryFee, 
-    required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
+  Future<void> processOrder(
+      {required int deliveryFee,
+      required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
     try {
       if (loading) return;
       toggleLoading(true);
       var res = await orderService.processOrder(
         ProcessOrderModel(
-           
             deliveryMode: _deliveryMethod.name.toUpperCase(),
             userWears: userWears,
             price: _price,

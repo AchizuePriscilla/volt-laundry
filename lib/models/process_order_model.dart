@@ -142,6 +142,7 @@ class UserWear {
         "wearType": wearType,
         "wearColor": wearColor,
         "wearTotal": wearTotal,
+       "serviceType": serviceType,
         "price": price.toMap(),
       };
 }
