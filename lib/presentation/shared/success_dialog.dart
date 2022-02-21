@@ -38,7 +38,7 @@ class SuccessDialog extends StatelessWidget {
         }
       },
       child: Material(
-        color: Theme.of(context).primaryColorLight.withOpacity(.75),
+        color: Colors.white,
         elevation: 10,
         child: SizedBox(
           height: height,
@@ -50,11 +50,11 @@ class SuccessDialog extends StatelessWidget {
                 key: dialogContainerKey,
                 constraints: BoxConstraints(
                     minWidth: MediaQuery.of(context).size.width * .6,
-                    minHeight: MediaQuery.of(context).size.height * .4),
+                    minHeight: MediaQuery.of(context).size.height * .35),
                 margin: EdgeInsets.symmetric(horizontal: dialogMargin),
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).dialogTheme.backgroundColor,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(30.w),
                 ),
                 child: Column(
@@ -78,10 +78,11 @@ class SuccessDialog extends StatelessWidget {
                     ),
                     Text(
                       request.message,
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                          fontSize: 24.sp,
+                          fontSize: 20.sp,
                           fontWeight: FontWeight.w700,
-                          color: Theme.of(context).primaryColorLight),
+                          color: Palette.blackColor),
                     ),
                     const CustomSpacer(
                       flex: 3,

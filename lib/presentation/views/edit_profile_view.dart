@@ -27,10 +27,11 @@ class _EditProfileViewState extends State<EditProfileView> {
   @override
   Widget build(BuildContext context) {
     var profileVM = context.read<AppProfileVM>();
-    var rxprofileVM = context.read<AppProfileVM>();
+    var rxprofileVM = context.watch<AppProfileVM>();
     var signUpVM = context.read<SignUpViewModel>();
     return ResponsiveWidget(
         resizeToAvoidBottomInset: true,
+        scaffoldKey: _scaffoldKey,
         builder: (_, size) {
           return Container(
               padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -145,6 +146,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                       ),
                       const CustomSpacer(flex: 1),
                       CustomTextField(
+                        validator: (address) {
+                          return signUpVM.validateText(address);
+                        },
                         fillColor:
                             Theme.of(context).disabledColor.withOpacity(.1),
                         hint: 'E.g: Premiere estate, ugwuaji enugu nigeria',
@@ -171,10 +175,10 @@ class _EditProfileViewState extends State<EditProfileView> {
                         child: Button(
                             text: 'Save',
                             color: Palette.lightGreen,
-                            loading: context.watch<AppProfileVM>().loading,
-                            onPressed: () {
+                            loading: rxprofileVM.loading,
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                profileVM.editUser(
+                                await profileVM.editUser(
                                     name: nameController.text,
                                     phoneNumber: phoneNumberController.text,
                                     address: addressController.text,

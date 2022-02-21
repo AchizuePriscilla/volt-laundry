@@ -293,7 +293,9 @@ class _FundWalletViewState extends State<FundWalletView> {
                                         : TransactionHistory(
                                             serviceType:
                                                 laundryVM.getServiceTypeEnum(
-                                                    orders[index].userWears[0].serviceType),
+                                                    orders[index]
+                                                        .userWears[0]
+                                                        .serviceType),
                                             price:
                                                 orders[index].netPrice.amount,
                                             date: StringUtils.getTimeAgo(

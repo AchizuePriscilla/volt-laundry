@@ -106,6 +106,9 @@ class _LogInViewState extends State<LogInView> {
                 ),
                 const CustomSpacer(flex: 1),
                 CustomTextField(
+                  validator: (email) {
+                    loginVM.validateEmail(email);
+                  },
                   fillColor: Theme.of(context).primaryColorLight,
                   controller: _emailController,
                 ),
@@ -120,6 +123,9 @@ class _LogInViewState extends State<LogInView> {
                 ),
                 const CustomSpacer(flex: 1),
                 CustomTextField(
+                  validator: (password) {
+                    loginVM.validatePassword(password);
+                  },
                   fillColor: Theme.of(context).disabledColor.withOpacity(.2),
                   obscure: hidePassword,
                   controller: _passwordController,

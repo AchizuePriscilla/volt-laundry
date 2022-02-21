@@ -59,6 +59,8 @@ class SignUpViewModel extends BaseViewModel {
   String? validatePhoneNumber(String phoneNumber) =>
       Validators.validatePhoneNumber(phoneNumber);
 
+  String? validateText(String text) =>
+      Validators.validateTextInput(text, 'Enter a valid address');
   updateFields({
     required String name,
     required String email,

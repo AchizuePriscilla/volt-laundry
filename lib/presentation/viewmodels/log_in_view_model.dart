@@ -13,6 +13,8 @@ class LogInViewModel extends BaseViewModel {
   String? validatePassword(String password) =>
       Validators.validatePassword(password);
 
+  String? validateEmail(String email) => Validators.validateEmail(email);
+
   ///Makes a network call to log user in with [email] and [password]
   Future<void> login({
     required String email,
@@ -35,12 +37,12 @@ class LogInViewModel extends BaseViewModel {
         log('An error occured');
         dialogHandler.showDialog(
             message: res.error!.message, contentType: DialogContentType.error);
+        toggleLoading(false);
         return;
       }
       toggleLoading(false);
     } catch (e) {
-      log(e.toString());
-
+      AppLogger.logger.d(e);
       toggleLoading(false);
     }
   }

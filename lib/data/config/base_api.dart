@@ -114,10 +114,11 @@ abstract class BaseApi {
       );
 
   Future<Either<Failure, Success>> delete(path,
-          {Map<String, dynamic> headers = const {}}) =>
+          {Map<String, dynamic>? data, Map<String, dynamic> headers = const {}}) =>
       makeRequest(
         dio.delete(
           "/$path",
+          data: data,
           options: Options(
             headers: {
               ...headers, // set content-length

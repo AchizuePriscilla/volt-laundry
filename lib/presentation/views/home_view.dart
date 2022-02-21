@@ -7,6 +7,8 @@ import 'package:volt/presentation/theme/palette.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/presentation/views/views.dart';
 
+final globalScaffoldKey = GlobalKey<ScaffoldMessengerState>();
+
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
 
@@ -56,115 +58,118 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     var homeVM = context.read<HomeVM>();
     var appProfileVM = context.read<AppProfileVM>();
-    return ResponsiveWidget(
-      onWillPop: () => homeVM.onWillPop(),
-      bottomNavigationBar: SizedBox(
-        height: 80.h,
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          iconSize: 27.w,
-          selectedFontSize: 14.sp,
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w900),
-          unselectedItemColor: Palette.buttonColor.withOpacity(.5),
-          backgroundColor: const Color(0xffF8F8F8),
-          elevation: 15,
-          selectedItemColor: Palette.buttonColor,
-          currentIndex: context.watch<HomeVM>().selectedIndex,
-          onTap: (int page) {
-            homeVM.jumpToPage(page);
-          },
-          items: [
-            const BottomNavigationBarItem(
-              icon: Icon(
-                IconlyLight.home,
+
+    return WillPopScope(
+      onWillPop: () {
+        return homeVM.onWillPop();
+      },
+      child: Scaffold(
+        bottomNavigationBar: SizedBox(
+          height: 80.h,
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            iconSize: 27.w,
+            selectedFontSize: 14.sp,
+            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w900),
+            unselectedItemColor: Palette.buttonColor.withOpacity(.5),
+            backgroundColor: const Color(0xffF8F8F8),
+            elevation: 15,
+            selectedItemColor: Palette.buttonColor,
+            currentIndex: context.watch<HomeVM>().selectedIndex,
+            onTap: (int page) {
+              homeVM.jumpToPage(page);
+            },
+            items: [
+              const BottomNavigationBarItem(
+                icon: Icon(
+                  IconlyLight.home,
+                ),
+                activeIcon: Icon(
+                  IconlyBold.home,
+                ),
+                label: '',
               ),
-              activeIcon: Icon(
-                IconlyBold.home,
+              const BottomNavigationBarItem(
+                icon: Icon(
+                  IconlyLight.location,
+                ),
+                activeIcon: Icon(
+                  IconlyBold.location,
+                ),
+                label: '',
               ),
-              label: '',
-            ),
-            const BottomNavigationBarItem(
-              icon: Icon(
-                IconlyLight.location,
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.local_laundry_service_outlined),
+                activeIcon: Icon(Icons.local_laundry_service_rounded),
+                label: '',
               ),
-              activeIcon: Icon(
-                IconlyBold.location,
+              const BottomNavigationBarItem(
+                icon: Icon(
+                  IconlyLight.wallet,
+                ),
+                activeIcon: Icon(
+                  IconlyBold.wallet,
+                ),
+                label: '',
               ),
-              label: '',
-            ),
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.local_laundry_service_outlined),
-              activeIcon: Icon(Icons.local_laundry_service_rounded),
-              label: '',
-            ),
-            const BottomNavigationBarItem(
-              icon: Icon(
-                IconlyLight.wallet,
-              ),
-              activeIcon: Icon(
-                IconlyBold.wallet,
-              ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Container(
-                height: 35.w,
-                width: 35.w,
-                decoration: BoxDecoration(
-                    color: Palette.buttonColor.withOpacity(.2),
-                    shape: BoxShape.circle),
-                child: Padding(
-                  padding: EdgeInsets.all(3.2.w),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Palette.buttonColor.withOpacity(.7),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: Image.network(
-                          appProfileVM.profilePic == "undefined"
-                              ? 'assets/images/empty_profile_picture.png'
-                              : appProfileVM.profilePic,
+              BottomNavigationBarItem(
+                icon: Container(
+                  height: 35.w,
+                  width: 35.w,
+                  decoration: BoxDecoration(
+                      color: Palette.buttonColor.withOpacity(.2),
+                      shape: BoxShape.circle),
+                  child: Padding(
+                    padding: EdgeInsets.all(3.2.w),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Palette.buttonColor.withOpacity(.7),
+                        image: DecorationImage(
                           fit: BoxFit.cover,
-                        ).image,
+                          image: Image.network(
+                            appProfileVM.profilePic == "undefined"
+                                ? 'assets/images/empty_profile_picture.png'
+                                : appProfileVM.profilePic,
+                            fit: BoxFit.cover,
+                          ).image,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              activeIcon: Container(
-                height: 35.w,
-                width: 35.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Palette.buttonColor.withOpacity(.7),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(3.2.w),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Palette.buttonColor.withOpacity(.7),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: Image.network(
-                          appProfileVM.profilePic == "undefined"
-                              ? 'assets/images/empty_profile_picture.png'
-                              : appProfileVM.profilePic,
+                activeIcon: Container(
+                  height: 35.w,
+                  width: 35.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Palette.buttonColor.withOpacity(.7),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(3.2.w),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Palette.buttonColor.withOpacity(.7),
+                        image: DecorationImage(
                           fit: BoxFit.cover,
-                        ).image,
+                          image: Image.network(
+                            appProfileVM.profilePic == "undefined"
+                                ? 'assets/images/empty_profile_picture.png'
+                                : appProfileVM.profilePic,
+                            fit: BoxFit.cover,
+                          ).image,
+                        ),
                       ),
                     ),
                   ),
                 ),
+                label: '',
               ),
-              label: '',
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      builder: (_, size) {
-        return PageView(
+        body: PageView(
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: const [
@@ -174,8 +179,8 @@ class _HomeViewState extends State<HomeView> {
             FundWalletView(),
             ProfileView()
           ],
-        );
-      },
+        ),
+      ),
     );
   }
 }

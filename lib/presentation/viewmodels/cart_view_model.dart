@@ -7,21 +7,20 @@ import 'package:volt/utils/utils.dart';
 import '../../models/api/transaction_reqests.dart';
 import '../../models/navigation/confirm_deduct_args.dart';
 import '../../models/process_order_model.dart';
-import '../shared/snackbar.dart';
 
 class CartVM extends BaseViewModel {
-  List<UserWear> userWears = <UserWear>[];
   late PaymentRef _paymentRef;
+  late CartModel _cartModel;
   DeliveryMethod _deliveryMethod = DeliveryMethod.pickup;
   void setDeliveryMethod(DeliveryMethod deliveryMethod) {
     _deliveryMethod = deliveryMethod;
     _paymentRef = PaymentRef.fromMap({'json': ''});
   }
 
-  int get totalUserWears => userWears.fold(
-      0, (previousValue, element) => previousValue + element.wearTotal);
+  int get totalUserWears => _cartModel.cart
+      .fold(0, (previousValue, element) => previousValue + element.wearTotal);
 
-  int get totalPrice => userWears.fold(
+  int get totalPrice => _cartModel.cart.fold(
       0, (previousValue, element) => previousValue + element.price.amount);
 
   void navigateToRoute(String route, dynamic args) {
@@ -102,24 +101,72 @@ class CartVM extends BaseViewModel {
     }
   }
 
-  void addToCart(
+  Future<void> addToCart(
       {required ClothType clothType,
       required List<dynamic> wearColor,
       required int wearTotal,
       required int amount,
-      required ServiceType serviceType}) {
-    userWears.add(UserWear(
-        wearType: getDesc(clothType),
-        wearColor: wearColor,
-        wearTotal: wearTotal,
-        price: DeliveryFee(currency: 'VLTCOIN', amount: amount),
-        serviceType: getServiceType(serviceType)));
+      required ServiceType serviceType,
+      required String description,
+      required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
+    try {
+      if (loading) return;
+      toggleLoading(true);
+      var res = await orderService.addToCart(
+        UserWear(
+          wearType: getDesc(clothType),
+          description: description,
+          wearColor: wearColor,
+          wearTotal: wearTotal,
+          price: DeliveryFee(currency: 'VLTCOIN', amount: amount),
+          serviceType: getServiceType(serviceType),
+        ),
+      );
+      if (!res.success) {
+        dialogHandler.showDialog(
+            contentType: DialogContentType.error,
+            message: res.error!.message,
+            autoDismiss: true,
+            title: "Error");
+      }
+      toggleLoading(false);
+    } catch (e) {
+      AppLogger.logger.d(e);
+      toggleLoading(false);
+    }
+  }
+
+  Future<List<UserWear>> getUserCart() async {
+    try {
+      var res = await orderService.getUserCart();
+      _cartModel = res.cartModel!;
+      return _cartModel.cart;
+    } catch (e) {
+      AppLogger.logger.d(e);
+      return [];
+    }
+  }
+
+  Future<void> deleteFromCart(UserWear userWear) async {
+    try {
+      if (loading) return;
+      toggleLoading(true);
+      await orderService.deleteFromCart(userWear);
+      getUserCart();
+      notifyListeners();
+      toggleLoading(false);
+    } catch (e) {
+      AppLogger.logger.d(e);
+      toggleLoading(false);
+    }
   }
 
   Future<void> transactionInit(
       {required String email,
       required double amount,
       required int deliveryFee,
+      bool? isSingleCartOrder = false,
+      int? singleOrderIndex,
       required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
     try {
       if (loading) return;
@@ -133,12 +180,21 @@ class CartVM extends BaseViewModel {
         log("PaymentRef: ${_paymentRef.toString()}");
         navigationHandler.pushNamed(
           confirmDeductViewRoute,
-          arg: ConfirmDeductArgs(amount: amount, deliveryFee: deliveryFee, isCartOrder: true),
+          arg: ConfirmDeductArgs(
+              amount: amount,
+              deliveryFee: deliveryFee,
+              isCartOrder: true,
+              singleOrderIndex: singleOrderIndex,
+              isSingleCartOrder: isSingleCartOrder),
         );
       } else {
         //show error messagge
         log('message: ${res.error!.message.toString()}');
-        showSnackbar("Error", res.error!.message, Colors.red, scaffoldKey);
+        dialogHandler.showDialog(
+            contentType: DialogContentType.error,
+            message: res.error!.message,
+            autoDismiss: true,
+            title: "Error");
       }
       toggleLoading(false);
     } catch (e) {
@@ -150,6 +206,8 @@ class CartVM extends BaseViewModel {
   Future<void> processOrder(
       {required int deliveryFee,
       required int totalPrice,
+      required bool isSingleOrder,
+      int? index,
       required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
     try {
       if (loading) return;
@@ -157,8 +215,12 @@ class CartVM extends BaseViewModel {
       var res = await orderService.processOrder(
         ProcessOrderModel(
             deliveryMode: _deliveryMethod.name.toUpperCase(),
-            userWears: userWears,
-            price: DeliveryFee(amount: totalPrice, currency: 'VLTCOIN'),
+            userWears: _cartModel.cart,
+            price: DeliveryFee(
+                amount: isSingleOrder
+                    ? _cartModel.cart[index!].price.amount
+                    : totalPrice,
+                currency: 'VLTCOIN'),
             deliveryFee: DeliveryFee(amount: deliveryFee, currency: 'VLTCOIN'),
             paymentMethod: 'COIN',
             origin: CurrentLocation(address: 'UNN', lat: 6.8645, lng: 7.4083),
@@ -170,18 +232,22 @@ class CartVM extends BaseViewModel {
             paymentRef: _paymentRef),
       );
       if (res.success) {
-        userWears.clear();
+        // _userWears.clear();
         dialogHandler.showDialog(
             contentType: DialogContentType.success,
-            title: 'Success',
-            message: 'Order placed successfully',
-            autoDismiss: true);
-        Future.delayed(const Duration(seconds: 3), () {
+            autoDismiss: true,
+            title: "Success",
+            message: "Order Placed Successfully");
+        Future.delayed(const Duration(seconds: 2), () {
           navigationHandler.pushNamed(homeViewRoute);
         });
       } else {
         log(res.error!.message);
-        showSnackbar("Error", res.error!.message, Colors.red, scaffoldKey);
+        dialogHandler.showDialog(
+            contentType: DialogContentType.error,
+            message: res.error!.message,
+            autoDismiss: false,
+            title: "Error");
       }
 
       toggleLoading(false);
@@ -191,5 +257,3 @@ class CartVM extends BaseViewModel {
     }
   }
 }
-
-

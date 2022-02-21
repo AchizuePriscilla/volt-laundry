@@ -1,5 +1,7 @@
 import 'package:volt/data/config/base_api.dart';
 import 'package:volt/data/remote/order_apis/order_repo.dart';
+import 'package:volt/models/api/get_cart_response.dart';
+import 'package:volt/models/api/general_response.dart';
 import 'package:volt/models/api/get_order_history_response.dart';
 import 'package:volt/models/api/get_user_response.dart';
 import 'package:volt/models/process_order_model.dart';
@@ -10,6 +12,7 @@ class OrderRepoImpl extends BaseApi implements OrderRepo {
   static const String orderHistory = 'order/user';
   static const order = 'order';
   static const driver = 'logistics/';
+  static const cart = 'cart';
 
   @override
   Future<GetOrderHistoryResponse> getOrderHistory() async {
@@ -27,5 +30,24 @@ class OrderRepoImpl extends BaseApi implements OrderRepo {
   Future<GetUserResponse> getDriverDetails(String id) async {
     var response = await get(driver + id);
     return GetUserResponse.fromMap(response);
+  }
+
+  @override
+  Future<GeneralResponse> addToCart(UserWear request) async {
+    var response = await post(cart, data: {"item": request.toMap()});
+
+    return GeneralResponse.fromMap(response);
+  }
+
+  @override
+  Future<GetCartResponse> getUserCart() async {
+    var response = await get(cart);
+    return GetCartResponse.fromMap(response);
+  }
+
+  @override
+  Future<GeneralResponse> deleteFromCart(UserWear request) async {
+    var response = await delete(cart, data: request.toMap());
+    return GeneralResponse.fromMap(response);
   }
 }

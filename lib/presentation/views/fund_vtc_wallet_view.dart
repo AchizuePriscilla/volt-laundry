@@ -42,7 +42,9 @@ class _FundVTCWalletViewState extends State<FundVTCWalletView> {
   @override
   Widget build(BuildContext context) {
     var rxAppProfileVM = context.watch<AppProfileVM>();
-    return ResponsiveWidget(builder: (context, size) {
+    return ResponsiveWidget(
+      scaffoldKey: _scaffoldKey,
+      builder: (context, size) {
       return SizedBox(
         height: size.height,
         width: size.width,

@@ -116,25 +116,29 @@ class PaymentRef {
 }
 
 class UserWear {
-  UserWear({
-    required this.wearType,
-    required this.wearColor,
-    required this.wearTotal,
-    required this.price,
-    required this.serviceType
-  });
+  UserWear(
+      {required this.wearType,
+      required this.wearColor,
+      required this.wearTotal,
+      required this.price,
+      required this.serviceType,
+      required this.description});
 
   final String wearType;
   final List wearColor;
   final int wearTotal;
   final DeliveryFee price;
   final String serviceType;
+  final String description;
 
   factory UserWear.fromMap(Map<String, dynamic> json) => UserWear(
         wearType: json["wearType"],
-        wearColor: json["wearColor"],
-        wearTotal: json["wearTotal"],
         serviceType: json["serviceType"],
+        wearColor: List<int>.from(
+          (json["wearColor"] ?? []),
+        ),
+        description: json["description"] ?? '',
+        wearTotal: json["wearTotal"],
         price: DeliveryFee.fromMap(json["price"]),
       );
 
@@ -142,7 +146,25 @@ class UserWear {
         "wearType": wearType,
         "wearColor": wearColor,
         "wearTotal": wearTotal,
-       "serviceType": serviceType,
+        "serviceType": serviceType,
+        "description": description,
         "price": price.toMap(),
+      };
+}
+
+class CartModel {
+  CartModel({
+    required this.cart,
+  });
+
+  final List<UserWear> cart;
+
+  factory CartModel.fromMap(Map<String, dynamic> json) => CartModel(
+        cart:
+            List<UserWear>.from(json["items"].map((x) => UserWear.fromMap(x))),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "items": List<dynamic>.from(cart.map((x) => x.toMap())),
       };
 }

@@ -12,11 +12,15 @@ class ConfirmDeductView extends StatelessWidget {
   final double amount;
   final int deliveryFee;
   final bool isCartOrder;
+  final bool? isSingleCartOrder;
+  final int? singleOrderIndex;
   const ConfirmDeductView(
       {Key? key,
       required this.amount,
       required this.deliveryFee,
-      required this.isCartOrder})
+      required this.isCartOrder,
+      this.isSingleCartOrder = false,
+      this.singleOrderIndex})
       : super(key: key);
 
   @override
@@ -31,6 +35,7 @@ class ConfirmDeductView extends StatelessWidget {
         appBar: CustomAppBar(
           text: 'Checkout',
         ),
+        scaffoldKey: _scaffoldKey,
         builder: (_, size) {
           return SizedBox(
             height: size.height,
@@ -66,12 +71,13 @@ class ConfirmDeductView extends StatelessWidget {
                     isCartOrder
                         ? await cartVM.processOrder(
                             deliveryFee: deliveryFee,
+                            isSingleOrder: isSingleCartOrder!,
+                            index: singleOrderIndex,
                             totalPrice: cartVM.totalPrice,
                             scaffoldKey: _scaffoldKey)
                         : await laundryVM.processOrder(
                             deliveryFee: deliveryFee,
                             scaffoldKey: _scaffoldKey);
-                    locator<NavigationHandler>().popAndPushNamed(homeViewRoute);
                   },
                   color: Palette.lightGreen,
                 ),

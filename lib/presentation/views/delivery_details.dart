@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,8 +8,12 @@ import 'package:volt/utils/utils.dart';
 class DeliveryDetailsView extends StatefulWidget {
   final int numberOfWears;
   final bool isCartOrder;
+  final bool? isSingleCartOrder;
+  final int? singleOrderIndex;
   const DeliveryDetailsView(
-      {Key? key, required this.numberOfWears, required this.isCartOrder})
+      {Key? key, required this.numberOfWears, required this.isCartOrder,
+      this.isSingleCartOrder = false,
+      this.singleOrderIndex})
       : super(key: key);
 
   @override
@@ -36,6 +39,7 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
         appBar: CustomAppBar(
           text: 'Checkout',
         ),
+        scaffoldKey: _scaffoldKey,
         builder: (_, size) {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -365,6 +369,8 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                             deliveryFee: _deliveryFee,
                             scaffoldKey: _scaffoldKey,
                             amount: _total,
+                            isSingleCartOrder: widget.isSingleCartOrder,
+                            singleOrderIndex: widget.singleOrderIndex
                           )
                         : await laundryVM.transactionInit(
                             email: profileVM.email!,

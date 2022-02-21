@@ -10,13 +10,15 @@ import 'package:volt/utils/utils.dart';
 class CartItemContainer extends StatefulWidget {
   final UserWear userWear;
   final ClothType clothType;
-  final VoidCallback? onTap;
-  const CartItemContainer({
-    Key? key,
-    required this.userWear,
-    required this.clothType,
-    this.onTap,
-  }) : super(key: key);
+  final VoidCallback? onDelete;
+  final int singleOrderIndex;
+  const CartItemContainer(
+      {Key? key,
+      required this.userWear,
+      required this.clothType,
+      this.onDelete,
+      required this.singleOrderIndex})
+      : super(key: key);
 
   @override
   _CartItemContainerState createState() => _CartItemContainerState();
@@ -25,18 +27,6 @@ class CartItemContainer extends StatefulWidget {
 class _CartItemContainerState extends State<CartItemContainer> {
   String selectedValue = 'Men';
   int _numberOfClothes = 0;
-
-  void _incrementCloth() {
-    setState(() {
-      _numberOfClothes++;
-    });
-  }
-
-  void _decrementCloth() {
-    setState(() {
-      _numberOfClothes == 0 ? null : _numberOfClothes--;
-    });
-  }
 
   @override
   void initState() {
@@ -52,21 +42,30 @@ class _CartItemContainerState extends State<CartItemContainer> {
       endActionPane:
           ActionPane(motion: const ScrollMotion(), extentRatio: .3, children: [
         InkWell(
-          onTap: widget.onTap ?? widget.onTap,
+          onTap: widget.onDelete ?? widget.onDelete,
           child: Container(
               height: 30.h,
               width: 30.h,
               margin: EdgeInsets.only(left: 15.w),
               decoration: const BoxDecoration(
                   color: Colors.red, shape: BoxShape.circle),
-              child: Icon(Icons.close,
-                  color: Theme.of(context).primaryColorLight, size: 20.h)),
+              child: cartVM.loading
+                  ? const CircularProgressIndicator(
+                      color: Colors.white,
+                    )
+                  : Icon(Icons.close,
+                      color: Theme.of(context).primaryColorLight, size: 20.h)),
         )
       ]),
       child: InkWell(
         onTap: () {
-          cartVM.navigateToRoute(deliveryDetailsViewRoute,
-              DeliveryDetailsArgs(numberOfWears: widget.userWear.wearTotal));
+          cartVM.navigateToRoute(
+              deliveryDetailsViewRoute,
+              DeliveryDetailsArgs(
+                  numberOfWears: widget.userWear.wearTotal,
+                  isCartOrder: true,
+                  isSingleCartOrder: true,
+                  singleOrderIndex: widget.singleOrderIndex));
         },
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 10.h),
@@ -204,6 +203,9 @@ class _CartItemContainerState extends State<CartItemContainer> {
                             (e) => Container(
                               width: 11.h,
                               decoration: BoxDecoration(
+                                border: e == 0xffffffff
+                                    ? Border.all(color: Colors.black)
+                                    : null,
                                 shape: BoxShape.circle,
                                 color: Color(e),
                               ),

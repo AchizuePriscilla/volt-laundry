@@ -21,18 +21,19 @@ class LaundryDetails extends StatefulWidget {
 
 class _LaundryDetailsState extends State<LaundryDetails> {
   final List<int> colors = <int>[
+    0xffffffff,
+    0xff000000,
     0xffff9800,
     0xffffeb3b,
     0xff4caf50,
     0xff9c27b0,
     0xfff44336,
     0xff2196f3,
-    0xff2196f3,
-    0xffffffff,
-    0xff000000,
     0xff8bc34a,
   ];
 
+  final TextEditingController _descriptionController = TextEditingController();
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   List<int> selectedColors = <int>[];
 
   String getCurrency() {
@@ -63,6 +64,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
 
     return ResponsiveWidget(
         resizeToAvoidBottomInset: true,
+        scaffoldKey: _scaffoldKey,
         appBar: AppBar(
           toolbarHeight: 70.h,
           backgroundColor: Colors.transparent,
@@ -236,6 +238,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                     const CustomSpacer(flex: 4),
                     TextField(
                       maxLines: 7,
+                      controller: _descriptionController,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(
                           borderSide: BorderSide(
@@ -255,10 +258,15 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                     ),
                     Button(
                       text: 'Add to cart',
-                      onPressed: () {
+                      loading: context.watch<CartVM>().loading,
+                      onPressed: () async {
                         if (_numberOfClothes != 0 &&
                             selectedColors.isNotEmpty) {
-                          context.read<CartVM>().addToCart(
+                          await context.read<CartVM>().addToCart(
+                              scaffoldKey: _scaffoldKey,
+                              description: _descriptionController.text.isEmpty
+                                  ? ''
+                                  : _descriptionController.text,
                               clothType: widget.clothType,
                               wearColor: selectedColors,
                               wearTotal: _numberOfClothes,
@@ -294,6 +302,9 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                               selectedColors.isNotEmpty) {
                             laundryVM.updateValues(
                                 clothType: widget.clothType,
+                                description: _descriptionController.text.isEmpty
+                                    ? ''
+                                    : _descriptionController.text,
                                 total: _numberOfClothes * 50,
                                 colors: selectedColors,
                                 serviceType: widget.serviceType);

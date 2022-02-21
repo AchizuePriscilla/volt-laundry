@@ -6,7 +6,6 @@ import 'package:volt/models/navigation/laundry_details_args.dart';
 import 'package:volt/models/order_history_model.dart' as order_history;
 import 'package:volt/models/process_order_model.dart';
 import 'package:volt/models/user_model.dart';
-import 'package:volt/presentation/shared/snackbar.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
 
@@ -26,6 +25,7 @@ class LaundryVM extends BaseViewModel {
   void updateValues(
       {required ClothType clothType,
       required int total,
+      required String description,
       required ServiceType serviceType,
       required List<int> colors}) {
     _price = DeliveryFee(currency: 'VLTCOIN', amount: total);
@@ -33,6 +33,7 @@ class LaundryVM extends BaseViewModel {
     userWears.add(
       UserWear(
         price: _price,
+        description: description,
         wearColor: _colors,
         wearType: getDesc(clothType),
         wearTotal: total,
@@ -146,7 +147,6 @@ class LaundryVM extends BaseViewModel {
   void navigateToRoute(String route, {dynamic args}) {
     navigationHandler.pushNamed(route, arg: args);
   }
-  
 
   List<order_history.Order> get orderHistory {
     try {
@@ -195,12 +195,17 @@ class LaundryVM extends BaseViewModel {
         log("PaymentRef: ${_paymentRef.toString()}");
         navigationHandler.pushNamed(
           confirmDeductViewRoute,
-          arg: ConfirmDeductArgs(amount: amount, deliveryFee: deliveryFee, isCartOrder: false),
+          arg: ConfirmDeductArgs(
+              amount: amount, deliveryFee: deliveryFee, isCartOrder: false),
         );
       } else {
         //show error messagge
         log('message: ${res.error!.message.toString()}');
-        showSnackbar("Error", res.error!.message, Colors.red, scaffoldKey);
+         dialogHandler.showDialog(
+            contentType: DialogContentType.error,
+            message: res.error!.message,
+            autoDismiss: true,
+            title: "Error");
       }
       toggleLoading(false);
     } catch (e) {
@@ -232,17 +237,21 @@ class LaundryVM extends BaseViewModel {
       );
       if (res.success) {
         userWears.clear();
-        dialogHandler.showDialog(
+         dialogHandler.showDialog(
             contentType: DialogContentType.success,
-            title: 'Success',
-            message: 'Order placed successfully',
-            autoDismiss: true);
-        Future.delayed(const Duration(seconds: 3), () {
+            autoDismiss: true,
+            title: "Success",
+            message: "Order Placed Successfully");
+        Future.delayed(const Duration(seconds: 2), () {
           navigationHandler.pushNamed(homeViewRoute);
         });
       } else {
         log(res.error!.message);
-        showSnackbar("Error", res.error!.message, Colors.red, scaffoldKey);
+         dialogHandler.showDialog(
+            contentType: DialogContentType.error,
+            message: res.error!.message,
+            autoDismiss: true,
+            title: "Error");
       }
 
       toggleLoading(false);

@@ -2,7 +2,6 @@ import 'package:volt/utils/utils.dart';
 import 'base_view_model.dart';
 
 class SplashScreenVM extends BaseViewModel {
-
   ///Handles navigation from SplashScreenView on app start
   Future<void> handleNavigation() async {
     await Future.delayed(const Duration(seconds: 2)).then((value) async {
@@ -11,6 +10,7 @@ class SplashScreenVM extends BaseViewModel {
           //check if user is logged in
           if (token != null && token.isNotEmpty) {
             //if user is logged in,
+            getUser();
             navigationHandler.pushReplacementNamed(homeViewRoute);
           } else {
             //#beginning of user not logged in flow
@@ -32,5 +32,13 @@ class SplashScreenVM extends BaseViewModel {
         },
       );
     });
+  }
+
+  Future<void> getUser() async {
+    try {
+      await authService.getUser();
+    } catch (e) {
+      AppLogger.logger.d(e);
+    }
   }
 }

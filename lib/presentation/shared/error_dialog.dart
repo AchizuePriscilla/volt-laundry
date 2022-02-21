@@ -34,7 +34,7 @@ class ErrorDialog extends StatelessWidget {
         }
       },
       child: Material(
-        color: Theme.of(context).primaryColorLight.withOpacity(.75),
+        color: Colors.white,
         elevation: 10,
         child: SizedBox(
           height: height,
@@ -46,35 +46,39 @@ class ErrorDialog extends StatelessWidget {
                 key: dialogContainerKey,
                 constraints: BoxConstraints(
                     minWidth: MediaQuery.of(context).size.width * .6,
-                    minHeight: MediaQuery.of(context).size.height * .4),
+                    minHeight: MediaQuery.of(context).size.height * .35),
                 margin: EdgeInsets.symmetric(horizontal: dialogMargin),
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).dialogTheme.backgroundColor,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(30.w),
                 ),
                 child: Column(
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                        padding: EdgeInsets.all(20.h),
-                        height: 160.w,
-                        width: 150.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.w),
-                          color: Theme.of(context).primaryColorLight,
-                        ),
-                        child: Image.asset(
-                            'assets/images/${request.imagePath}.png')),
+                      alignment: Alignment.topCenter,
+                      height: 40.h,
+                      width: 40.h,
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child:
+                            Icon(Icons.clear, size: 20.h, color: Colors.white),
+                      ),
+                    ),
                     const CustomSpacer(
                       flex: 3,
                     ),
                     Text(
                       request.message,
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                          fontSize: 24.sp,
+                          fontSize: 20.sp,
                           fontWeight: FontWeight.w700,
-                          color: Theme.of(context).primaryColorLight),
+                          color: Palette.blackColor),
                     ),
                     const CustomSpacer(
                       flex: 3,
@@ -84,7 +88,7 @@ class ErrorDialog extends StatelessWidget {
                       child: Button(
                         onPressed: () => dismissDialog(false),
                         text: request.buttonText,
-                        color: Palette.lightGreen,
+                        color: Colors.red,
                         isRounded: true,
                       ),
                     )

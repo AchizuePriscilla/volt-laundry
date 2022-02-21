@@ -47,6 +47,8 @@ class RouteGenerator {
           return _getPageRoute(DeliveryDetailsView(
             numberOfWears: deliveryDetailsArgs.numberOfWears,
             isCartOrder: deliveryDetailsArgs.isCartOrder!,
+            isSingleCartOrder: deliveryDetailsArgs.isSingleCartOrder,
+            singleOrderIndex: deliveryDetailsArgs.singleOrderIndex,
           ));
         }
         return _getPageRoute(
@@ -78,6 +80,8 @@ class RouteGenerator {
             amount: confirmDeductArgs.amount,
             deliveryFee: confirmDeductArgs.deliveryFee,
             isCartOrder: confirmDeductArgs.isCartOrder,
+            isSingleCartOrder: confirmDeductArgs.isSingleCartOrder,
+            singleOrderIndex: confirmDeductArgs.singleOrderIndex,
           ));
         }
         return _getPageRoute(
