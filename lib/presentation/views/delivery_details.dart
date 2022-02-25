@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:volt/models/process_order_model.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/utils/utils.dart';
@@ -8,12 +8,14 @@ import 'package:volt/utils/utils.dart';
 class DeliveryDetailsView extends StatefulWidget {
   final int numberOfWears;
   final bool isCartOrder;
-  final bool? isSingleCartOrder;
-  final int? singleOrderIndex;
+  final bool isSingleCartOrder;
+  final UserWear? userWear;
   const DeliveryDetailsView(
-      {Key? key, required this.numberOfWears, required this.isCartOrder,
-      this.isSingleCartOrder = false,
-      this.singleOrderIndex})
+      {Key? key,
+      required this.numberOfWears,
+      required this.isCartOrder,
+      this.userWear,
+      required this.isSingleCartOrder,})
       : super(key: key);
 
   @override
@@ -363,21 +365,23 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                   loading:
                       widget.isCartOrder ? cartVM.loading : rxLaundryVM.loading,
                   onPressed: () async {
-                    widget.isCartOrder
-                        ? await cartVM.transactionInit(
+                    widget.isCartOrder && widget.isSingleCartOrder
+                        ? await cartVM.singleTransactionInit(
                             email: profileVM.email!,
-                            deliveryFee: _deliveryFee,
-                            scaffoldKey: _scaffoldKey,
                             amount: _total,
-                            isSingleCartOrder: widget.isSingleCartOrder,
-                            singleOrderIndex: widget.singleOrderIndex
-                          )
-                        : await laundryVM.transactionInit(
-                            email: profileVM.email!,
                             deliveryFee: _deliveryFee,
-                            scaffoldKey: _scaffoldKey,
-                            amount: _total,
-                          );
+                            userWear: widget.userWear!)
+                        : widget.isCartOrder
+                            ? await cartVM.transactionInit(
+                                email: profileVM.email!,
+                                deliveryFee: _deliveryFee,
+                                amount: _total,)
+                            : await laundryVM.transactionInit(
+                                email: profileVM.email!,
+                                deliveryFee: _deliveryFee,
+                                scaffoldKey: _scaffoldKey,
+                                amount: _total,
+                              );
                   }),
               const CustomSpacer(flex: 4),
             ]),

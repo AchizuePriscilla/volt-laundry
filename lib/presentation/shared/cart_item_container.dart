@@ -65,7 +65,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
                   numberOfWears: widget.userWear.wearTotal,
                   isCartOrder: true,
                   isSingleCartOrder: true,
-                  singleOrderIndex: widget.singleOrderIndex));
+                  userWear: widget.userWear));
         },
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 10.h),

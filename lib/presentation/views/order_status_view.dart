@@ -61,10 +61,12 @@ class _OrderStatusViewState extends State<OrderStatusView> {
                                 ? const NoLaundryView()
                                 : ListView.builder(
                                     itemBuilder: (context, index) {
-                                      context
-                                          .read<LaundryVM>()
-                                          .getDriverDetails(
-                                              orders[index].assignedTo);
+                                      if (orders[index].status != "PLACED") {
+                                        context
+                                            .read<LaundryVM>()
+                                            .getDriverDetails(
+                                                orders[index].assignedTo);
+                                      }
                                       return OrderStatusDropdown(
                                         onTap: () {
                                           setState(() {

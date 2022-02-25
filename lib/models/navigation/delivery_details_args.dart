@@ -1,9 +1,11 @@
+import 'package:volt/models/process_order_model.dart';
+
 class DeliveryDetailsArgs {
   final int numberOfWears;
   final bool? isCartOrder;
-  final bool? isSingleCartOrder;
-  final int? singleOrderIndex;
+  final bool isSingleCartOrder;
+  final UserWear? userWear;
   DeliveryDetailsArgs({required this.numberOfWears, this.isCartOrder = false,
-      this.isSingleCartOrder = false,
-      this.singleOrderIndex});
+      required this.isSingleCartOrder,
+      this.userWear,});
 }

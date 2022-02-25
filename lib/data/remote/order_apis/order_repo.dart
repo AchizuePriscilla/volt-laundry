@@ -12,4 +12,5 @@ abstract class OrderRepo {
   Future<GetCartResponse> getUserCart();
   Future<GeneralResponse> addToCart(UserWear request);
   Future<GeneralResponse> deleteFromCart(UserWear request);
+  Future<GeneralResponse> clearCart();
 }

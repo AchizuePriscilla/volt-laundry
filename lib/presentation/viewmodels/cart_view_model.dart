@@ -122,7 +122,9 @@ class CartVM extends BaseViewModel {
           serviceType: getServiceType(serviceType),
         ),
       );
-      if (!res.success) {
+      if (res.success) {
+        navigationHandler.popAndPushNamed(cartViewRoute);
+      } else {
         dialogHandler.showDialog(
             contentType: DialogContentType.error,
             message: res.error!.message,
@@ -147,12 +149,21 @@ class CartVM extends BaseViewModel {
     }
   }
 
+  Future<void> clearCart() async {
+    try {
+      log('clearing cart');
+      await orderService.clearCart();
+      log('cleared');
+      notifyListeners();
+    } catch (e) {
+      AppLogger.logger.d(e);
+    }
+  }
+
   Future<void> deleteFromCart(UserWear userWear) async {
     try {
-      if (loading) return;
       toggleLoading(true);
       await orderService.deleteFromCart(userWear);
-      getUserCart();
       notifyListeners();
       toggleLoading(false);
     } catch (e) {
@@ -161,13 +172,11 @@ class CartVM extends BaseViewModel {
     }
   }
 
-  Future<void> transactionInit(
-      {required String email,
-      required double amount,
-      required int deliveryFee,
-      bool? isSingleCartOrder = false,
-      int? singleOrderIndex,
-      required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
+  Future<void> transactionInit({
+    required String email,
+    required double amount,
+    required int deliveryFee,
+  }) async {
     try {
       if (loading) return;
       toggleLoading(true);
@@ -184,8 +193,7 @@ class CartVM extends BaseViewModel {
               amount: amount,
               deliveryFee: deliveryFee,
               isCartOrder: true,
-              singleOrderIndex: singleOrderIndex,
-              isSingleCartOrder: isSingleCartOrder),
+              isSingleCartOrder: false),
         );
       } else {
         //show error messagge
@@ -203,12 +211,55 @@ class CartVM extends BaseViewModel {
     }
   }
 
-  Future<void> processOrder(
-      {required int deliveryFee,
-      required int totalPrice,
-      required bool isSingleOrder,
-      int? index,
-      required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
+  Future<void> abstractDeleteFromCart(UserWear userWear) async {
+    log("deleting from cart");
+    await deleteFromCart(userWear);
+  }
+
+  Future<void> singleTransactionInit(
+      {required String email,
+      required double amount,
+      required int deliveryFee,
+      required UserWear userWear}) async {
+    try {
+      if (loading) return;
+      toggleLoading(true);
+      var res = await walletService.transactionInit(
+        TransactionInitRequest(email: email, amount: amount),
+      );
+      if (res.success) {
+        _paymentRef = PaymentRef.fromMap({'ref': res.reference});
+
+        log("PaymentRef: ${_paymentRef.toString()}");
+        navigationHandler.pushNamed(
+          confirmDeductViewRoute,
+          arg: ConfirmDeductArgs(
+              amount: amount,
+              deliveryFee: deliveryFee,
+              isCartOrder: true,
+              isSingleCartOrder: true,
+              userWear: userWear),
+        );
+      } else {
+        //show error messagge
+        log('message: ${res.error!.message.toString()}');
+        dialogHandler.showDialog(
+            contentType: DialogContentType.error,
+            message: res.error!.message,
+            autoDismiss: true,
+            title: "Error");
+      }
+      toggleLoading(false);
+    } catch (e) {
+      AppLogger.logger.d(e);
+      toggleLoading(false);
+    }
+  }
+
+  Future<void> processSingleOrder({
+    required int deliveryFee,
+    required UserWear userWear,
+  }) async {
     try {
       if (loading) return;
       toggleLoading(true);
@@ -216,11 +267,8 @@ class CartVM extends BaseViewModel {
         ProcessOrderModel(
             deliveryMode: _deliveryMethod.name.toUpperCase(),
             userWears: _cartModel.cart,
-            price: DeliveryFee(
-                amount: isSingleOrder
-                    ? _cartModel.cart[index!].price.amount
-                    : totalPrice,
-                currency: 'VLTCOIN'),
+            price:
+                DeliveryFee(amount: userWear.price.amount, currency: 'VLTCOIN'),
             deliveryFee: DeliveryFee(amount: deliveryFee, currency: 'VLTCOIN'),
             paymentMethod: 'COIN',
             origin: CurrentLocation(address: 'UNN', lat: 6.8645, lng: 7.4083),
@@ -232,7 +280,58 @@ class CartVM extends BaseViewModel {
             paymentRef: _paymentRef),
       );
       if (res.success) {
-        // _userWears.clear();
+        await deleteFromCart(userWear);
+        await getUserCart();
+        notifyListeners();
+        dialogHandler.showDialog(
+            contentType: DialogContentType.success,
+            autoDismiss: true,
+            title: "Success",
+            message: "Order Placed Successfully");
+        Future.delayed(const Duration(seconds: 2), () {
+          navigationHandler.pushNamed(homeViewRoute);
+        });
+      } else {
+        log(res.error!.message);
+        dialogHandler.showDialog(
+            contentType: DialogContentType.error,
+            message: res.error!.message,
+            autoDismiss: false,
+            title: "Error");
+      }
+
+      toggleLoading(false);
+    } catch (e) {
+      AppLogger.logger.d(e);
+      toggleLoading(false);
+    }
+  }
+
+  Future<void> processOrder(
+      {required int deliveryFee, required int totalPrice}) async {
+    try {
+      if (loading) return;
+      toggleLoading(true);
+      var res = await orderService.processOrder(
+        ProcessOrderModel(
+            deliveryMode: _deliveryMethod.name.toUpperCase(),
+            userWears: _cartModel.cart,
+            price: DeliveryFee(amount: totalPrice, currency: 'VLTCOIN'),
+            deliveryFee: DeliveryFee(amount: deliveryFee, currency: 'VLTCOIN'),
+            paymentMethod: 'COIN',
+            origin: CurrentLocation(address: 'UNN', lat: 6.8645, lng: 7.4083),
+            destination: CurrentLocation(
+                address: 'Volt factory', lat: 7.4083, lng: 7.4083),
+            currentLocation:
+                CurrentLocation(address: 'UNN', lat: 6.8645, lng: 7.4083),
+            status: 'PLACED',
+            paymentRef: _paymentRef),
+      );
+
+      if (res.success) {
+        await clearCart();
+        await getUserCart();
+        notifyListeners();
         dialogHandler.showDialog(
             contentType: DialogContentType.success,
             autoDismiss: true,

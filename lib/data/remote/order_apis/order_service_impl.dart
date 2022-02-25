@@ -47,4 +47,10 @@ class OrderServiceImpl extends OrderService {
     var res = await orderRepo.deleteFromCart(request);
     return res;
   }
+
+  @override
+  Future<GeneralResponse> clearCart() async {
+    var res = await orderRepo.clearCart();
+    return res;
+  }
 }

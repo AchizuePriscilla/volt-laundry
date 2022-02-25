@@ -3,24 +3,25 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/handlers/navigation_handler.dart';
+import 'package:volt/models/process_order_model.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
-import 'package:volt/utils/constants.dart';
-import 'package:volt/utils/locator.dart';
 
 class ConfirmDeductView extends StatelessWidget {
   final double amount;
   final int deliveryFee;
   final bool isCartOrder;
-  final bool? isSingleCartOrder;
+  final bool isSingleCartOrder;
   final int? singleOrderIndex;
+  final UserWear? userWear;
   const ConfirmDeductView(
       {Key? key,
       required this.amount,
       required this.deliveryFee,
       required this.isCartOrder,
-      this.isSingleCartOrder = false,
-      this.singleOrderIndex})
+      required this.isSingleCartOrder,
+      this.singleOrderIndex,
+      this.userWear})
       : super(key: key);
 
   @override
@@ -68,16 +69,18 @@ class ConfirmDeductView extends StatelessWidget {
                   text: 'Confirm',
                   loading: isCartOrder ? rxcartVM.loading : rxLaundryVM.loading,
                   onPressed: () async {
-                    isCartOrder
-                        ? await cartVM.processOrder(
-                            deliveryFee: deliveryFee,
-                            isSingleOrder: isSingleCartOrder!,
-                            index: singleOrderIndex,
-                            totalPrice: cartVM.totalPrice,
-                            scaffoldKey: _scaffoldKey)
-                        : await laundryVM.processOrder(
-                            deliveryFee: deliveryFee,
-                            scaffoldKey: _scaffoldKey);
+                    log('Is Single order: $isSingleCartOrder');
+                    isCartOrder && isSingleCartOrder
+                        ? cartVM.processSingleOrder(
+                            deliveryFee: deliveryFee, userWear: userWear!)
+                        : isCartOrder
+                            ? await cartVM.processOrder(
+                                deliveryFee: deliveryFee,
+                                totalPrice: cartVM.totalPrice,
+                              )
+                            : await laundryVM.processOrder(
+                                deliveryFee: deliveryFee,
+                                scaffoldKey: _scaffoldKey);
                   },
                   color: Palette.lightGreen,
                 ),

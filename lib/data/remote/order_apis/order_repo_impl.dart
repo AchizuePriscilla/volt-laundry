@@ -13,6 +13,7 @@ class OrderRepoImpl extends BaseApi implements OrderRepo {
   static const order = 'order';
   static const driver = 'logistics/';
   static const cart = 'cart';
+  static const clear = 'cart/clear';
 
   @override
   Future<GetOrderHistoryResponse> getOrderHistory() async {
@@ -47,7 +48,13 @@ class OrderRepoImpl extends BaseApi implements OrderRepo {
 
   @override
   Future<GeneralResponse> deleteFromCart(UserWear request) async {
-    var response = await delete(cart, data: request.toMap());
+    var response = await delete(cart, data: {"item": request.toMap()});
+    return GeneralResponse.fromMap(response);
+  }
+
+  @override
+  Future<GeneralResponse> clearCart() async {
+    var response = await delete(clear);
     return GeneralResponse.fromMap(response);
   }
 }

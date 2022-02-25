@@ -53,12 +53,11 @@ class _CartViewState extends State<CartView> {
                                       return CartItemContainer(
                                         clothType: cartVM.getClothTypeEnum(
                                             items[index].wearType),
-                                            singleOrderIndex: index,
+                                        singleOrderIndex: index,
                                         userWear: items[index],
                                         onDelete: () async {
-                                          // await cartVM
-                                          //     .deleteFromCart(items[index]);
-                                          items.remove(items[index]);
+                                          await cartVM
+                                              .deleteFromCart(items[index]);
                                           setState(() {});
                                         },
                                       );
@@ -76,6 +75,7 @@ class _CartViewState extends State<CartView> {
                                             cartVM.navigateToRoute(
                                                 deliveryDetailsViewRoute,
                                                 DeliveryDetailsArgs(
+                                                  isSingleCartOrder: false,
                                                     numberOfWears:
                                                         cartVM.totalUserWears,
                                                     isCartOrder: true));

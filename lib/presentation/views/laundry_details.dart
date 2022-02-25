@@ -272,8 +272,6 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                               wearTotal: _numberOfClothes,
                               amount: _numberOfClothes * 50,
                               serviceType: widget.serviceType);
-                          locator<NavigationHandler>()
-                              .popAndPushNamed(cartViewRoute);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -310,6 +308,7 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                                 serviceType: widget.serviceType);
                             laundryVM.navigateToRoute(deliveryDetailsViewRoute,
                                 args: DeliveryDetailsArgs(
+                                    isSingleCartOrder: false,
                                     numberOfWears: _numberOfClothes));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
