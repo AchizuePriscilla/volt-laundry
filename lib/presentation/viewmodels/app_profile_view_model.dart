@@ -42,7 +42,7 @@ class AppProfileVM extends BaseViewModel {
 
   String? get timeOfCreation {
     try {
-      return _user.timeOfCreation!;
+      return _user.timeOfCreation.toString();
     } catch (e) {
       return '';
     }

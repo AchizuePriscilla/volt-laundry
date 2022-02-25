@@ -151,9 +151,7 @@ class CartVM extends BaseViewModel {
 
   Future<void> clearCart() async {
     try {
-      log('clearing cart');
       await orderService.clearCart();
-      log('cleared');
       notifyListeners();
     } catch (e) {
       AppLogger.logger.d(e);
@@ -211,10 +209,6 @@ class CartVM extends BaseViewModel {
     }
   }
 
-  Future<void> abstractDeleteFromCart(UserWear userWear) async {
-    log("deleting from cart");
-    await deleteFromCart(userWear);
-  }
 
   Future<void> singleTransactionInit(
       {required String email,

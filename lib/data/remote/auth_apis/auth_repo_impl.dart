@@ -46,7 +46,7 @@ class AuthRepositoryImpl extends BaseApi implements AuthRepository {
 
   @override
   Future<GetUserResponse> editUser(SignUpRequest request) async {
-    var res = await patch(registerUser, data: request.toMap());
+    var res = await patch(user, data: request.toMap());
     return GetUserResponse.fromMap(res);
   }
 }

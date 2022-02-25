@@ -59,6 +59,9 @@ class UserModel extends Equatable {
       'id': id,
       'email': email,
       'phone': phoneNumber,
+      'password': password,
+      'createdAt': timeOfCreation,
+      'updatedAt': timeOfUpdate,
       'name': name,
       'avatar': avatar,
       'location': {
@@ -81,6 +84,7 @@ class UserModel extends Equatable {
         name,
         email,
         phoneNumber,
+        password,
         address,
         country,
         state,
