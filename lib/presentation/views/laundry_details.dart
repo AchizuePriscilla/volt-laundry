@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:volt/handlers/handlers.dart';
 import 'package:volt/models/navigation/delivery_details_args.dart';
 import 'dart:io';
 import 'package:volt/presentation/shared/shared.dart';
@@ -33,7 +32,6 @@ class _LaundryDetailsState extends State<LaundryDetails> {
   ];
 
   final TextEditingController _descriptionController = TextEditingController();
-  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   List<int> selectedColors = <int>[];
 
   String getCurrency() {
@@ -64,7 +62,6 @@ class _LaundryDetailsState extends State<LaundryDetails> {
 
     return ResponsiveWidget(
         resizeToAvoidBottomInset: true,
-        scaffoldKey: _scaffoldKey,
         appBar: AppBar(
           toolbarHeight: 70.h,
           backgroundColor: Colors.transparent,
@@ -263,7 +260,6 @@ class _LaundryDetailsState extends State<LaundryDetails> {
                         if (_numberOfClothes != 0 &&
                             selectedColors.isNotEmpty) {
                           await context.read<CartVM>().addToCart(
-                              scaffoldKey: _scaffoldKey,
                               description: _descriptionController.text.isEmpty
                                   ? ''
                                   : _descriptionController.text,

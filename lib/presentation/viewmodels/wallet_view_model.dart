@@ -122,8 +122,7 @@ class WalletVM extends BaseViewModel {
   }
 
   Future<void> creditVTCWallet(
-      {required double amount,
-      required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
+      {required double amount,}) async {
     try {
       if (loading) return;
       toggleLoading(true);
@@ -175,8 +174,7 @@ class WalletVM extends BaseViewModel {
       {required String email,
       required double amount,
       required BuildContext context,
-      required PaystackPlugin paystackPlugin,
-      required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
+      required PaystackPlugin paystackPlugin}) async {
     try {
       if (loading) return;
       toggleLoading(true);

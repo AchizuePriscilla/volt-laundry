@@ -12,7 +12,6 @@ class FundVTCWalletView extends StatefulWidget {
 
 class _FundVTCWalletViewState extends State<FundVTCWalletView> {
   final _amountController = TextEditingController();
-  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   bool buttonActive = false;
   late int _amount;
   void onListen() {
@@ -43,7 +42,6 @@ class _FundVTCWalletViewState extends State<FundVTCWalletView> {
   Widget build(BuildContext context) {
     var rxAppProfileVM = context.watch<AppProfileVM>();
     return ResponsiveWidget(
-      scaffoldKey: _scaffoldKey,
       builder: (context, size) {
       return SizedBox(
         height: size.height,
@@ -126,8 +124,7 @@ class _FundVTCWalletViewState extends State<FundVTCWalletView> {
                           context
                               .read<WalletVM>()
                               .creditVTCWallet(
-                                  amount: _amount.toDouble(),
-                                  scaffoldKey: _scaffoldKey)
+                                  amount: _amount.toDouble())
                               .then((value) => _amountController.clear());
                         },
                         color: Palette.lightGreen),

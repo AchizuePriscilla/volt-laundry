@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/handlers/bottom_sheet_handler.dart';
@@ -19,7 +17,6 @@ class _EditProfileViewState extends State<EditProfileView> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   @override
   void initState() {
     context.read<AppProfileVM>().downloadUrl = '';
@@ -33,7 +30,6 @@ class _EditProfileViewState extends State<EditProfileView> {
     var signUpVM = context.read<SignUpViewModel>();
     return ResponsiveWidget(
         resizeToAvoidBottomInset: true,
-        scaffoldKey: _scaffoldKey,
         builder: (_, size) {
           return Container(
               padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -185,8 +181,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                     phoneNumber: phoneNumberController.text,
                                     address: addressController.text,
                                     latitude: profileVM.latitude!,
-                                    longitude: profileVM.longitude!,
-                                    scaffoldKey: _scaffoldKey);
+                                    longitude: profileVM.longitude!);
                               }
                             }),
                       ),

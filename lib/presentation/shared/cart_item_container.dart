@@ -26,12 +26,10 @@ class CartItemContainer extends StatefulWidget {
 
 class _CartItemContainerState extends State<CartItemContainer> {
   String selectedValue = 'Men';
-  int _numberOfClothes = 0;
 
   @override
   void initState() {
     super.initState();
-    _numberOfClothes = widget.userWear.wearTotal;
   }
 
   @override

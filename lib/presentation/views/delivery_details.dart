@@ -25,8 +25,6 @@ class DeliveryDetailsView extends StatefulWidget {
 class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
   DeliveryMethod deliveryMethod = DeliveryMethod.pickup;
 
-  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
-
   @override
   Widget build(BuildContext context) {
     var laundryVM = context.read<LaundryVM>();
@@ -41,7 +39,6 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
         appBar: CustomAppBar(
           text: 'Checkout',
         ),
-        scaffoldKey: _scaffoldKey,
         builder: (_, size) {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -379,7 +376,6 @@ class _DeliveryDetailsViewState extends State<DeliveryDetailsView> {
                             : await laundryVM.transactionInit(
                                 email: profileVM.email!,
                                 deliveryFee: _deliveryFee,
-                                scaffoldKey: _scaffoldKey,
                                 amount: _total,
                               );
                   }),

@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:volt/models/api/auth_requests.dart';
 import 'package:volt/models/user_model.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
@@ -164,8 +163,7 @@ class AppProfileVM extends BaseViewModel {
       required String phoneNumber,
       required String address,
       required double latitude,
-      required double longitude,
-      required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
+      required double longitude}) async {
     try {
       if (loading) return;
       toggleLoading(true);

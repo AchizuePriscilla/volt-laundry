@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:flutter/material.dart';
 import 'package:volt/presentation/viewmodels/base_view_model.dart';
 import 'package:volt/utils/utils.dart';
 
@@ -107,8 +105,7 @@ class CartVM extends BaseViewModel {
       required int wearTotal,
       required int amount,
       required ServiceType serviceType,
-      required String description,
-      required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
+      required String description}) async {
     try {
       if (loading) return;
       toggleLoading(true);

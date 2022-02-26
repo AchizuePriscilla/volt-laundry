@@ -1,8 +1,6 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:volt/handlers/navigation_handler.dart';
 import 'package:volt/models/process_order_model.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
@@ -31,12 +29,10 @@ class ConfirmDeductView extends StatelessWidget {
     var cartVM = context.read<CartVM>();
     var rxcartVM = context.watch<CartVM>();
 
-    final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
     return ResponsiveWidget(
         appBar: CustomAppBar(
           text: 'Checkout',
         ),
-        scaffoldKey: _scaffoldKey,
         builder: (_, size) {
           return SizedBox(
             height: size.height,
@@ -79,8 +75,7 @@ class ConfirmDeductView extends StatelessWidget {
                                 totalPrice: cartVM.totalPrice,
                               )
                             : await laundryVM.processOrder(
-                                deliveryFee: deliveryFee,
-                                scaffoldKey: _scaffoldKey);
+                                deliveryFee: deliveryFee);
                   },
                   color: Palette.lightGreen,
                 ),

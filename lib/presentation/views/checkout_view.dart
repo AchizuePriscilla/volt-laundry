@@ -14,7 +14,6 @@ class CheckoutView extends StatefulWidget {
 
 class _CheckoutViewState extends State<CheckoutView> {
   final _formKey = GlobalKey<FormState>();
-  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   final paystackPlugin = PaystackPlugin();
   // final _cardNumberController = TextEditingController();
   // final _expiryMonthController = TextEditingController();
@@ -85,7 +84,6 @@ class _CheckoutViewState extends State<CheckoutView> {
     var walletVM = context.read<WalletVM>();
     return ResponsiveWidget(
         resizeToAvoidBottomInset: true,
-        scaffoldKey: _scaffoldKey,
         appBar: CustomAppBar(
           text: 'Card Payment',
         ),
@@ -251,7 +249,6 @@ class _CheckoutViewState extends State<CheckoutView> {
                                 amount: _amount.toDouble(),
                                 context: context,
                                 paystackPlugin: paystackPlugin,
-                                scaffoldKey: _scaffoldKey
                               );
                             }
                           },

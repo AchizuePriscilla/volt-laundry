@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:flutter/material.dart';
 import 'package:volt/models/api/transaction_reqests.dart';
 import 'package:volt/models/navigation/confirm_deduct_args.dart';
 import 'package:volt/models/navigation/laundry_details_args.dart';
@@ -181,8 +180,7 @@ class LaundryVM extends BaseViewModel {
   Future<void> transactionInit(
       {required String email,
       required double amount,
-      required int deliveryFee,
-      required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
+      required int deliveryFee}) async {
     try {
       if (loading) return;
       toggleLoading(true);
@@ -215,8 +213,7 @@ class LaundryVM extends BaseViewModel {
   }
 
   Future<void> processOrder(
-      {required int deliveryFee,
-      required GlobalKey<ScaffoldMessengerState>? scaffoldKey}) async {
+      {required int deliveryFee}) async {
     try {
       if (loading) return;
       toggleLoading(true);
