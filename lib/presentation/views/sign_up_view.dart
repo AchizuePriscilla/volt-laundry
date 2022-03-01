@@ -157,6 +157,9 @@ class _SignUpViewState extends State<SignUpView> {
                 CustomTextField(
                   controller: _locationController,
                   fillColor: Theme.of(context).primaryColorLight,
+                  validator: (address){
+                    return signUpVM.validateText(address);
+                  },
                   prefix: Icon(
                     Icons.pin_drop,
                     color: Theme.of(context).disabledColor.withOpacity(.6),

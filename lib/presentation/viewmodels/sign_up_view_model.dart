@@ -174,6 +174,15 @@ class SignUpViewModel extends BaseViewModel {
       if (loading) return;
 
       toggleLoading(true);
+      Geolocator.requestPermission();
+      currentPosition = await geolocatorService.getCurrentPosition();
+      latitude = currentPosition.latitude;
+      longitude = currentPosition.longitude;
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(latitude, longitude);
+      Placemark placemark = placemarks[0];
+      country = placemark.country!;
+      state = placemark.administrativeArea!;
 
       var res = await authService.signUp(
         SignUpRequest(
