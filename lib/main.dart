@@ -25,14 +25,8 @@ void main() async {
   await setupLocator(baseApi: url);
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then(
-    (value) async {
-      await SentryFlutter.init(
-        (options) {
-          options.dsn =
-              'https://ed4d40b9b74e42ef95b468b13caa4689@o1007712.ingest.sentry.io/5970772';
-        },
-        appRunner: () => runApp(const VoltApp()),
-      );
+    (value)  {
+      runApp(const VoltApp());
     },
   );
 }

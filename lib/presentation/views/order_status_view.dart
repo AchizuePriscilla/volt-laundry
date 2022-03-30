@@ -51,13 +51,13 @@ class _OrderStatusViewState extends State<OrderStatusView> {
                     future: context.watch<LaundryVM>().getOrderHistory(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        var orders = snapshot.data;
+                        var orders = snapshot.data!.reversed.toList();
                         return Expanded(
                           child: RefreshIndicator(
                             onRefresh: () async {
                               await context.read<LaundryVM>().getOrderHistory();
                             },
-                            child: orders!.isEmpty
+                            child: orders.isEmpty
                                 ? const NoLaundryView()
                                 : ListView.builder(
                                     itemBuilder: (context, index) {
@@ -129,33 +129,7 @@ class OrderStatusDropdown extends StatefulWidget {
 class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
   @override
   Widget build(BuildContext context) {
-    var latitude = context.watch<AppProfileVM>().latitude!;
-    var longitude = context.watch<AppProfileVM>().longitude!;
     UserModel? driver = context.watch<LaundryVM>().driverDetails;
-    LatLng userPosition = LatLng(latitude, longitude);
-    LatLng driverPosition = LatLng(
-        widget.order.currentLocation.lat, widget.order.currentLocation.lng);
-    Marker userPositionMarker = Marker(
-        markerId: const MarkerId('userPosition'),
-        infoWindow: const InfoWindow(title: 'My Position'),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-        position: userPosition);
-
-    Marker driverPositionMarker = Marker(
-        markerId: const MarkerId('driverPosition'),
-        infoWindow: const InfoWindow(title: 'Courier Position'),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-        position: driverPosition);
-
-    CameraPosition cameraPosition =
-        CameraPosition(target: LatLng(latitude, longitude), zoom: 13);
-
-    Polyline polyline = Polyline(
-        color: Palette.buttonColor,
-        width: 5,
-        jointType: JointType.round,
-        polylineId: const PolylineId('kPolyline'),
-        points: [userPosition, driverPosition]);
     return InkWell(
       onTap: widget.onTap,
       child: Column(
@@ -266,21 +240,16 @@ class _OrderStatusDropdownState extends State<OrderStatusDropdown> {
                 Visibility(
                   visible: widget.order.status == 'DELIVERING',
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height * .5,
-                    child: GoogleMap(
-                      mapType: MapType.terrain,
-                      initialCameraPosition: cameraPosition,
-                      trafficEnabled: true,
-                      markers: {userPositionMarker, driverPositionMarker},
-                      polylines: {polyline},
-                      onTap: (latlng) {
-                        locator<NavigationHandler>().pushNamed(
-                          mapViewRoute,
-                          arg: MapViewArgs(order: widget.order),
-                        );
-                      },
-                    ),
-                  ),
+                      height: MediaQuery.of(context).size.height * .5,
+                      child: MapWidget(
+                        order: widget.order,
+                        onTap: (latlng) {
+                          locator<NavigationHandler>().pushNamed(
+                            mapViewRoute,
+                            arg: MapViewArgs(order: widget.order),
+                          );
+                        },
+                      )),
                 ),
                 const CustomSpacer(
                   flex: 2,

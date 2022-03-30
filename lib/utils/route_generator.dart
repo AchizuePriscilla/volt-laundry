@@ -57,7 +57,7 @@ class RouteGenerator {
         final mapViewArgs = settings.arguments;
         if (mapViewArgs != null &&
             mapViewArgs is MapViewArgs) {
-          return _getPageRoute(MapView(
+          return _getPageRoute(FullMapView(
             order: mapViewArgs.order),);
         }
         return _getPageRoute(

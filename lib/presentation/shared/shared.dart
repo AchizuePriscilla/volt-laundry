@@ -25,3 +25,4 @@ export 'bottom_sheet.dart';
 export 'empty_container.dart';
 export 'error_dialog.dart';
 export 'avatar_options.dart';
+export 'map_widget.dart';

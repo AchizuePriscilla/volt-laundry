@@ -31,4 +31,4 @@ export 'fund_vtc_wallet_view.dart';
 export 'no_laundry_view.dart';
 export 'address_search_view.dart';
 export 'set_profile_picture_view.dart';
-export 'map_view.dart';
+export 'full_map_view.dart';

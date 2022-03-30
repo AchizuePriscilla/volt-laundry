@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -13,6 +14,14 @@ import 'package:volt/utils/utils.dart';
 abstract class BaseApi {
   late Dio dio;
   final apiKey = dotenv.env['API_KEY'];
+   static String getGoogleApiKey() {
+    if (Platform.isAndroid) {
+      return dotenv.env['GOOGLE_API_ANDROID']!;
+    } else if (Platform.isIOS) {
+      return dotenv.env['GOOGLE_API_IOS']!;
+    }
+    return '';
+  }
   BaseApi(String baseApi) {
     final options = BaseOptions(
         baseUrl: "https://$baseApi",

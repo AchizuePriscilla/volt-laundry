@@ -34,7 +34,7 @@ class _HistoryViewState extends State<HistoryView> {
               future: laundryVM.getOrderHistory(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  var orders = snapshot.data;
+                  var orders = snapshot.data!.reversed.toList();
                   return RefreshIndicator(
                     onRefresh: () async {
                       await laundryVM.getOrderHistory();
@@ -49,7 +49,7 @@ class _HistoryViewState extends State<HistoryView> {
                           separatorBuilder: (context, index) {
                             return const Divider();
                           },
-                          itemCount: orders!.isEmpty ? 1 : orders.length,
+                          itemCount: orders.isEmpty ? 1 : orders.length,
                           itemBuilder: (context, index) {
                             return orders.isEmpty
                                 ? const EmptyContainer(message: 'Histories')

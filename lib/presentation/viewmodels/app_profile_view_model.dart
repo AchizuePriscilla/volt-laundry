@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:location/location.dart';
 import 'package:volt/models/api/auth_requests.dart';
 import 'package:volt/models/user_model.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
@@ -14,7 +15,15 @@ class AppProfileVM extends BaseViewModel {
   String downloadUrl = '';
   File? _pickedImage;
   FirebaseStorage storage = FirebaseStorage.instance;
+  Location location = Location();
 
+  late bool _serviceEnabled;
+  late PermissionStatus _permissionGranted;
+  late LocationData _currentlocationData;
+  LocationData get currenLocation => _currentlocationData;
+  set setCurrentLocation(LocationData locationData) {
+    _currentlocationData = locationData;
+  }
   String? get email {
     try {
       return _user.email!;
@@ -206,5 +215,38 @@ class AppProfileVM extends BaseViewModel {
 
   void navigateToEditProfileView() {
     navigationHandler.pushNamed(editProfileViewRoute);
+  }
+    void fetchLocation() async {
+    try {
+      await location.getLocation().then((onValue) {
+        _currentlocationData = onValue;
+        log("location of user: ${onValue.latitude}");
+        log(onValue.latitude.toString() + "," + onValue.longitude.toString());
+      });
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+    Future<void> initLocation() async {
+    log('Location running');
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    } else if (_serviceEnabled) {
+      log('Service enabled');
+    }
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    } else if (_permissionGranted == PermissionStatus.granted) {
+      log("Location of user: ");
+      fetchLocation();
+    }
   }
 }

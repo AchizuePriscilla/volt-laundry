@@ -223,7 +223,7 @@ class _FundWalletViewState extends State<FundWalletView> {
                       future: walletVM.getWalletHistory(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          var history = snapshot.data;
+                          var history = snapshot.data!.reversed.toList();
                           return RefreshIndicator(
                             onRefresh: () async {
                               await walletVM.getWalletHistory();
@@ -239,7 +239,7 @@ class _FundWalletViewState extends State<FundWalletView> {
                               ),
                               child: ListView.builder(
                                   itemCount:
-                                      history!.isEmpty ? 1 : history.length,
+                                      history.isEmpty ? 1 : history.length,
                                   itemBuilder: (context, index) {
                                     return history.isEmpty
                                         ? const EmptyContainer(
@@ -270,7 +270,7 @@ class _FundWalletViewState extends State<FundWalletView> {
                       future: laundryVM.getOrderHistory(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          var orders = snapshot.data;
+                          var orders = snapshot.data!.reversed.toList();
                           return RefreshIndicator(
                             onRefresh: () async {
                               await laundryVM.getOrderHistory();
@@ -285,7 +285,7 @@ class _FundWalletViewState extends State<FundWalletView> {
                               ),
                               child: ListView.builder(
                                   itemCount:
-                                      orders!.isEmpty ? 1 : orders.length,
+                                      orders.isEmpty ? 1 : orders.length,
                                   itemBuilder: (context, index) {
                                     return orders.isEmpty
                                         ? const EmptyContainer(
