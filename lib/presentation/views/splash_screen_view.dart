@@ -17,7 +17,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
     super.initState();
     var appProfileVM = context.read<AppProfileVM>();
     appProfileVM.fetchUserDataFromCache();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await context.read<SplashScreenVM>().handleNavigation();
     });
   }

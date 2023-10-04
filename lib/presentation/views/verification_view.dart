@@ -38,7 +38,7 @@ class _VerificationViewState extends State<VerificationView> {
     var verificationVM = context.read<VerificationViewModel>();
     super.initState();
 
-    WidgetsBinding.instance?.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         verificationVM.startTimer();
       },
