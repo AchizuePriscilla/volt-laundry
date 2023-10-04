@@ -24,11 +24,11 @@ class MapWidget extends StatefulWidget {
 class _MapWidgetState extends State<MapWidget> {
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints = PolylinePoints();
-  Set<Marker> _markers = Set<Marker>();
+ final Set<Marker> _markers = <Marker>{};
   late LatLng currentLocation;
   late LatLng destinationLocation;
   final Set<Polyline> _polylines = <Polyline>{};
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
   Location location = Location();
   void setInitialLocation() {
     var _rxUserVM = context.read<AppProfileVM>();

@@ -48,7 +48,7 @@ class _BankTransferViewState extends State<BankTransferView> {
                         decoration: BoxDecoration(
                           color: rememberMe
                               ? Palette.buttonColor
-                              : Theme.of(context).backgroundColor,
+                              : Theme.of(context).scaffoldBackgroundColor,
                           border: Border.all(
                             color: Palette.buttonColor,
                             width: 2,

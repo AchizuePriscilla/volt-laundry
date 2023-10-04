@@ -7,7 +7,6 @@ import 'package:volt/models/user_model.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
 import 'package:volt/presentation/views/views.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:volt/utils/constants.dart';
 import 'package:volt/utils/locator.dart';
 

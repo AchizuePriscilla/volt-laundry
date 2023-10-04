@@ -43,7 +43,7 @@ class _HomeViewState extends State<HomeView> {
     appProfileVM.fetchUserDataFromCache();
     appProfileVM.getUser();
     appProfileVM.initLocation();
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       homeVM.jumpToPage(0);
     });
   }

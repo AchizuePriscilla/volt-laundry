@@ -30,11 +30,21 @@ class DefaultFirebaseOptions {
           'DefaultFirebaseOptions have not been configured for macos - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
+      case TargetPlatform.windows:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.linux:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      default:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions are not supported for this platform.',
+        );
     }
-
-    throw UnsupportedError(
-      'DefaultFirebaseOptions are not supported for this platform.',
-    );
   }
 
   static const FirebaseOptions web = FirebaseOptions(
@@ -61,7 +71,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '858082998268',
     projectId: 'volt-456cd',
     storageBucket: 'volt-456cd.appspot.com',
-    iosClientId: '858082998268-qijreua7qkg11s5bhppv60bpchnes3oj.apps.googleusercontent.com',
+    iosClientId:
+        '858082998268-qijreua7qkg11s5bhppv60bpchnes3oj.apps.googleusercontent.com',
     iosBundleId: 'com.volt.laundry',
   );
 }

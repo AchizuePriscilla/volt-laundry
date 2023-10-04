@@ -141,7 +141,7 @@ class _ImageContainer extends StatelessWidget {
     } else {
       return CircleAvatar(
         radius: isSmall ? 65.w : 88.w,
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         backgroundImage: Image.asset(
           'assets/images/empty_profile_picture.png',
           fit: BoxFit.cover,

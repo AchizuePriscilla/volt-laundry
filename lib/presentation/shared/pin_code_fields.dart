@@ -53,10 +53,10 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
           fieldHeight: 40.h,
           fieldWidth: 50.w,
           activeColor: widget.hasError
-              ? Theme.of(context).errorColor
+              ? Theme.of(context).colorScheme.error
               : Theme.of(context).primaryColor.withOpacity(.8),
           activeFillColor: widget.hasError
-              ? Theme.of(context).errorColor
+              ? Theme.of(context).colorScheme.error
               : Theme.of(context).primaryColor.withOpacity(.8),
         ),
         cursorColor: Theme.of(context).primaryColor,
