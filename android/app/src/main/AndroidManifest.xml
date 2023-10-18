@@ -5,8 +5,12 @@
         android:icon="@mipmap/ic_launcher">
          <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyDOidrCGitCm2VQmB61X-kXnb9IFKoTcnU"/>
+         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+<!-- Necessary for apps that target Android 9.0 or higher -->
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
         <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

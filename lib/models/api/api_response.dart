@@ -1,4 +1,3 @@
-
 import 'package:volt/models/api/api.dart';
 import 'package:volt/utils/utils.dart';
 
@@ -18,7 +17,7 @@ class Failure extends ApiResponse {
   factory Failure.fromMap(Map<String, dynamic> json) {
     return Failure(
       ApiErrorResponse(
-        message: getErrorMessage(json['message']),
+        message: getErrorMessage(json['']),
         type: json['data'] != null
             ? getErrorType(json['data']['errorType'])
             : ErrorType.unknown,

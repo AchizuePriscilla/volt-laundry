@@ -14,7 +14,7 @@ import 'package:volt/utils/utils.dart';
 abstract class BaseApi {
   late Dio dio;
   final apiKey = dotenv.env['API_KEY'];
-   static String getGoogleApiKey() {
+  static String getGoogleApiKey() {
     if (Platform.isAndroid) {
       return dotenv.env['GOOGLE_API_ANDROID']!;
     } else if (Platform.isIOS) {
@@ -22,6 +22,7 @@ abstract class BaseApi {
     }
     return '';
   }
+
   BaseApi(String baseApi) {
     final options = BaseOptions(
         baseUrl: "https://$baseApi",
@@ -123,7 +124,8 @@ abstract class BaseApi {
       );
 
   Future<Either<Failure, Success>> delete(path,
-          {Map<String, dynamic>? data, Map<String, dynamic> headers = const {}}) =>
+          {Map<String, dynamic>? data,
+          Map<String, dynamic> headers = const {}}) =>
       makeRequest(
         dio.delete(
           "/$path",
@@ -148,8 +150,8 @@ abstract class BaseApi {
       //check for status code that indicates expired session and log user out
       log('Status Code: ${req.statusCode.toString()}');
       if ("${req.statusCode}".startsWith('2')) {
-        if(data is! Map){
-          return Right(Success(<String, dynamic>{"data":data}));
+        if (data is! Map) {
+          return Right(Success(<String, dynamic>{"data": data}));
         }
         return Right(Success(data as Map<String, dynamic>));
       }
@@ -172,7 +174,7 @@ abstract class BaseApi {
         if (e.response?.data != null && e.response!.data is Map) {
           return Left(Failure.fromMap(e.response!.data));
         }
-        return Left(Failure(e.response?.data));
+        return Left(Failure(ApiErrorResponse(message: e.response?.data)));
       } else {
         // Something happened in setting up or sending the request that triggered an Error
         return Left(Failure(

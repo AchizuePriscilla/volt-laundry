@@ -53,7 +53,7 @@ class VoltApp extends StatelessWidget {
               initialRoute: splashScreenViewRoute,
               builder: (context, widget) => ScreenUtilInit(
                     designSize: const Size(360, 630),
-                    builder: () => Navigator(
+                    builder: (BuildContext context, Widget? child) => Navigator(
                       onGenerateRoute: (settings) => CupertinoPageRoute(
                         builder: (context) => DialogManager(
                           child: widget!,

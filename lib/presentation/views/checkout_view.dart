@@ -4,6 +4,7 @@ import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:provider/provider.dart';
 import 'package:volt/presentation/shared/shared.dart';
 import 'package:volt/presentation/viewmodels/viewmodels.dart';
+import 'package:volt/utils/utils.dart';
 
 class CheckoutView extends StatefulWidget {
   const CheckoutView({Key? key}) : super(key: key);
@@ -234,6 +235,8 @@ class _CheckoutViewState extends State<CheckoutView> {
                       onChanged: (value) {
                         _amount = int.parse(value);
                       },
+                      validator: (value) => Validators.validateTextInput(
+                          value, "Amount cannot be empty"),
                     ),
                     const CustomSpacer(flex: 4),
                     Align(

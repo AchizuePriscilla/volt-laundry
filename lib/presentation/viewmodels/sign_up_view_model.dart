@@ -29,7 +29,7 @@ class SignUpViewModel extends BaseViewModel {
   var setImage = '';
 
   void setCurrentLocation() async {
-    Geolocator.requestPermission();
+    await Geolocator.requestPermission();
     currentPosition = await geolocatorService.getCurrentPosition();
     latitude = currentPosition.latitude;
     longitude = currentPosition.longitude;
@@ -106,7 +106,6 @@ class SignUpViewModel extends BaseViewModel {
         cachePage(phoneNumber);
         // await localCache.removeFromLocalCache(lastPage);
         // await localCache.removeFromLocalCache(lastEmail);
-
       } else {
         log('Verification code sending unsuccessful');
         toggleLoading(false);
@@ -174,7 +173,7 @@ class SignUpViewModel extends BaseViewModel {
       if (loading) return;
 
       toggleLoading(true);
-      Geolocator.requestPermission();
+      await Geolocator.requestPermission();
       currentPosition = await geolocatorService.getCurrentPosition();
       latitude = currentPosition.latitude;
       longitude = currentPosition.longitude;
